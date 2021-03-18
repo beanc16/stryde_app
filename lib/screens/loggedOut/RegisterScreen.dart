@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/utilities/FormHelpers.dart';
+import 'package:workout_buddy/components/formHelpers/TextElements.dart';
+import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 
@@ -189,10 +190,10 @@ class RegisterScreenState extends State<RegisterScreen>
   Widget build(BuildContext context)
   {
     return SinglePageScrollingWidget(
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: getChildren(),
-        )
+      Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: getChildren(),
+      )
     );
   }
 }

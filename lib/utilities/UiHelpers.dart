@@ -13,7 +13,8 @@ Center getCircularProgressIndicatorCentered()
 
 
 // Raised Button
-RaisedButton getRaisedButton(String displayText, double fontSize, Function() callback)
+RaisedButton getRaisedButton(String displayText, double fontSize,
+                             Function() callback)
 {
   return RaisedButton(
     child: Text(
@@ -64,36 +65,4 @@ PageView getPageView(PageController pageController, List<Widget> screens)
       return screens[index];
     },
   );
-}
-
-
-
-class SinglePageScrollingWidget extends StatelessWidget
-{
-  // Variable
-  final Widget _child;
-
-  // Constructor
-  SinglePageScrollingWidget(this._child);
-
-
-
-  @override
-  Widget build(BuildContext context)
-  {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints viewportConstraints)
-      {
-        return SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: viewportConstraints.maxHeight,
-            ),
-
-            child: this._child,
-          )
-        );
-      }
-    );
-  }
 }

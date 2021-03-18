@@ -33,7 +33,7 @@ class StartupScreen extends StatelessWidget
     PageView pageView = getPageView(pageController, screens);
 
     return Scaffold(
-      appBar: MyAppBar.getAppBar("Workout Buddy"),
+      appBar: MyAppBar.getAppBar("Stryde"),
       body: Container(
         margin: getDefaultMargin(),
         child: pageView,

@@ -8,48 +8,56 @@ class HttpQueryHelper
   static String ip = "64.227.12.181";
   static String port = ":8000";
   static String url = "http://" + ip + port;
+  static String query = "";
 
 
 
-  static void get(String route, body, {Function() onSuccess, Function() onFailure})
-  {
+  static Future<void> get(String route, body, {Function(dynamic) onSuccess,
+																							 Function(dynamic) onFailure}) async
+	{
     try
-	{
-      dynamic response = await http.get(url + route, body: body);
-	  
-	  if (onSuccess != null)
-	  {
-	    onSuccess(response);
-	  }
-	}
-	
-	catch (err)
-	{
-	  if (onFailure != null)
-	  {
-	    onFailure(err);
-	  }
-	}
+		{
+			Uri httpUri = Uri.http(url + route, query, body);
+			//dynamic response = await http.get(httpUri, body: body);
+			dynamic response = await http.get(httpUri);
+
+			if (onSuccess != null)
+			{
+				onSuccess(response);
+			}
+		}
+
+		catch (err)
+		{
+			if (onFailure != null)
+			{
+				onFailure(err);
+			}
+		}
   }
 
-  static void post(String route, body, {Function() onSuccess, Function() onFailure})
-  {
+  static Future<void> post(String route, body, {Function(dynamic) onSuccess,
+																				Function(dynamic) onFailure})
+  async {
     try
-	{
-      dynamic response = await http.post(url + route, body: body);
-	  
-	  if (onSuccess != null)
-	  {
-	    onSuccess(response);
-	  }
-	}
-	
-	catch (err)
-	{
-	  if (onFailure != null)
-	  {
-	    onFailure(err);
-	  }
-	}
+		{
+			Uri httpUri = Uri.http(url + route, query, body);
+			//dynamic response = await http.post(url + route, body: body);
+			//dynamic response = await http.post(httpUri, body: body);
+			dynamic response = await http.post(httpUri);
+
+			if (onSuccess != null)
+			{
+				onSuccess(response);
+			}
+		}
+
+		catch (err)
+		{
+			if (onFailure != null)
+			{
+				onFailure(err);
+			}
+		}
   }
 }

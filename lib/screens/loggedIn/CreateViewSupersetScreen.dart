@@ -1,15 +1,12 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
+import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Superset.dart';
-import 'package:workout_buddy/models/Workout.dart';
-import 'package:workout_buddy/utilities/FormHelpers.dart';
-
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
-import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
-
 import 'EditSupersetScreen.dart';
 
 
@@ -168,8 +165,8 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: getChildren(),
-          )
         )
+      )
     );
   }
 }
