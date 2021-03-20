@@ -54,10 +54,13 @@ EdgeInsets getDefaultMargin()
 
 
 // PageView (lets you swipe between screens easily)
-PageView getPageView(PageController pageController, List<Widget> screens)
+PageView getPageView(PageController pageController,
+                     List<Widget> screens,
+                     Function(int) onPageChanged)
 {
   return PageView.builder(
     controller: pageController,
+    onPageChanged: (int index) => onPageChanged(index),
 
     itemCount: screens.length,
     itemBuilder: (BuildContext context, int index)

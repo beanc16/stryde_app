@@ -193,7 +193,7 @@ class RegisterScreenState extends State<RegisterScreen>
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: getChildren(),
-      )
+      ),
     );
   }
 }

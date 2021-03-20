@@ -1,33 +1,102 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/utilities/UiHelpers.dart';
+
+
+class MultiPageScrollingWidget extends StatefulWidget
+{
+  List<Widget> _screens;
+  List<BottomNavigationBarItem> _bottomNavigationBarItems;
+  Color _navBarSelectedItemColor;
+
+  MultiPageScrollingWidget(
+    List<Widget> screens,
+    List<BottomNavigationBarItem> bottomNavigationBarItems,
+    Color navBarSelectedItemColor
+  )
+  {
+    this._screens = screens;
+    this._bottomNavigationBarItems = bottomNavigationBarItems;
+    this._navBarSelectedItemColor = navBarSelectedItemColor;
+  }
 
 
 
-class MultiPageScrollingWidget extends StatelessWidget
+  @override
+  State<StatefulWidget> createState()
+  {
+    return MultiPageScrollingWidgetState(this._screens,
+                                         this._bottomNavigationBarItems,
+                                         this._navBarSelectedItemColor);
+  }
+}
+
+
+
+class MultiPageScrollingWidgetState extends State
 {
   // Variables
-  String appBarTitle;
-  List<Widget> screens;
   PageController pageController;
-  EdgeInsets margins;
+  List<Widget> screens = [];
+  PageView pageView;
+  int _index = 0;
+  List<BottomNavigationBarItem> _bottomNavigationBarItems;
+  Color _navBarSelectedItemColor;
 
   // Constructor
-  MultiPageScrollingWidget(List<Widget> screens,
-                           {String appBarTitle = "",
-                            double leftMargin = 20,
-                            double topMargin = 20,
-                            double rightMargin = 20,
-                            double bottomMargin = 20,})
+  MultiPageScrollingWidgetState(
+    List<Widget> screens,
+    List<BottomNavigationBarItem> bottomNavigationBarItems,
+    Color navBarSelectedItemColor
+  )
   {
-    this.appBarTitle = appBarTitle;
     this.screens = screens;
+    this._bottomNavigationBarItems = bottomNavigationBarItems;
+    this._navBarSelectedItemColor = navBarSelectedItemColor;
+
     this.pageController = PageController(
       keepPage: true,
+      initialPage: 0,
     );
-    this.margins = EdgeInsets.only(left: leftMargin,
-                                   top: topMargin,
-                                   right: rightMargin,
-                                   bottom: bottomMargin);
+    this.pageView = getPageView(pageController, screens, _onPageChanged);
+  }
+
+
+
+  void _onPageChanged(int index)
+  {
+    setState(()
+    {
+      _index = index;
+    });
+  }
+
+  void _onNavbarItemTapped(int index)
+  {
+    setState(()
+    {
+      _index = index;
+
+      this.pageController.animateToPage(
+        index,
+        duration: Duration(seconds: 1),
+        curve: Curves.ease,
+      );
+    });
+  }
+
+  Widget _getNavbar()
+  {
+    return BottomNavigationBar(
+      items: _bottomNavigationBarItems,
+
+      currentIndex: this._index,
+      selectedItemColor: _navBarSelectedItemColor,
+      onTap: (int index) => _onNavbarItemTapped(index),
+    );
   }
 
 
@@ -35,37 +104,17 @@ class MultiPageScrollingWidget extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
+    this.pageView = getPageView(pageController,
+                                screens,
+                                _onPageChanged);
+
     return Scaffold(
-      appBar: getAppBar(appBarTitle, Colors.blue),
+      appBar: MyAppBar.getAppBar("Stryde"),
       body: Container(
-        margin: margins,
-        child: getPageView(pageController, screens),
-      ),
+        margin: getDefaultMargin(),
+        child: pageView,
+        ),
+      bottomNavigationBar: _getNavbar(),
     );
   }
-}
-
-
-
-AppBar getAppBar(String titleStr, MaterialColor materialColor)
-{
-  return AppBar(
-    title: Text(titleStr),
-    backgroundColor: materialColor,
-  );
-}
-
-
-// PageView (lets you swipe between screens easily)
-PageView getPageView(PageController pageController, List<Widget> screens)
-{
-  return PageView.builder(
-    controller: pageController,
-    itemCount: screens.length,
-
-    itemBuilder: (BuildContext context, int index)
-    {
-      return screens[index];
-    },
-  );
 }

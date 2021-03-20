@@ -1,23 +1,52 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/components/uiHelpers/MultiPageScrollingWidget.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 import 'LoginScreen.dart';
 import 'RegisterScreen.dart';
 
 
-class StartupScreen extends StatelessWidget
+class StartupScreen extends StatefulWidget
+{
+  @override
+  State<StatefulWidget> createState()
+  {
+    return StartupScreenState();
+  }
+}
+
+
+
+class StartupScreenState extends State
 {
   // Variables
-  PageController pageController;
+  List<Widget> _screens = [];
 
   // Constructor
-  StartupScreen()
+  StartupScreenState()
   {
-    pageController = PageController(
-      keepPage: true,
-    );
+    this._screens = [
+      LoginScreen(),
+      RegisterScreen(),
+    ];
+  }
+
+
+
+  List<BottomNavigationBarItem> _getNavbarItems()
+  {
+    return const <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: Icon(Icons.login_rounded),
+        label: 'Login',
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.app_registration),
+        label: 'Register',
+      ),
+    ];
   }
 
 
@@ -25,19 +54,8 @@ class StartupScreen extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    List<Widget> screens = [
-      LoginScreen(),
-      RegisterScreen(),
-    ];
-
-    PageView pageView = getPageView(pageController, screens);
-
-    return Scaffold(
-      appBar: MyAppBar.getAppBar("Stryde"),
-      body: Container(
-        margin: getDefaultMargin(),
-        child: pageView,
-      ),
+    return MultiPageScrollingWidget(
+      _screens, _getNavbarItems(), StrydeColors.lightBlue
     );
   }
 }

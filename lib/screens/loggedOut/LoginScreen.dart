@@ -171,7 +171,7 @@ class LoginScreenState extends State<LoginScreen>
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: getChildren(),
-      )
+      ),
     );
   }
 }

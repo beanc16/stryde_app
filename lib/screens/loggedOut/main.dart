@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget
   {
     return MaterialApp(
       title: "Workout Buddy",
-      //home: StartupScreen(),
-      home: CreateViewWorkoutScreen(),
+      home: StartupScreen(),
+      //home: CreateViewWorkoutScreen(),
       //home: CreateViewSupersetScreen(),
       /*
       home: Scaffold(

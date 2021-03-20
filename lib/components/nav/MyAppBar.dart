@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 
@@ -19,7 +20,7 @@ class MyAppBar
 
       myAppBarNoButton = AppBar(
         title: titleText,
-        backgroundColor: Colors.blue,
+        backgroundColor: StrydeColors.lightBlue,
       );
     }
 
