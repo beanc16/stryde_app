@@ -82,7 +82,7 @@ class MultiPageScrollingWidgetState extends State
 
       this.pageController.animateToPage(
         index,
-        duration: Duration(seconds: 1),
+        duration: Duration(milliseconds: 500),
         curve: Curves.ease,
       );
     });

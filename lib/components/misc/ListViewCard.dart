@@ -125,7 +125,7 @@ class ListViewCardState extends State<ListViewCard>
   {
     double defaultMargin = 4;
     double leftMargin = defaultMargin;
-    Padding reorderIcon;
+    //Padding reorderIcon;
     Padding deleteIcon;
 
     if (widget.shouldLeftIndent)
@@ -135,12 +135,12 @@ class ListViewCardState extends State<ListViewCard>
 
     if (this.isReorderable)
     {
-      reorderIcon = _getReorderIcon();
+      //reorderIcon = _getReorderIcon();
       deleteIcon = _getDeleteIcon();
     }
     else
     {
-      reorderIcon = _getNoReorderIcon();
+      //reorderIcon = _getNoReorderIcon();
       deleteIcon = _getNoDeleteIcon();
     }
 
@@ -196,7 +196,7 @@ class ListViewCardState extends State<ListViewCard>
               ),
             ),
 
-            reorderIcon,
+            //reorderIcon,
           ],
         ),
       ),
@@ -210,6 +210,7 @@ class ListViewCardState extends State<ListViewCard>
 
 
 
+  /*
   Padding _getReorderIcon()
   {
     return Padding(
@@ -228,6 +229,7 @@ class ListViewCardState extends State<ListViewCard>
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
     );
   }
+   */
 
   Padding _getDeleteIcon()
   {
