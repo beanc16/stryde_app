@@ -92,10 +92,12 @@ class MultiPageScrollingWidgetState extends State
   {
     return BottomNavigationBar(
       items: _bottomNavigationBarItems,
-
       currentIndex: this._index,
       selectedItemColor: _navBarSelectedItemColor,
       onTap: (int index) => _onNavbarItemTapped(index),
+
+      // Prevent bug that causes icons to turn white if there's > 3
+      type: BottomNavigationBarType.fixed,
     );
   }
 

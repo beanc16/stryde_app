@@ -4,6 +4,7 @@ import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/screens/loggedIn/CreateViewSupersetScreen.dart';
 import 'package:workout_buddy/screens/loggedIn/CreateViewWorkoutScreen.dart';
 import 'package:workout_buddy/screens/loggedIn/EditWorkoutScreen.dart';
+import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
 
 import 'StartupScreen.dart';
 
@@ -23,14 +24,9 @@ class MyApp extends StatelessWidget
     return MaterialApp(
       title: "Stryde",
       //home: StartupScreen(),
-      home: CreateViewWorkoutScreen(),
+      home: HomeScreen(),
+      //home: CreateViewWorkoutScreen(),
       //home: CreateViewSupersetScreen(),
-      /*
-      home: Scaffold(
-        appBar: MyAppBar.getAppBar("Workout Buddy"),
-        //body: DragAndDropScreen(),
-      )
-       */
     );
   }
 }

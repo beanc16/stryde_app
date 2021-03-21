@@ -23,12 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  reorderables: ^0.3.2
-  http: ^0.13.0
-  flutter_svg: ^0.19.3
-
-  # For ListViewCard
-  # fluttertoast: ^7.1.6
+  #reorderables: ^0.3.2
+  http: ^0.13.0             # For HTTP requests
+  flutter_svg: ^0.19.3      # Display svg logo in AppBar
+  flutter_icons: ^1.1.0     # For more icons
 
 
   # The following adds the Cupertino Icons font to your application.
