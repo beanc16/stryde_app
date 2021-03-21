@@ -139,22 +139,31 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    getRaisedButton("Add", 14, ()
-                    {
-                      print("Add an exercise");
-                      //workout.isReorderable = true;
-                      //navigateToScreen(context, () => EditWorkoutScreen(workout));
-                    }),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 15,
+                    Flexible(
+                      flex: 2,
+                      child: getRaisedButton("Add", 14, ()
+                      {
+                        print("Add an exercise");
+                        //workout.isReorderable = true;
+                        //navigateToScreen(context, () => EditWorkoutScreen(workout));
+                      }),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 15,
+                        ),
                       ),
                     ),
-                    getRaisedButton("Edit", 14, ()
-                    {
-                      workout.isReorderable = true;
-                      navigateToScreen(context, () => EditWorkoutScreen(workout));
-                    })
+                    Flexible(
+                      flex: 2,
+                      child: getRaisedButton("Edit", 14, ()
+                      {
+                        workout.isReorderable = true;
+                        navigateToScreen(context, () => EditWorkoutScreen(workout));
+                      }),
+                    ),
                   ],
                 ),
               )
@@ -170,14 +179,23 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   @override
   Widget build(BuildContext context)
   {
+    double padding = 5;
+
     return Scaffold(
       appBar: MyAppBar.getAppBar("View Workout"),
-      body: SinglePageScrollingWidget(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: getChildren(),
-        )
+      body: Padding(
+        padding: EdgeInsets.only(
+          left: padding,
+          right: padding,
+        ),
+
+        child: SinglePageScrollingWidget(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: getChildren(),
+          )
+        ),
       )
     );
   }

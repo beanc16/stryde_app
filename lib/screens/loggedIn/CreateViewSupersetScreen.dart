@@ -129,22 +129,31 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    getRaisedButton("Add", 14, ()
-                    {
-                      print("Add an exercise");
-                      //superset.isReorderable = true;
-                      //navigateToScreen(context, () => EditSupersetScreen(superset));
-                    }),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: 15,
+                    Flexible(
+                      flex: 2,
+                      child: getRaisedButton("Add", 14, ()
+                      {
+                        print("Add an exercise");
+                        //superset.isReorderable = true;
+                        //navigateToScreen(context, () => EditSupersetScreen(superset));
+                      }),
+                      ),
+                    Flexible(
+                      flex: 1,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 15,
+                        ),
                       ),
                     ),
-                    getRaisedButton("Edit", 14, ()
-                    {
-                      superset.isReorderable = true;
-                      navigateToScreen(context, () => EditSupersetScreen(superset));
-                    }),
+                    Flexible(
+                      flex: 2,
+                      child: getRaisedButton("Edit", 14, ()
+                      {
+                        superset.isReorderable = true;
+                        navigateToScreen(context, () => EditSupersetScreen(superset));
+                      }),
+                    ),
                   ],
                 ),
               ),
