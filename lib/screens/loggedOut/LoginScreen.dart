@@ -5,6 +5,7 @@ import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'package:workout_buddy/utilities/httpQueryHelpers.dart';
 
 
 class LoginScreen extends StatefulWidget
@@ -59,14 +60,19 @@ class LoginScreenState extends State<LoginScreen>
         getRaisedButton(
           "Login",
           48,
-          ()  // Callback
+          () async // Callback
           {
+            print("Click");
+
             Map<String, String> postData = {
               "username": this._usernameInput.inputElement
                   .textEditingController.text,
               "password": this._passwordInput.inputElement
                   .textEditingController.text,
             };
+
+            await HttpQueryHelper.tryInitializeUrls();
+            print("Url: " + HttpQueryHelper.url);
 
             /*
             http.post("http://159.89.55.211:4444/login", body: postData)
@@ -119,14 +125,19 @@ class LoginScreenState extends State<LoginScreen>
         getRaisedButton(
           "Login",
           48,
-          ()
+          () async
           {
+            print("Click");
+
             Map<String, String> postData = {
               "username": this._usernameInput.inputElement
                   .textEditingController.text,
               "password": this._passwordInput.inputElement
                   .textEditingController.text,
             };
+
+            await HttpQueryHelper.tryInitializeUrls();
+            print("Url: " + HttpQueryHelper.url);
 
             /*
             http.post("http://159.89.55.211:4444/login", body: postData)
