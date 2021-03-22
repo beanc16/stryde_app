@@ -11,10 +11,14 @@ import 'WorkoutScheduleScreen.dart';
 
 class HomeScreen extends StatefulWidget
 {
+  Map<String, dynamic> _userInfo;
+
+  HomeScreen(this._userInfo);
+
   @override
   State<StatefulWidget> createState()
   {
-    return HomeScreenState();
+    return HomeScreenState(this._userInfo);
   }
 }
 
@@ -24,9 +28,9 @@ class HomeScreenState extends State
 {
   // Variables
   List<Widget> _screens = [];
+  Map<String, dynamic> _userInfo;
 
-  // Constructor
-  HomeScreenState()
+  HomeScreenState(this._userInfo)
   {
     this._screens = [
       WorkoutScheduleScreen(),

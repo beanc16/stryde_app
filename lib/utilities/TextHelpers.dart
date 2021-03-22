@@ -42,6 +42,7 @@ class TextHeader2 extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
+    print("TextHeader2");
     return TextHeader(_displayText, 36);
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import "package:http/http.dart" as http;
 import "package:flutter_dotenv/flutter_dotenv.dart" as DotEnv;
 
@@ -16,18 +18,27 @@ class HttpQueryHelper
   static Future<void> get(String route, body, {Function(dynamic) onSuccess,
 																							 Function(dynamic) onFailure}) async
 	{
-    try
+		try
 		{
 			await tryInitializeUrls();
 
-			Uri httpUri = Uri.http(url + route, query, body);
-			//dynamic response = await http.get(httpUri, body: body);
-			dynamic response = await http.get(httpUri);
+			Uri httpUri = Uri.http(url, route);
 
-			if (onSuccess != null)
-			{
-				onSuccess(response);
-			}
+			http.get(httpUri)
+				.then((http.Response response)
+				{
+					if (onSuccess != null)
+					{
+						onSuccess.call( jsonDecode(response.body) );
+					}
+				})
+				.catchError((err)
+				{
+					if (onFailure != null)
+					{
+						onFailure(err);
+					}
+				});
 		}
 
 		catch (err)
@@ -39,23 +50,32 @@ class HttpQueryHelper
 		}
   }
 
-  static Future<void> post(String route, body, {Function(dynamic) onSuccess,
-																				Function(dynamic) onFailure})
+  static Future<void> post(String route, body,
+													 {Function(dynamic) onSuccess,
+														Function(dynamic) onFailure})
   async
 	{
     try
 		{
 			await tryInitializeUrls();
 
-			Uri httpUri = Uri.http(url + route, query, body);
-			//dynamic response = await http.post(url + route, body: body);
-			//dynamic response = await http.post(httpUri, body: body);
-			dynamic response = await http.post(httpUri);
+			Uri httpUri = Uri.http(url, route);
 
-			if (onSuccess != null)
-			{
-				onSuccess(response);
-			}
+			http.post(httpUri, body: body)
+				.then((http.Response response)
+				{
+					if (onSuccess != null)
+					{
+						onSuccess.call( jsonDecode(response.body) );
+					}
+				})
+				.catchError((err)
+				{
+					if (onFailure != null)
+					{
+						onFailure(err);
+					}
+				});
 		}
 
 		catch (err)
@@ -97,7 +117,7 @@ class HttpQueryHelper
 		// Update url
 		if (canSet)
 		{
-			url = "http://" + env["SERVER_IP"] + env["STRYDE_SERVER_PORT"];
+			url = env["SERVER_IP"] + env["STRYDE_SERVER_PORT"];
 		}
 		else
 		{

@@ -1,8 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
+import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
+import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
 import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 import 'package:workout_buddy/utilities/httpQueryHelpers.dart';
@@ -43,137 +44,82 @@ class LoginScreenState extends State<LoginScreen>
 
   List<Widget> getChildren()
   {
-    if (!hasError)
+    List<Widget> children = [
+      getPadding(10),
+
+      TextHeader1("Login"),
+      getDefaultPadding(),
+
+      this._usernameInput,
+      getPadding(30),
+
+      this._passwordInput,
+      getPadding(30),
+
+      getRaisedButton("Login", 48, _tryLogin),
+      getDefaultPadding(),
+    ];
+
+    if (hasError)
     {
-      return [
-        getPadding(10),
-
-        TextHeader1("Login"),
-        getDefaultPadding(),
-
-        this._usernameInput,
-        getPadding(30),
-
-        this._passwordInput,
-        getPadding(30),
-
-        getRaisedButton(
-          "Login",
-          48,
-          () async // Callback
-          {
-            print("Click");
-
-            Map<String, String> postData = {
-              "username": this._usernameInput.inputElement
-                  .textEditingController.text,
-              "password": this._passwordInput.inputElement
-                  .textEditingController.text,
-            };
-
-            await HttpQueryHelper.tryInitializeUrls();
-            print("Url: " + HttpQueryHelper.url);
-
-            /*
-            http.post("http://159.89.55.211:4444/login", body: postData)
-                .then((response)
-                      {
-                        // Success
-                        if (response.body != "error")
-                        {
-                          Map<String, dynamic> loggedInUserInfo = jsonDecode(response.body);
-                          int userId = loggedInUserInfo["user_id"];
-                          navigateToScreenWithoutBack(context, () => HomeScreen(userId));
-
-                          setState(()
-                                   {
-                                     hasError = false;
-                                   });
-                        }
-
-                        // Error
-                        else
-                        {
-                          setState(()
-                                   {
-                                     hasError = true;
-                                   });
-                        }
-                      });
-
-             */
-            }
-          ),
-        getDefaultPadding(),
-      ];
-    }
-
-    else
-    {
-      return [
-        getPadding(10),
-
-        TextHeader1("Login"),
-        getDefaultPadding(),
-
-        this._usernameInput,
-        getPadding(30),
-
-        this._passwordInput,
-        getPadding(30),
-
-        getRaisedButton(
-          "Login",
-          48,
-          () async
-          {
-            print("Click");
-
-            Map<String, String> postData = {
-              "username": this._usernameInput.inputElement
-                  .textEditingController.text,
-              "password": this._passwordInput.inputElement
-                  .textEditingController.text,
-            };
-
-            await HttpQueryHelper.tryInitializeUrls();
-            print("Url: " + HttpQueryHelper.url);
-
-            /*
-            http.post("http://159.89.55.211:4444/login", body: postData)
-                .then((response)
-                {
-                  // Success
-                  if (response.body != "error")
-                  {
-                    Map<String, dynamic> loggedInUserInfo = jsonDecode(response.body);
-                    int userId = loggedInUserInfo["user_id"];
-                    navigateToScreenWithoutBack(context, () => HomeScreen(userId));
-
-                    setState(()
-                    {
-                      hasError = false;
-                    });
-                  }
-
-                  // Error
-                  else
-                  {
-                    setState(()
-                    {
-                      hasError = true;
-                    });
-                  }
-                });
-             */
-          }
-        ),
-        getDefaultPadding(),
+      children.addAll([
         TextHeader2("Failed to login"),
         getDefaultPadding(),
-      ];
+      ]);
+    }
+
+    return children;
+  }
+
+
+
+  void _tryLogin() async
+  {
+    Map<String, String> postData = {
+      "username": this._usernameInput.inputElement
+          .textEditingController.text,
+      "password": this._passwordInput.inputElement
+          .textEditingController.text,
+    };
+
+    await HttpQueryHelper.post(
+      "/login",
+      postData,
+      onSuccess: (dynamic jsonResult) => _onLoginSuccess(jsonResult),
+      onFailure: (dynamic response) => _onLoginFail(response)
+    );
+  }
+
+  void _onLoginSuccess(dynamic response)
+  {
+    // Success
+    if (response["error"] == null && response["results"] != null)
+    {
+      Map<String, dynamic> userInfo = response["results"];
+      navigateToScreenWithoutBack(context, () => HomeScreen(userInfo));
+
+      setState(()
+      {
+        hasError = false;
+      });
+    }
+
+    // Fail
+    else
+    {
+      _onLoginFail(response);
     }
   }
+
+  void _onLoginFail(dynamic response)
+  {
+    setState(()
+    {
+      hasError = true;
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context)
