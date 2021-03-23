@@ -24,11 +24,12 @@ dependencies:
   flutter:
     sdk: flutter
   #reorderables: ^0.3.2
-  http: ^0.13.0             # For HTTP requests
-  flutter_svg: ^0.19.3      # Display svg logo in AppBar
-  flutter_icons: ^1.1.0     # For more icons
-  flutter_dotenv: ^3.1.0    # For .env variables
-  universal_io: ^1.0.2      # To fix Platform.environment not working in browsers
+  http: ^0.13.0                 # For HTTP requests
+  flutter_svg: ^0.19.3          # Display svg logo in AppBar
+  flutter_icons: ^1.1.0         # For more icons
+  flutter_dotenv: ^3.1.0        # For .env variables
+  universal_io: ^1.0.2          # To fix Platform.environment not working in browsers
+  multi_select_flutter: ^4.0.0  # Multi select dropdown menus
 
 
   # The following adds the Cupertino Icons font to your application.

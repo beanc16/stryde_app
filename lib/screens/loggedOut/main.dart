@@ -24,9 +24,6 @@ class MyApp extends StatelessWidget
     return MaterialApp(
       title: "Stryde",
       home: StartupScreen(),
-      //home: HomeScreen(),
-      //home: CreateViewWorkoutScreen(),
-      //home: CreateViewSupersetScreen(),
     );
   }
 }
