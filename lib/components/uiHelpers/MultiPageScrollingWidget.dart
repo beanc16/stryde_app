@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 
@@ -11,16 +12,18 @@ class MultiPageScrollingWidget extends StatefulWidget
   List<Widget> _screens;
   List<BottomNavigationBarItem> _bottomNavigationBarItems;
   Color _navBarSelectedItemColor;
+  Color _navBarUnselectedItemColor;
 
   MultiPageScrollingWidget(
     List<Widget> screens,
     List<BottomNavigationBarItem> bottomNavigationBarItems,
-    Color navBarSelectedItemColor
+    Color navBarSelectedItemColor, {Color navBarUnselectedItemColor}
   )
   {
     this._screens = screens;
     this._bottomNavigationBarItems = bottomNavigationBarItems;
     this._navBarSelectedItemColor = navBarSelectedItemColor;
+    this._navBarUnselectedItemColor = navBarUnselectedItemColor;
   }
 
 
@@ -30,7 +33,8 @@ class MultiPageScrollingWidget extends StatefulWidget
   {
     return MultiPageScrollingWidgetState(this._screens,
                                          this._bottomNavigationBarItems,
-                                         this._navBarSelectedItemColor);
+                                         this._navBarSelectedItemColor,
+                                         this._navBarUnselectedItemColor);
   }
 }
 
@@ -45,17 +49,20 @@ class MultiPageScrollingWidgetState extends State
   int _index = 0;
   List<BottomNavigationBarItem> _bottomNavigationBarItems;
   Color _navBarSelectedItemColor;
+  Color _navBarUnselectedItemColor;
 
   // Constructor
   MultiPageScrollingWidgetState(
     List<Widget> screens,
     List<BottomNavigationBarItem> bottomNavigationBarItems,
-    Color navBarSelectedItemColor
+    Color navBarSelectedItemColor,
+    Color navBarUnselectedItemColor
   )
   {
     this.screens = screens;
     this._bottomNavigationBarItems = bottomNavigationBarItems;
     this._navBarSelectedItemColor = navBarSelectedItemColor;
+    this._navBarUnselectedItemColor = navBarUnselectedItemColor;
 
     this.pageController = PageController(
       keepPage: true,
@@ -94,6 +101,7 @@ class MultiPageScrollingWidgetState extends State
       items: _bottomNavigationBarItems,
       currentIndex: this._index,
       selectedItemColor: _navBarSelectedItemColor,
+      unselectedItemColor: _navBarUnselectedItemColor,
       onTap: (int index) => _onNavbarItemTapped(index),
 
       // Prevent bug that causes icons to turn white if there's > 3

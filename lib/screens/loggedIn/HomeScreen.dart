@@ -70,7 +70,8 @@ class HomeScreenState extends State
   Widget build(BuildContext context)
   {
     return MultiPageScrollingWidget(
-      _screens, _getNavbarItems(), StrydeColors.lightBlue
+      _screens, _getNavbarItems(), StrydeColors.lightBlue,
+      navBarUnselectedItemColor: StrydeColors.darkGray,
     );
   }
 }
