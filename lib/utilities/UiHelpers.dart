@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 
 
 
@@ -14,17 +15,23 @@ Center getCircularProgressIndicatorCentered()
 
 // Raised Button
 RaisedButton getRaisedButton(String displayText, double fontSize,
-                             Function() callback)
+                             Function() callback, {Color textColor,
+                                                   Color buttonColor})
 {
   return RaisedButton(
-    child: Text(
-      displayText,
-      style: TextStyle(
-          fontSize: fontSize
-      ),
+    child: Padding(
+      padding: EdgeInsets.all(5),
+      child: Text(
+        displayText,
+        style: TextStyle(
+          fontSize: fontSize,
+          color: textColor
+        ),
+      )
     ),
 
     onPressed: callback,
+    color: buttonColor,
   );
 }
 

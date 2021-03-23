@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
@@ -41,22 +42,29 @@ class RegisterScreenState extends State<RegisterScreen>
 
 
 
-  List<Widget> getChildren()
+  List<Widget> _getChildren()
   {
 
     List<Widget> children = [
-      getPadding(10),
+      getDefaultPadding(),
 
-      TextHeader1("Register"),
+      TextHeader1("Register", color: StrydeColors.darkGray),
       getDefaultPadding(),
 
       this._usernameInput,
-      getPadding(30),
+      getDefaultPadding(),
 
       this._passwordInput,
-      getPadding(30),
+      getDefaultPadding(),
 
-      getRaisedButton("Register", 48, _tryRegister),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          getRaisedButton("Register", 20, _tryRegister,
+                          buttonColor: StrydeColors.purple,
+                          textColor: Colors.white)
+        ],
+      ),
       getDefaultPadding(),
     ];
 
@@ -127,7 +135,7 @@ class RegisterScreenState extends State<RegisterScreen>
     return SinglePageScrollingWidget(
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: getChildren(),
+        children: _getChildren(),
       ),
     );
   }

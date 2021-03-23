@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
@@ -42,21 +43,28 @@ class LoginScreenState extends State<LoginScreen>
 
 
 
-  List<Widget> getChildren()
+  List<Widget> _getChildren()
   {
     List<Widget> children = [
-      getPadding(10),
+      getDefaultPadding(),
 
-      TextHeader1("Login"),
+      TextHeader1("Login", color: StrydeColors.darkGray),
       getDefaultPadding(),
 
       this._usernameInput,
-      getPadding(30),
+      getDefaultPadding(),
 
       this._passwordInput,
-      getPadding(30),
+      getDefaultPadding(),
 
-      getRaisedButton("Login", 48, _tryLogin),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          getRaisedButton("Login", 20, _tryLogin,
+                          buttonColor: StrydeColors.purple,
+                          textColor: Colors.white)
+        ],
+      ),
       getDefaultPadding(),
     ];
 
@@ -127,7 +135,7 @@ class LoginScreenState extends State<LoginScreen>
     return SinglePageScrollingWidget(
       Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: getChildren(),
+        children: _getChildren(),
       ),
     );
   }
