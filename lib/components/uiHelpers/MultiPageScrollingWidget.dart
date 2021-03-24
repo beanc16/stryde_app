@@ -123,7 +123,7 @@ class MultiPageScrollingWidgetState extends State
       body: Container(
         margin: getDefaultMargin(),
         child: pageView,
-        ),
+      ),
       bottomNavigationBar: _getNavbar(),
     );
   }
