@@ -1,16 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:workout_buddy/components/misc/ListViewCard.dart';
 import 'package:workout_buddy/components/misc/ListViewHeader.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/models/Workout.dart';
-import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/screens/loggedOut/main.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
-
-import 'CreateViewWorkoutScreen.dart';
+import 'package:workout_buddy/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
 
 
 class EditWorkoutScreen extends StatefulWidget

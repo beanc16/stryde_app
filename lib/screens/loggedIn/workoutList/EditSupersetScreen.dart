@@ -5,13 +5,9 @@ import 'package:workout_buddy/components/misc/ListViewCard.dart';
 import 'package:workout_buddy/components/misc/ListViewHeader.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/models/Superset.dart';
-import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/screens/loggedOut/main.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
-
 import 'CreateViewSupersetScreen.dart';
-import 'CreateViewWorkoutScreen.dart';
 
 
 class EditSupersetScreen extends StatefulWidget

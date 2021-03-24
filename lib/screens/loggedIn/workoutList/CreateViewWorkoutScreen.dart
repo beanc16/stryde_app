@@ -7,7 +7,7 @@ import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dar
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'EditWorkoutScreen.dart';
+import 'package:workout_buddy/screens/loggedIn/workoutList/EditWorkoutScreen.dart';
 
 
 class CreateViewWorkoutScreen extends StatefulWidget
