@@ -11,15 +11,36 @@ import 'Superset.dart';
 
 class Workout
 {
+  int workoutId;
+  int userId;
   final String name;
+  String description;
   final List<Object> exercisesAndSupersets;
   bool isReorderable = true;
 
-  Workout(this.name, this.exercisesAndSupersets);
+  Workout(this.name, this.exercisesAndSupersets,
+          {int workoutId, int userId, String description})
+  {
+    this.workoutId = workoutId;
+    this.userId = userId;
+    this.description = description;
+  }
 
-  Workout.notReorderable(this.name, this.exercisesAndSupersets)
+  Workout.notReorderable(this.name, this.exercisesAndSupersets,
+                         {int workoutId, int userId,
+                          String description})
   {
     this.isReorderable = false;
+    this.workoutId = workoutId;
+    this.userId = userId;
+    this.description = description;
+  }
+
+
+
+  bool hasNoExercisesOrSupersets()
+  {
+    return exercisesAndSupersets.length == 0;
   }
 
 
@@ -87,16 +108,6 @@ class Workout
       }
     }
 
-    if (children.length <= 0)
-    {
-      children.add(
-        Text(
-          "No Exercises",
-          key: Key("No Exercises"),
-        )
-      );
-    }
-
     return children;
   }
 
@@ -104,11 +115,9 @@ class Workout
   {
     List<Widget> exercisesAndSupersetsListViewCardsAndHeaders = this.getAsWidgets();
 
-    if (exercisesAndSupersetsListViewCardsAndHeaders.length <= 0)
+    if (exercisesAndSupersetsListViewCardsAndHeaders.length == 0)
     {
-      List<Widget> emptyWorkoutList = [
-        Text("No Exercises."),
-      ];
+      List<Widget> emptyWorkoutList = [];
 
       return ListView(
         key: Key(this.name),
@@ -199,7 +208,9 @@ class Workout
   String toString()
   {
     String exercisesAndSupersetsStr = _getExercisesAndSupersetsAsString();
-    return 'Workout{name: $name, exercisesAndSupersets: \n$exercisesAndSupersetsStr}';
+    return 'Workout{name: "$name", description: "$description", ' +
+                   'workoutId: $workoutId, userId: $userId, ' +
+                   'exercisesAndSupersets: \n$exercisesAndSupersetsStr}';
   }
 
   String _getExercisesAndSupersetsAsString()
