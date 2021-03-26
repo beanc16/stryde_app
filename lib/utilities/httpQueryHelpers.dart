@@ -15,8 +15,9 @@ class HttpQueryHelper
 
 
 
-  static Future<void> get(String route, body, {Function(dynamic) onSuccess,
-																							 Function(dynamic) onFailure}) async
+  static Future<void> get(String route,
+													{Function(dynamic) onSuccess,
+													 Function(dynamic) onFailure}) async
 	{
 		try
 		{
