@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:workout_buddy/components/misc/StrydeColors.dart';
+import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/uiHelpers/MultiPageScrollingWidget.dart';
+import 'package:workout_buddy/models/UserExperience.dart';
 import 'package:workout_buddy/screens/loggedIn/progressGraphs/AllProgressGraphsScreen.dart';
 import 'package:workout_buddy/screens/loggedIn/userProfile/UserProfileScreen.dart';
 import 'workoutList/WorkoutListScreen.dart';
@@ -18,7 +20,13 @@ class HomeScreen extends StatefulWidget
   @override
   State<StatefulWidget> createState()
   {
-    return HomeScreenState(this._userInfo);
+    StrydeUserStorage.userExperience = new UserExperience(
+      this._userInfo["id"], this._userInfo["username"],
+      this._userInfo["password"], this._userInfo["goal"],
+      this._userInfo["experienceName"]
+    );
+
+    return HomeScreenState();
   }
 }
 
@@ -28,9 +36,8 @@ class HomeScreenState extends State
 {
   // Variables
   List<Widget> _screens = [];
-  Map<String, dynamic> _userInfo;
 
-  HomeScreenState(this._userInfo)
+  HomeScreenState()
   {
     this._screens = [
       WorkoutScheduleScreen(),
