@@ -10,17 +10,20 @@ class MultiPageScrollingWidget extends StatefulWidget
   List<BottomNavigationBarItem> _bottomNavigationBarItems;
   Color _navBarSelectedItemColor;
   Color _navBarUnselectedItemColor;
+  double _marginAroundScreens;
 
   MultiPageScrollingWidget(
     List<Widget> screens,
     List<BottomNavigationBarItem> bottomNavigationBarItems,
-    Color navBarSelectedItemColor, {Color navBarUnselectedItemColor}
+    Color navBarSelectedItemColor, {Color navBarUnselectedItemColor,
+    double marginAroundScreens = 20}
   )
   {
     this._screens = screens;
     this._bottomNavigationBarItems = bottomNavigationBarItems;
     this._navBarSelectedItemColor = navBarSelectedItemColor;
     this._navBarUnselectedItemColor = navBarUnselectedItemColor;
+    this._marginAroundScreens = marginAroundScreens;
   }
 
 
@@ -31,7 +34,8 @@ class MultiPageScrollingWidget extends StatefulWidget
     return MultiPageScrollingWidgetState(this._screens,
                                          this._bottomNavigationBarItems,
                                          this._navBarSelectedItemColor,
-                                         this._navBarUnselectedItemColor);
+                                         this._navBarUnselectedItemColor,
+                                         this._marginAroundScreens);
   }
 }
 
@@ -47,19 +51,22 @@ class MultiPageScrollingWidgetState extends State
   List<BottomNavigationBarItem> _bottomNavigationBarItems;
   Color _navBarSelectedItemColor;
   Color _navBarUnselectedItemColor;
+  double _marginAroundScreens;
 
   // Constructor
   MultiPageScrollingWidgetState(
     List<Widget> screens,
     List<BottomNavigationBarItem> bottomNavigationBarItems,
     Color navBarSelectedItemColor,
-    Color navBarUnselectedItemColor
+    Color navBarUnselectedItemColor,
+    double marginAroundScreens
   )
   {
     this.screens = screens;
     this._bottomNavigationBarItems = bottomNavigationBarItems;
     this._navBarSelectedItemColor = navBarSelectedItemColor;
     this._navBarUnselectedItemColor = navBarUnselectedItemColor;
+    this._marginAroundScreens = marginAroundScreens;
 
     this.pageController = PageController(
       keepPage: true,
@@ -118,7 +125,7 @@ class MultiPageScrollingWidgetState extends State
     return Scaffold(
       appBar: MyAppBar.getAppBar("Stryde"),
       body: Container(
-        margin: getDefaultMargin(),
+        margin: EdgeInsets.all(_marginAroundScreens),
         child: pageView,
       ),
       bottomNavigationBar: _getNavbar(),

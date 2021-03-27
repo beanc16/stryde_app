@@ -80,6 +80,7 @@ class HomeScreenState extends State
     return MultiPageScrollingWidget(
       _screens, _getNavbarItems(), StrydeColors.lightBlue,
       navBarUnselectedItemColor: StrydeColors.darkGray,
+      marginAroundScreens: 0,
     );
   }
 }

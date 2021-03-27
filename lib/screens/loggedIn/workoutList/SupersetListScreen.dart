@@ -12,11 +12,15 @@ class SupersetListScreen extends StatefulWidget
 
 
 
-class SupersetListState extends State<SupersetListScreen>
+class SupersetListState extends State<SupersetListScreen> with
+    AutomaticKeepAliveClientMixin<SupersetListScreen>
 {
   @override
   Widget build(BuildContext context)
   {
     return Text("Superset list");
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

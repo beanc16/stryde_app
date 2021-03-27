@@ -22,7 +22,8 @@ class WorkoutListScreen extends StatefulWidget
 
 
 
-class WorkoutListState extends State<WorkoutListScreen>
+class WorkoutListState extends State<WorkoutListScreen> with
+    AutomaticKeepAliveClientMixin<WorkoutListScreen>
 {
   List<Workout> _workouts;
   bool _isLoading;
@@ -49,8 +50,11 @@ class WorkoutListState extends State<WorkoutListScreen>
 
     if (StrydeUserStorage.workouts != null)
     {
-      //_workouts = StrydeUserStorage.workouts;
-      //_setListView();
+      this._workouts = StrydeUserStorage.workouts;
+      _setListView();
+
+      setIsLoading(false);
+      setHasError(false);
     }
 
     else
@@ -70,12 +74,13 @@ class WorkoutListState extends State<WorkoutListScreen>
     // TODO: Convert workouts to model
     print(workoutsJson);
     _convertWorkoutResults(
-        workoutsJson["nonEmptyWorkoutResults"]["_results"],
-        workoutsJson["emptyWorkoutResults"]["_results"]
+      workoutsJson["nonEmptyWorkoutResults"]["_results"],
+      workoutsJson["emptyWorkoutResults"]["_results"]
     );
 
     // TODO: Set StrydeUserStorage.workouts
-    //StrydeUserStorage.workouts = this._workouts;
+    print("\n\n" + this._workouts.toString());
+    StrydeUserStorage.workouts = this._workouts;
 
     // Send models to listview
     _setListView();
@@ -151,7 +156,6 @@ class WorkoutListState extends State<WorkoutListScreen>
         itemBuilder: (BuildContext context, int index)
         {
           // TODO: Have some kind of converter for nonEmpty workouts
-          //return _getWorkoutListTile(context, _workouts[index]);
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
@@ -168,6 +172,7 @@ class WorkoutListState extends State<WorkoutListScreen>
       );
     });
   }
+
   ListTile _getWorkoutListTile(BuildContext context, Workout curWorkout)
   {
     return ListTile(
@@ -222,29 +227,33 @@ class WorkoutListState extends State<WorkoutListScreen>
     {
       if (this._workouts.length > 0)
       {
-        return Column(
-          children: [
-            getDefaultPadding(),
+        return Container(
+          margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+          child: Column(
+            children: [
+              _getButtonsAboveListView(),
+              getDefaultPadding(),
 
-            _getButtonsAboveListView(),
-            getDefaultPadding(),
-
-            Expanded(
-              child: _listView,
-            )
-          ],
+              Expanded(
+                child: _listView,
+              )
+            ],
+          )
         );
       }
 
       else
       {
-        return Column(
-          children: [
-            _getButtonsAboveListView(),
-            getDefaultPadding(),
+        return Container(
+          margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+          child: Column(
+            children: [
+              _getButtonsAboveListView(),
+              getDefaultPadding(),
 
-            LabelTextElement("No workouts...")
-          ],
+              LabelTextElement("No workouts...")
+            ],
+          )
         );
       }
     }
@@ -257,4 +266,7 @@ class WorkoutListState extends State<WorkoutListScreen>
   {
     return _getWidgetToDisplay();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
