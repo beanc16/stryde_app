@@ -224,6 +224,8 @@ class WorkoutListState extends State<WorkoutListScreen>
       {
         return Column(
           children: [
+            getDefaultPadding(),
+
             _getButtonsAboveListView(),
             getDefaultPadding(),
 
