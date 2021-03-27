@@ -74,10 +74,11 @@ class WorkoutListState extends State<WorkoutListScreen>
         workoutsJson["emptyWorkoutResults"]["_results"]
     );
 
+    // TODO: Set StrydeUserStorage.workouts
+    //StrydeUserStorage.workouts = this._workouts;
+
     // Send models to listview
     _setListView();
-
-    // TODO: Set StrydeUserStorage.workouts
 
     setIsLoading(false);
     setHasError(false);
@@ -157,8 +158,8 @@ class WorkoutListState extends State<WorkoutListScreen>
                 Radius.circular(5),
               ),
               border: Border.all(
-                width: 1.5,
-                color: StrydeColors.lightGray
+                width: 2,
+                color: StrydeColors.darkBlue
               )
             ),
             child: _getWorkoutListTile(context, _workouts[index]),
@@ -171,7 +172,17 @@ class WorkoutListState extends State<WorkoutListScreen>
   {
     return ListTile(
       contentPadding: EdgeInsets.all(5),
-      title: Text(curWorkout.name),
+      //tileColor: StrydeColors.lightGray,
+      title: Padding(
+        padding: EdgeInsets.only(left: 5),
+        child: Text(
+          curWorkout.name,
+          style: TextStyle(
+            color: StrydeColors.darkGray,
+            fontSize: 20
+          ),
+        )
+      ),
 
       onTap: ()
       {
@@ -185,7 +196,7 @@ class WorkoutListState extends State<WorkoutListScreen>
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        getRaisedButton("Add", 24, ()
+        getRaisedButton("Add", 20, ()
         {
           navigateToScreen(context, () => CreateViewWorkoutScreen());
         },

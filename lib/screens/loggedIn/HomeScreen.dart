@@ -7,6 +7,7 @@ import 'package:workout_buddy/components/uiHelpers/MultiPageScrollingWidget.dart
 import 'package:workout_buddy/models/UserExperience.dart';
 import 'package:workout_buddy/screens/loggedIn/progressGraphs/AllProgressGraphsScreen.dart';
 import 'package:workout_buddy/screens/loggedIn/userProfile/UserProfileScreen.dart';
+import 'package:workout_buddy/screens/loggedIn/workoutList/WorkoutAndSupersetListScreen.dart';
 import 'workoutList/WorkoutListScreen.dart';
 import 'workoutSchedule/WorkoutScheduleScreen.dart';
 
@@ -41,7 +42,7 @@ class HomeScreenState extends State
   {
     this._screens = [
       WorkoutScheduleScreen(),
-      WorkoutListScreen(),
+      WorkoutAndSupersetListScreen(),
       AllProgressGraphsScreen(),
       UserProfileScreen(),
     ];
