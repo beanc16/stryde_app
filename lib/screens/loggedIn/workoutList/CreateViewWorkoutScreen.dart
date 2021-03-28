@@ -5,6 +5,7 @@ import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
+import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
 import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
@@ -177,9 +178,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                       flex: 2,
                       child: getRaisedButton("Add", 14, ()
                       {
-                        print("Add an exercise");
-                        //workout.isReorderable = true;
-                        //navigateToScreen(context, () => EditWorkoutScreen(workout));
+                        navigateToScreen(context, () => AllExerciseListScreen());
                       }),
                     ),
                     Flexible(

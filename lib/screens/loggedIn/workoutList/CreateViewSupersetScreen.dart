@@ -7,6 +7,7 @@ import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dar
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'AllExerciseListScreen.dart';
 import 'EditSupersetScreen.dart';
 
 
@@ -133,9 +134,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
                       flex: 2,
                       child: getRaisedButton("Add", 14, ()
                       {
-                        print("Add an exercise");
-                        //superset.isReorderable = true;
-                        //navigateToScreen(context, () => EditSupersetScreen(superset));
+                        navigateToScreen(context, () => AllExerciseListScreen());
                       }),
                       ),
                     Flexible(
