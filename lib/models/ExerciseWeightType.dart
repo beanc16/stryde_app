@@ -1,18 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:workout_buddy/components/misc/ListViewCard.dart';
 
+import 'enums/ExerciseWeightTypeEnum.dart';
+
 
 
 class ExerciseWeightType
 {
-  final int id;
-  final String name;
+  int id;
+  ExerciseWeightTypeEnum value;
 
-  ExerciseWeightType(this.id, this.name);
+  ExerciseWeightType(String exerciseWeightType)
+  {
+    this.value = ExerciseWeightTypeEnumHelpers.getFromString(exerciseWeightType);
+    this.id = this.value.getId();
+  }
 
   @override
   String toString()
   {
-    return 'ExerciseWeightType{id: $id, name: $name}';
+    return 'ExerciseWeightType{id: $id, value: ' + value.toStringShort() + '}';
   }
 }

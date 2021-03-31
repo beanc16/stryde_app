@@ -1,6 +1,7 @@
 import 'package:workout_buddy/models/UserExperience.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/models/Superset.dart';
+import 'package:workout_buddy/models/Exercise.dart';
 
 
 class StrydeUserStorage
@@ -13,6 +14,9 @@ class StrydeUserStorage
 
   // The logged in user's supersets
   static List<Superset> supersets = null;
+
+  // All exercises the user can add to their workouts & supersets
+  static List<Exercise> allExercises = null;
 
 
 

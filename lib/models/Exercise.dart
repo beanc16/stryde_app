@@ -1,12 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:workout_buddy/components/misc/ListViewCard.dart';
+import 'package:workout_buddy/models/ExerciseMuscleType.dart';
+import 'package:workout_buddy/models/MuscleGroup.dart';
+import 'ExerciseMovementType.dart';
+import 'ExerciseWeightType.dart';
 
 
 
 class Exercise
 {
+  int id;
   final String name;
   final String description;
+  ExerciseWeightType exerciseWeightType;
+  ExerciseMuscleType exerciseMuscleType;
+  ExerciseMovementType exerciseMovementType;
+  List<MuscleGroup> muscleGroups;
+
   ExerciseListViewCard exerciseListViewCard;
 
   Exercise(this.name, this.description, Function() onDeleteListViewCard)
@@ -30,16 +40,35 @@ class Exercise
     );
   }
 
+  Exercise.model(this.id, this.name, this.description,
+                 String exerciseWeightType, String exerciseMuscleType,
+                 String exerciseMovementType,
+                 this.muscleGroups)
+  {
+    this.exerciseWeightType = ExerciseWeightType(exerciseWeightType);
+    this.exerciseMuscleType = ExerciseMuscleType(exerciseMuscleType);
+    this.exerciseMovementType = ExerciseMovementType(exerciseMovementType);
+  }
+
+
+
   void indentLeft()
   {
-    exerciseListViewCard.indentLeft();
+    if (exerciseListViewCard != null)
+    {
+      exerciseListViewCard.indentLeft();
+    }
   }
 
   @override
   String toString()
   {
-    //return 'Exercise{name: $name, description: $description}';
-    return 'Exercise{name: $name}';
+    return 'Exercise{id: $id, name: $name, description: $description, '
+           'exerciseWeightType: $exerciseWeightType, '
+           'exerciseMuscleType: $exerciseMuscleType, '
+           'exerciseMovementType: $exerciseMovementType, '
+           'muscleGroups: $muscleGroups, '
+           'exerciseListViewCard: $exerciseListViewCard}';
   }
 }
 

@@ -48,7 +48,7 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
     // Muscle Groups
     List<MultiSelectItem> muscleGroupList = StrydeConstants.muscleGroupList
       .map((element) =>
-        MultiSelectItem<MuscleGroup>(element, element.name))
+        MultiSelectItem<MuscleGroup>(element, element.value.toString()))
       .toList();
     _muscleGroupDropdown = MultiSelectBottomSheetChipDisplay(
       muscleGroupList, buttonText: "Muscle Groups Used",
@@ -61,7 +61,7 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
     // Weight Type
     List<MultiSelectItem> weightTypeList = StrydeConstants.weightTypeList
       .map((element) =>
-        MultiSelectItem<ExerciseWeightType>(element, element.name))
+        MultiSelectItem<ExerciseWeightType>(element, element.value.toString()))
       .toList();
     _weightTypeDropdown = SingleSelectBottomSheetChipDisplay(
       weightTypeList, buttonText: "Weight Type",
@@ -74,7 +74,7 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
     // Muscle Type
     List<MultiSelectItem> muscleTypeList = StrydeConstants.muscleTypeList
       .map((element) =>
-        MultiSelectItem<ExerciseMuscleType>(element, element.name))
+        MultiSelectItem<ExerciseMuscleType>(element, element.value.toString()))
       .toList();
     _muscleTypeDropdown = SingleSelectBottomSheetChipDisplay(
       muscleTypeList, buttonText: "Muscle Type",
@@ -87,7 +87,7 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
     // Muscle Type
     List<MultiSelectItem> movementTypeList = StrydeConstants.movementTypeList
       .map((element) =>
-        MultiSelectItem<ExerciseMovementType>(element, element.name))
+        MultiSelectItem<ExerciseMovementType>(element, element.value.toString()))
       .toList();
     _movementTypeDropdown = SingleSelectBottomSheetChipDisplay(
       movementTypeList, buttonText: "Movement Type",

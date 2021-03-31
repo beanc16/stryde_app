@@ -1,18 +1,21 @@
-import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/misc/ListViewCard.dart';
+import 'package:workout_buddy/models/enums/MuscleGroupEnum.dart';
 
 
 
 class MuscleGroup
 {
-  final int id;
-  final String name;
+  int id;
+  MuscleGroupEnum value;
 
-  MuscleGroup(this.id, this.name);
+  MuscleGroup(String muscleGroup)
+  {
+    this.value = MuscleGroupEnumHelpers.getFromString(muscleGroup);
+    this.id = this.value.getId();
+  }
 
   @override
   String toString()
   {
-    return 'MuscleGroup{id: $id, name: $name}';
+    return 'MuscleGroup{id: $id, value: ' + value.toStringShort() + '}';
   }
 }
