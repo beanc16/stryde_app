@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
@@ -29,8 +30,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   bool _isLoading;
   bool _hasError;
   Center _loadingIcon;
-  List<dynamic> _selectedExercises;
-  //List<Map< string, Map<string, dynamic >>> _selectedExercises;
+  List<Map< String, dynamic>> _selectedExercises;
 
   @override
   void initState()
@@ -181,7 +181,9 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
             // Miscellaneous
             spaceBetweenTiles: 15,
-            //onTapListTile: (context, index) => _callback(context, index),
+            onTapListTile: (context, index) =>
+                _onTapExerciseListTile(context, index),
+            onTapColor: StrydeColors.lightBlue,
           )
         );
       }
@@ -200,6 +202,16 @@ class AllExerciseListState extends State<AllExerciseListScreen>
         );
       }
     }
+  }
+
+  void _onTapExerciseListTile(BuildContext context, int index)
+  {
+    _selectedExercises.add({
+      "exercise": _exercises[index],
+      "displayText": _listTileDisplayText[index],
+    });
+
+    print("\n\n_selectedExercises: " + _selectedExercises.toString());
   }
 
 

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Superset.dart';
@@ -132,11 +134,13 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
                   children: [
                     Flexible(
                       flex: 2,
-                      child: getRaisedButton("Add", 14, ()
-                      {
-                        navigateToScreen(context, () => AllExerciseListScreen());
-                      }),
+                      child: StrydeButton(
+                        displayText: "Add", textSize: 14, onTap: ()
+                        {
+                          navigateToScreen(context, () => AllExerciseListScreen());
+                        },
                       ),
+                    ),
                     Flexible(
                       flex: 1,
                       child: Padding(
@@ -147,11 +151,13 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
                     ),
                     Flexible(
                       flex: 2,
-                      child: getRaisedButton("Edit", 14, ()
-                      {
-                        superset.isReorderable = true;
-                        navigateToScreen(context, () => EditSupersetScreen(superset));
-                      }),
+                      child: StrydeButton(
+                        displayText: "Edit", textSize: 14, onTap: ()
+                        {
+                          superset.isReorderable = true;
+                          navigateToScreen(context, () => EditSupersetScreen(superset));
+                        },
+                      ),
                     ),
                   ],
                 ),

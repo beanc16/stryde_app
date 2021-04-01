@@ -10,6 +10,7 @@ class SearchableListView extends StatefulWidget
   double _textSize;
   Color _textColor;
   Function _onTapListTile;
+  Color _onTapColor;
   double _borderWidth;
   Color _borderColor;
   double _spaceBetweenTiles;
@@ -19,6 +20,7 @@ class SearchableListView extends StatefulWidget
     double textSize = 20,
     Color textColor,
     Function onTapListTile,
+    Color onTapColor = Colors.lightBlue,
     double borderWidth = 0,
     Color borderColor = Colors.black,
     double spaceBetweenTiles = 5
@@ -28,6 +30,7 @@ class SearchableListView extends StatefulWidget
     this._textSize = textSize;
     this._textColor = textColor;
     this._onTapListTile = onTapListTile;
+    this._onTapColor = onTapColor;
     this._borderWidth = borderWidth;
     this._borderColor = borderColor;
     this._spaceBetweenTiles = spaceBetweenTiles;
@@ -53,6 +56,7 @@ class SearchableListView extends StatefulWidget
                                    _textSize,
                                    _textColor,
                                    _onTapListTile,
+                                   _onTapColor,
                                    _borderWidth,
                                    _borderColor,
                                    _spaceBetweenTiles);
@@ -71,6 +75,7 @@ class SearchableListViewState extends State<SearchableListView>
   double _textSize;
   Color _textColor;
   Function _onTapListTile;
+  Color _onTapColor;
   double _borderWidth;
   Color _borderColor;
   double _spaceBetweenTiles;
@@ -80,6 +85,7 @@ class SearchableListViewState extends State<SearchableListView>
                           this._textSize,
                           this._textColor,
                           this._onTapListTile,
+                          this._onTapColor,
                           this._borderWidth,
                           this._borderColor,
                           this._spaceBetweenTiles)
@@ -173,33 +179,36 @@ class SearchableListViewState extends State<SearchableListView>
             itemCount: _listTileDisplayText.length,
             itemBuilder: (BuildContext context, int index)
             {
-              return Container(
-                // Border
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: _borderWidth,
-                    color: _borderColor,
-                  ),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                ),
+              return InkWell(
+                onTap: () => _onTapListTile(context, index),
+                splashColor: _onTapColor,
 
-                // ListTile
-                child: ListTile(
-                  contentPadding: EdgeInsets.all(5),
-                  title: Padding(
-                    padding: EdgeInsets.only(left: 5),
-                    child: Text(
-                      _listTileDisplayText[index],
-                      style: TextStyle(
-                        color: _textColor,
-                        fontSize: _textSize
-                      ),
+                child: Container(
+                  // Border
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: _borderWidth,
+                      color: _borderColor,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5),
                     ),
                   ),
 
-                  onTap: _onTapListTile(context, index),
+                  // ListTile
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(5),
+                    title: Padding(
+                      padding: EdgeInsets.only(left: 5),
+                      child: Text(
+                        _listTileDisplayText[index],
+                        style: TextStyle(
+                          color: _textColor,
+                          fontSize: _textSize
+                        ),
+                      ),
+                    ),
+                  )
                 )
               );
             },

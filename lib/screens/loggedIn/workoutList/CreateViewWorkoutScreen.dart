@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
+import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
@@ -179,7 +181,8 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                       child: getRaisedButton("Add", 14, ()
                       {
                         navigateToScreen(context, () => AllExerciseListScreen());
-                      }),
+                      }, buttonColor: StrydeColors.purple,
+                         textColor: Colors.white),
                     ),
                     Flexible(
                       flex: 1,
@@ -208,17 +211,21 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     // Disable the button if there IS NO exercises or supersets
     if (workout == null || workout.hasNoExercisesOrSupersets())
     {
-      return getRaisedButton("Edit", 14, null);
+      return StrydeButton(
+        displayText: "Edit", textSize: 14, onTap: null
+      );
     }
 
     // Enable the button if there IS exercises or supersets
     else
     {
-      return getRaisedButton("Edit", 14, ()
-      {
-        workout.isReorderable = true;
-        navigateToScreen(context, () => EditWorkoutScreen(workout));
-      });
+      return StrydeButton(
+        displayText: "Edit", textSize: 14, onTap: ()
+        {
+          workout.isReorderable = true;
+          navigateToScreen(context, () => EditWorkoutScreen(workout));
+        }
+      );
     }
   }
 

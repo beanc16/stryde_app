@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
@@ -60,9 +61,9 @@ class RegisterScreenState extends State<RegisterScreen>
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          getRaisedButton("Register", 20, _tryRegister,
-                          buttonColor: StrydeColors.purple,
-                          textColor: Colors.white)
+          StrydeButton(
+            displayText: "Register", textSize: 20, onTap: _tryRegister,
+          ),
         ],
       ),
       getDefaultPadding(),

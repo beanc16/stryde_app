@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
@@ -72,7 +73,7 @@ class WorkoutListState extends State<WorkoutListScreen> with
   void _onGetWorkoutsSuccess(Map<String, dynamic> workoutsJson)
   {
     // TODO: Convert workouts to model
-    print(workoutsJson);
+    print("workoutsJson:\n" + workoutsJson.toString());
     _convertWorkoutResults(
       workoutsJson["nonEmptyWorkoutResults"]["_results"],
       workoutsJson["emptyWorkoutResults"]["_results"]
@@ -201,12 +202,12 @@ class WorkoutListState extends State<WorkoutListScreen> with
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        getRaisedButton("Add", 20, ()
-        {
-          navigateToScreen(context, () => CreateViewWorkoutScreen());
-        },
-        buttonColor: StrydeColors.purple,
-        textColor: Colors.white)
+        StrydeButton(
+          displayText: "Add", textSize: 20, onTap: ()
+          {
+            navigateToScreen(context, () => CreateViewWorkoutScreen());
+          },
+        ),
       ],
     );
   }

@@ -26,8 +26,8 @@ class WorkoutScheduleScreenState extends State<WorkoutScheduleScreen>
     DateTime startTime = DateTime(
       today.year,   // Year
       today.month,  // Month
-      24,           // Day
-      8,            // Hour
+      2,            // Day
+      15,           // Hour
       0,            // Minute
       0             // Second
     );

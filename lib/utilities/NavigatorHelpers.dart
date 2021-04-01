@@ -3,52 +3,58 @@ import "package:flutter/material.dart";
 
 
 // Go to a screen w/ a back button
-void navigateToScreen(context, Function() route)
+void navigateToScreen(BuildContext context,
+                      Function() route)
 {
   Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context)
-        {
-          return route();
-        }
-      )
+    context,
+    MaterialPageRoute(
+      builder: (context)
+      {
+        return route();
+      }
+    )
   );
 }
 
 // Go to a screen w/ a back button
-void navigateToScreenThen(context, Function() route, Function() callback)
+void navigateToScreenThen(BuildContext context,
+                          Function() route,
+                          Function() callback)
 {
   Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context)
-          {
-            return route();
-          }
-          )
-      )
-      .then((value) => callback());
-}
-
-
-
-// Go to a screen w/o a back button
-void navigateToScreenWithoutBack(context, Function() route)
-{
-  Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
+    context,
+    MaterialPageRoute(
         builder: (context)
         {
           return route();
         }
-      )
+    )
+  )
+  .then((value) => callback());
+}
+
+
+
+// Go to a screen w/o a back button
+void navigateToScreenWithoutBack(BuildContext context,
+                                 Function() route)
+{
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context)
+      {
+        return route();
+      }
+    )
   );
 }
 
 // Go to a screen w/o a back button
-void navigateToScreenWithoutBackThen(context, Function() route, Function() callback)
+void navigateToScreenWithoutBackThen(BuildContext context,
+                                     Function() route,
+                                     Function() callback)
 {
   Navigator.push(
     context,
@@ -59,18 +65,18 @@ void navigateToScreenWithoutBackThen(context, Function() route, Function() callb
       }
     )
   )
-      .then((value) => callback());
+  .then((value) => callback());
 }
 
 
 
 // Go back to the previous screen
-void navigateBack(context)
+void navigateBack(BuildContext context)
 {
   Navigator.pop(context);
 }
 
-void navigateBackThen(context, Function() callback)
+void navigateBackThen(BuildContext context, Function() callback)
 {
   Navigator.maybePop(context)
            .then( (value) => callback() );
@@ -78,8 +84,10 @@ void navigateBackThen(context, Function() callback)
 
 
 
-//
-void navigateToScreenWithoutBackUntil(context, Function() route, int numOfScreensToGoBack)
+// Navigate backwards the given number of screens
+void navigateToScreenWithoutBackUntil(BuildContext context,
+                                      Function() route,
+                                      int numOfScreensToGoBack)
 {
   int numOfRoutes = 0;
 

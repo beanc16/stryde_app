@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
@@ -60,9 +61,9 @@ class LoginScreenState extends State<LoginScreen>
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          getRaisedButton("Login", 20, _tryLogin,
-                          buttonColor: StrydeColors.purple,
-                          textColor: Colors.white)
+          StrydeButton(
+            displayText: "Login", textSize: 20, onTap: _tryLogin,
+          ),
         ],
       ),
       getDefaultPadding(),
