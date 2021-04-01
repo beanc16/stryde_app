@@ -237,7 +237,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     double padding = 5;
 
     return Scaffold(
-      appBar: StrydeAppBar.getAppBar("View Workout"),
+      appBar: StrydeAppBar(titleStr: "View Workout"),
       body: Padding(
         padding: EdgeInsets.only(
           left: padding,
@@ -245,7 +245,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
         ),
 
         child: SinglePageScrollingWidget(
-          Column(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: getChildren(),

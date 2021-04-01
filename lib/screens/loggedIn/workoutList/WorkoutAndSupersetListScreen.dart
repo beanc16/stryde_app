@@ -35,8 +35,8 @@ class WorkoutAndSupersetListState extends State<WorkoutAndSupersetListScreen>
   Widget build(BuildContext context)
   {
     return TabMenuMultiPageScrollingWidget(
-      _screens,
-      ["Workouts", "Supersets"],    // Display text for each tab
+      screens: _screens,
+      tabsDisplayText: ["Workouts", "Supersets"],
       tabBarSelectedItemColor: StrydeColors.lightBlue,
       tabBarUnselectedItemColor: StrydeColors.darkGray,
     );

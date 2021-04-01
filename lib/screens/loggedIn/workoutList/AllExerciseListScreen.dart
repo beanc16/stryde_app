@@ -220,7 +220,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: StrydeAppBar.getAppBar("Add Exercise"),
+      appBar: StrydeAppBar(titleStr: "Add Exercise"),
       body: _getWidgetToDisplay()
     );
   }

@@ -5,11 +5,15 @@ import "package:flutter/material.dart";
 class SinglePageScrollingWidget extends StatefulWidget
 {
   // Variable
-  final Widget _child;
+  Widget _child;
   final bool shouldKeepAlive;
 
   // Constructor
-  SinglePageScrollingWidget(this._child, {this.shouldKeepAlive: true});
+  SinglePageScrollingWidget({@required Widget child,
+                             this.shouldKeepAlive: true})
+  {
+    this._child = child;
+  }
 
 
 

@@ -135,7 +135,7 @@ class RegisterScreenState extends State<RegisterScreen>
   Widget build(BuildContext context)
   {
     return SinglePageScrollingWidget(
-      Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: _getChildren(),
       ),

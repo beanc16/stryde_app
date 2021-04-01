@@ -53,7 +53,9 @@ class StartupScreenState extends State
   Widget build(BuildContext context)
   {
     return MultiPageScrollingWidget(
-      _screens, _getNavbarItems(), StrydeColors.lightBlue,
+      screens: _screens,
+      bottomNavigationBarItems: _getNavbarItems(),
+      navBarSelectedItemColor: StrydeColors.lightBlue,
       navBarUnselectedItemColor: StrydeColors.darkGray,
     );
   }

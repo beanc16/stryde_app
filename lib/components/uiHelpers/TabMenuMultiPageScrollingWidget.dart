@@ -14,13 +14,13 @@ class TabMenuMultiPageScrollingWidget extends StatefulWidget
   Color _tabBarUnselectedItemColor;
   Color _tabBarBackgroundColor;
 
-  TabMenuMultiPageScrollingWidget(
-    List<Widget> screens,
-    List<String> tabsDisplayText,
-    {Color tabBarSelectedItemColor = Colors.blue,
-     Color tabBarUnselectedItemColor = Colors.black,
-     Color tabBarBackgroundColor = Colors.white,}
-  )
+  TabMenuMultiPageScrollingWidget({
+    @required List<Widget> screens,
+    @required List<String> tabsDisplayText,
+    Color tabBarSelectedItemColor = Colors.blue,
+    Color tabBarUnselectedItemColor = Colors.black,
+    Color tabBarBackgroundColor = Colors.white,
+  })
   {
     this._screens = screens;
     this._tabsDisplayText = tabsDisplayText;

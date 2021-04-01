@@ -12,12 +12,13 @@ class MultiPageScrollingWidget extends StatefulWidget
   Color _navBarUnselectedItemColor;
   double _marginAroundScreens;
 
-  MultiPageScrollingWidget(
-    List<Widget> screens,
-    List<BottomNavigationBarItem> bottomNavigationBarItems,
-    Color navBarSelectedItemColor, {Color navBarUnselectedItemColor,
-    double marginAroundScreens = 20}
-  )
+  MultiPageScrollingWidget({
+    @required List<Widget> screens,
+    @required List<BottomNavigationBarItem> bottomNavigationBarItems,
+    @required Color navBarSelectedItemColor,
+    Color navBarUnselectedItemColor,
+    double marginAroundScreens = 20
+  })
   {
     this._screens = screens;
     this._bottomNavigationBarItems = bottomNavigationBarItems;
@@ -123,7 +124,7 @@ class MultiPageScrollingWidgetState extends State
                                 _onPageChanged);
 
     return Scaffold(
-      appBar: StrydeAppBar.getAppBar("Stryde"),
+      appBar: StrydeAppBar(titleStr: "Stryde"),
       body: Container(
         margin: EdgeInsets.all(_marginAroundScreens),
         child: pageView,

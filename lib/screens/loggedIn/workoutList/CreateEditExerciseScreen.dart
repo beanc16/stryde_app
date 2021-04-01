@@ -131,14 +131,14 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
   Widget build(BuildContext context)
   {
     SinglePageScrollingWidget child = SinglePageScrollingWidget(
-      Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: _getChildren(),
       ),
     );
 
     return Scaffold(
-      appBar: StrydeAppBar.getAppBar("Stryde"),
+      appBar: StrydeAppBar(titleStr: "Stryde"),
       body: Container(
         margin: getDefaultMargin(),
         child: child,
