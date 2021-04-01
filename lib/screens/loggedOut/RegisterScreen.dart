@@ -105,7 +105,7 @@ class RegisterScreenState extends State<RegisterScreen>
     if (response["_results"] != null)
     {
       Map<String, dynamic> userInfo = response["_results"];
-      navigateToScreenWithoutBack(context, () => HomeScreen(userInfo));
+      NavigateTo.screenWithoutBack(context, () => HomeScreen(userInfo));
 
       setState(()
       {

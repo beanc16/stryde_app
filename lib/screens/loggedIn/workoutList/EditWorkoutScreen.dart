@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/listViews/ListViewCard.dart';
 import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
-import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/models/Workout.dart';
@@ -287,10 +287,10 @@ class EditWorkoutState extends State<EditWorkoutScreen>
                     Workout newWorkout = getListViewAsWorkout();
                     print(newWorkout.toString());
 
-                    // Test if the workout has changed
-                    // Save the workout if there has been changes
+                    // TODO: Test if the workout has changed
+                    // TODO: Save the workout if there has been changes
 
-                    return navigateToScreenWithoutBackUntil(
+                    return NavigateTo.screenWithoutBackUntil(
                       context,
                       () => CreateViewWorkoutScreen.workout(newWorkout),
                       2

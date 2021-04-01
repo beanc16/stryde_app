@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:workout_buddy/components/listViews/ListViewCard.dart';
 import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
-import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
@@ -140,7 +140,7 @@ class EditSupersetState extends State<EditSupersetScreen>
                     // Test if the workout has changed
                     // Save the workout if there has been changes
 
-                    return navigateToScreenWithoutBackUntil(
+                    return NavigateTo.screenWithoutBackUntil(
                       context,
                       () => CreateViewSupersetScreen.superset(newSuperset),
                       2

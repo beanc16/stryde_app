@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
@@ -136,7 +136,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
                       child: StrydeButton(
                         displayText: "Add", textSize: 14, onTap: ()
                         {
-                          navigateToScreen(context, () => AllExerciseListScreen());
+                          NavigateTo.screen(context, () => AllExerciseListScreen());
                         },
                       ),
                     ),
@@ -154,7 +154,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
                         displayText: "Edit", textSize: 14, onTap: ()
                         {
                           superset.isReorderable = true;
-                          navigateToScreen(context, () => EditSupersetScreen(superset));
+                          NavigateTo.screen(context, () => EditSupersetScreen(superset));
                         },
                       ),
                     ),

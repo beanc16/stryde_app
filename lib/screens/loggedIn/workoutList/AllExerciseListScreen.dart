@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/listViews/searchableListView/SearchableListView.dart';
-import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';

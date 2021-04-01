@@ -4,7 +4,7 @@ import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/nav/MyAppBar.dart';
+import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
@@ -180,7 +180,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                       flex: 2,
                       child: getRaisedButton("Add", 14, ()
                       {
-                        navigateToScreen(context, () => AllExerciseListScreen());
+                        NavigateTo.screen(context, () => AllExerciseListScreen());
                       }, buttonColor: StrydeColors.purple,
                          textColor: Colors.white),
                     ),
@@ -223,7 +223,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
         displayText: "Edit", textSize: 14, onTap: ()
         {
           workout.isReorderable = true;
-          navigateToScreen(context, () => EditWorkoutScreen(workout));
+          NavigateTo.screen(context, () => EditWorkoutScreen(workout));
         }
       );
     }

@@ -192,7 +192,7 @@ class WorkoutListState extends State<WorkoutListScreen> with
 
       onTap: ()
       {
-        navigateToScreen(context, () => CreateViewWorkoutScreen.workout(curWorkout));
+        NavigateTo.screen(context, () => CreateViewWorkoutScreen.workout(curWorkout));
       },
     );
   }
@@ -205,7 +205,7 @@ class WorkoutListState extends State<WorkoutListScreen> with
         StrydeButton(
           displayText: "Add", textSize: 20, onTap: ()
           {
-            navigateToScreen(context, () => CreateViewWorkoutScreen());
+            NavigateTo.screen(context, () => CreateViewWorkoutScreen());
           },
         ),
       ],
