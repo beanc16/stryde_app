@@ -123,7 +123,7 @@ class MultiPageScrollingWidgetState extends State
                                 _onPageChanged);
 
     return Scaffold(
-      appBar: MyAppBar.getAppBar("Stryde"),
+      appBar: StrydeAppBar.getAppBar("Stryde"),
       body: Container(
         margin: EdgeInsets.all(_marginAroundScreens),
         child: pageView,

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:workout_buddy/components/misc/ListViewCard.dart';
-import 'package:workout_buddy/components/misc/ListViewHeader.dart';
+import 'package:workout_buddy/components/listViews/ListViewCard.dart';
+import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/models/Exercise.dart';
@@ -163,7 +163,7 @@ class EditSupersetState extends State<EditSupersetScreen>
     return new WillPopScope(
       onWillPop: _onBackButtonPressed,
       child: Scaffold(
-        appBar: MyAppBar.getAppBar("Edit Superset"),
+        appBar: StrydeAppBar.getAppBar("Edit Superset"),
         body: ReorderableListView(
         children: listViewWidgets,
 

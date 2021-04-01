@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/misc/StrydeColors.dart';
+import 'package:workout_buddy/components/listViews/searchableListView/SearchableListView.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
-import 'package:workout_buddy/components/uiHelpers/SearchableListView.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
@@ -220,7 +220,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: MyAppBar.getAppBar("Add Exercise"),
+      appBar: StrydeAppBar.getAppBar("Add Exercise"),
       body: _getWidgetToDisplay()
     );
   }

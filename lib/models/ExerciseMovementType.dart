@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/misc/ListViewCard.dart';
 import 'package:workout_buddy/models/enums/ExerciseMovementTypeEnum.dart';
 
 

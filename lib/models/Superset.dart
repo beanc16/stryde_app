@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/misc/ListViewCard.dart';
-import 'package:workout_buddy/components/misc/ListViewHeader.dart';
+import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 
 

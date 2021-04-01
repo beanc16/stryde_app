@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Superset.dart';
@@ -173,7 +172,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: MyAppBar.getAppBar("View Superset"),
+      appBar: StrydeAppBar.getAppBar("View Superset"),
       body: SinglePageScrollingWidget(
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

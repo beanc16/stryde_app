@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 
+import 'SearchBar.dart';
+import 'SearchableListTile.dart';
+import 'SearchableListViewBody.dart';
+
 
 class SearchableListView extends StatefulWidget
 {
@@ -71,7 +75,6 @@ class SearchableListViewState extends State<SearchableListView>
   List<String> _listTileAllText = [];
   String _searchBarPlaceholderText;
   int _prevSearchLength;
-  bool _isLoading;
   double _textSize;
   Color _textColor;
   Function _onTapListTile;
@@ -79,6 +82,7 @@ class SearchableListViewState extends State<SearchableListView>
   double _borderWidth;
   Color _borderColor;
   double _spaceBetweenTiles;
+  SearchableListViewBody _searchableListViewBody;
 
   SearchableListViewState(this._listTileAllText,
                           this._searchBarPlaceholderText,
@@ -92,155 +96,34 @@ class SearchableListViewState extends State<SearchableListView>
   {
     this._listTileDisplayText = this._listTileAllText.toList();
     this._prevSearchLength = 0;
-  }
 
-  @override
-  void initState()
-  {
-    super.initState();
-
-    if (_listTileAllText.length == 0)
-    {
-      setIsLoading(true);
-    }
-
-    else
-    {
-      setIsLoading(false);
-    }
-  }
-
-
-
-  void setIsLoading(bool isLoading)
-  {
-    setState(()
-    {
-      _isLoading = isLoading;
-    });
-  }
-
-
-
-  Widget _getSearchBar()
-  {
-    return Container(
-      padding: EdgeInsets.only(bottom: 15),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: _searchBarPlaceholderText,
-          prefixIcon: Icon(Icons.search),
-        ),
-        onChanged: (text)
-        {
-          _filterListView(text);
-        }
-      ),
+    this._searchableListViewBody = SearchableListViewBody(
+      this._listTileDisplayText, this._textSize, this._textColor,
+      this._onTapListTile, this._onTapColor, this._borderWidth,
+      this._borderColor, this._spaceBetweenTiles,
     );
   }
 
-  Widget _getDisplay()
-  {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _tryGetListView(),
-      ],
-    );
-  }
-
-  Widget _tryGetListView()
-  {
-    if (_isLoading)
-    {
-      return Center(
-        child: getCircularProgressIndicatorCentered(),
-      );
-    }
-
-    else
-    {
-      return Expanded(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: 15,
-            right: 15,
-            bottom: 15,
-          ),
-          child: ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index)
-            {
-              return Padding(
-                padding: EdgeInsets.only(bottom: _spaceBetweenTiles),
-              );
-            },
-
-            itemCount: _listTileDisplayText.length,
-            itemBuilder: (BuildContext context, int index)
-            {
-              return InkWell(
-                onTap: () => _onTapListTile(context, index),
-                splashColor: _onTapColor,
-
-                child: Container(
-                  // Border
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: _borderWidth,
-                      color: _borderColor,
-                    ),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-
-                  // ListTile
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(5),
-                    title: Padding(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Text(
-                        _listTileDisplayText[index],
-                        style: TextStyle(
-                          color: _textColor,
-                          fontSize: _textSize
-                        ),
-                      ),
-                    ),
-                  )
-                )
-              );
-            },
-          )
-        )
-      );
-    }
-  }
 
 
-
+  // Search functionality
   void _filterListView(String searchedText)
   {
     if (searchedText.isEmpty)
     {
-      setState(()
-      {
-        _listTileDisplayText.clear();
-        _listTileDisplayText = _listTileAllText.toList();
-      });
+      _listTileDisplayText.clear();
+      _listTileDisplayText = _listTileAllText.toList();
     }
 
     else
     {
       final List<String> tempFilteredText = _getTempSearchResults(searchedText);
 
-      setState(()
-      {
-        _listTileDisplayText.clear();
-        _listTileDisplayText = tempFilteredText.toList();
-      });
+      _listTileDisplayText.clear();
+      _listTileDisplayText = tempFilteredText.toList();
     }
+
+    _searchableListViewBody.updateListTileDisplayText(_listTileDisplayText);
   }
 
   List<String> _getTempSearchResults(String searchedText)
@@ -296,10 +179,13 @@ class SearchableListViewState extends State<SearchableListView>
     return Container(
       child: Column(
         children: [
-          _getSearchBar(),
+          SearchBar(
+            onSearchChangedCallback: (String text) => _filterListView(text),
+            searchBarPlaceholderText: _searchBarPlaceholderText,
+          ),
           Expanded(
             flex: 1,
-            child: _getDisplay(),
+            child: _searchableListViewBody,
           ),
         ],
       )

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:workout_buddy/components/colors/StrydeColors.dart';
 
 
-class MyAppBar
+class StrydeAppBar
 {
   static AppBar myAppBarNoButton;
   static Text titleText;

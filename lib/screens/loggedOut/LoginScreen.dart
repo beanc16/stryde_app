@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/buttons/StrydeButton.dart';
+import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
 import 'package:workout_buddy/utilities/NavigatorHelpers.dart';

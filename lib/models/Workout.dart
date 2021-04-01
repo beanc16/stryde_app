@@ -1,10 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:workout_buddy/components/misc/ListViewCard.dart';
-import 'package:workout_buddy/components/misc/ListViewHeader.dart';
 import 'package:workout_buddy/models/Exercise.dart';
-
 import 'Superset.dart';
 
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/misc/ListViewCard.dart';
-import 'package:workout_buddy/components/misc/ListViewHeader.dart';
+import 'package:workout_buddy/components/listViews/ListViewCard.dart';
+import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/Superset.dart';
@@ -313,7 +313,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     return new WillPopScope(
       onWillPop: _onBackButtonPressed,
       child: Scaffold(
-        appBar: MyAppBar.getAppBar("Edit Workout"),
+        appBar: StrydeAppBar.getAppBar("Edit Workout"),
         body: ReorderableListView(
         children: listViewWidgets,
 

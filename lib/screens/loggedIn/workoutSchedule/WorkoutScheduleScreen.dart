@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:workout_buddy/components/calendarHelpers/CalendarEvent.dart';
 import 'package:workout_buddy/components/calendarHelpers/CalendarEventDataSource.dart';
-import 'package:workout_buddy/components/misc/StrydeColors.dart';
+import 'package:workout_buddy/components/colors/StrydeColors.dart';
 
 
 class WorkoutScheduleScreen extends StatefulWidget

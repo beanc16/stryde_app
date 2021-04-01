@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/buttons/StrydeButton.dart';
+import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
@@ -237,7 +237,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     double padding = 5;
 
     return Scaffold(
-      appBar: MyAppBar.getAppBar("View Workout"),
+      appBar: StrydeAppBar.getAppBar("View Workout"),
       body: Padding(
         padding: EdgeInsets.only(
           left: padding,

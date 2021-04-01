@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
+import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/formHelpers/multiSelectFlutterHelpers/MultiSelectBottomSheetChipDisplay.dart';
 import 'package:workout_buddy/components/formHelpers/multiSelectFlutterHelpers/SingleSelectBottomSheetChipDisplay.dart';
-import 'package:workout_buddy/components/misc/StrydeColors.dart';
 import 'package:workout_buddy/components/nav/MyAppBar.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeConstants.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
@@ -138,7 +138,7 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
     );
 
     return Scaffold(
-      appBar: MyAppBar.getAppBar("Stryde"),
+      appBar: StrydeAppBar.getAppBar("Stryde"),
       body: Container(
         margin: getDefaultMargin(),
         child: child,

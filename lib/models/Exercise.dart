@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/misc/ListViewCard.dart';
+import 'package:workout_buddy/components/listViews/ListViewCard.dart';
 import 'package:workout_buddy/models/ExerciseMuscleType.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
 import 'ExerciseMovementType.dart';
