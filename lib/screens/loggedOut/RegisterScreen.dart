@@ -5,10 +5,10 @@ import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
-import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
+import 'package:workout_buddy/utilities/NavigateTo.dart';
 import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'package:workout_buddy/utilities/httpQueryHelpers.dart';
+import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
 
 class RegisterScreen extends StatefulWidget
 {
@@ -32,20 +32,27 @@ class RegisterScreenState extends State<RegisterScreen>
   {
     _usernameInput = LabeledTextInputElement("Username", "Enter username");
     _passwordInput = LabeledTextInputElement.password("Password", "Enter password");
-    hasError = false;
+    setHasError(false);
   }
 
   @override
   initState()
   {
-    hasError = false;
+    setHasError(false);
+  }
+
+  void setHasError(bool hasError)
+  {
+    setState(()
+    {
+      hasError = false;
+    });
   }
 
 
 
   List<Widget> _getChildren()
   {
-
     List<Widget> children = [
       getDefaultPadding(),
 
@@ -107,10 +114,7 @@ class RegisterScreenState extends State<RegisterScreen>
       Map<String, dynamic> userInfo = response["_results"];
       NavigateTo.screenWithoutBack(context, () => HomeScreen(userInfo));
 
-      setState(()
-      {
-        hasError = false;
-      });
+      setHasError(false);
     }
 
     // Fail
@@ -122,10 +126,7 @@ class RegisterScreenState extends State<RegisterScreen>
 
   void _onRegisterFail(dynamic response)
   {
-    setState(()
-    {
-      hasError = true;
-    });
+    setHasError(true);
   }
 
 

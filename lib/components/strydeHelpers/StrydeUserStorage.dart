@@ -25,5 +25,6 @@ class StrydeUserStorage
     StrydeUserStorage.userExperience = null;
     StrydeUserStorage.workouts = null;
     StrydeUserStorage.supersets = null;
+    //StrydeUserStorage.allExercises = null;
   }
 }

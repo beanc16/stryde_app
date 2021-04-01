@@ -5,10 +5,10 @@ import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
-import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
+import 'package:workout_buddy/utilities/NavigateTo.dart';
 import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'package:workout_buddy/utilities/httpQueryHelpers.dart';
+import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
 
 
 class LoginScreen extends StatefulWidget
@@ -40,6 +40,14 @@ class LoginScreenState extends State<LoginScreen>
   initState()
   {
     hasError = false;
+  }
+
+  void setHasError(bool hasError)
+  {
+    setState(()
+    {
+      this.hasError = hasError;
+    });
   }
 
 
@@ -107,10 +115,7 @@ class LoginScreenState extends State<LoginScreen>
       Map<String, dynamic> userInfo = response["_results"];
       NavigateTo.screenWithoutBack(context, () => HomeScreen(userInfo));
 
-      setState(()
-      {
-        hasError = false;
-      });
+      setHasError(false);
     }
 
     // Fail
@@ -122,10 +127,7 @@ class LoginScreenState extends State<LoginScreen>
 
   void _onLoginFail(dynamic response)
   {
-    setState(()
-    {
-      hasError = true;
-    });
+    setHasError(true);
   }
 
 

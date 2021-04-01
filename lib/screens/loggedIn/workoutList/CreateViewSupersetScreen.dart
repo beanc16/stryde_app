@@ -6,7 +6,7 @@ import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Superset.dart';
-import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
+import 'package:workout_buddy/utilities/NavigateTo.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 import 'AllExerciseListScreen.dart';
 import 'EditSupersetScreen.dart';

@@ -7,9 +7,9 @@ import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
-import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
+import 'package:workout_buddy/utilities/NavigateTo.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'package:workout_buddy/utilities/httpQueryHelpers.dart';
+import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
 
 
 class WorkoutListScreen extends StatefulWidget

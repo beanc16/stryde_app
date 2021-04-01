@@ -42,7 +42,7 @@ class HomeScreenState extends State
     this._screens = [
       WorkoutScheduleScreen(),
       WorkoutAndSupersetListScreen(),
-      AllProgressGraphsScreen(),
+      //AllProgressGraphsScreen(),
       UserProfileScreen(),
     ];
   }
@@ -60,10 +60,12 @@ class HomeScreenState extends State
         icon: Icon(FlutterIcons.ios_fitness_ion),
         label: 'Workouts',
       ),
+      /*
       BottomNavigationBarItem(
         icon: Icon(Icons.stacked_line_chart_rounded),
         label: 'Progress',
       ),
+      */
       BottomNavigationBarItem(
         icon: Icon(Icons.person_rounded),
         label: 'Profile',

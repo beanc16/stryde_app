@@ -6,7 +6,7 @@ import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
 import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/utilities/NavigatorHelpers.dart';
+import 'package:workout_buddy/utilities/NavigateTo.dart';
 import 'CreateViewSupersetScreen.dart';
 
 

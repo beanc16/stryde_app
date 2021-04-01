@@ -9,7 +9,7 @@ import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'package:workout_buddy/utilities/httpQueryHelpers.dart';
+import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
 
 
 class AllExerciseListScreen extends StatefulWidget
