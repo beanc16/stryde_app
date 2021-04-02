@@ -11,33 +11,11 @@ import 'package:workout_buddy/screens/loggedIn/workoutList/WorkoutAndSupersetLis
 import 'workoutSchedule/WorkoutScheduleScreen.dart';
 
 
-class HomeScreen extends StatefulWidget
+class HomeScreen extends StatelessWidget
 {
-  Map<String, dynamic> _userInfo;
+  List<Widget> _screens = [];Map<String, dynamic> _userInfo;
 
-  HomeScreen(this._userInfo);
-
-  @override
-  State<StatefulWidget> createState()
-  {
-    StrydeUserStorage.userExperience = new UserExperience(
-      this._userInfo["id"], this._userInfo["username"],
-      this._userInfo["password"], this._userInfo["goal"],
-      this._userInfo["experienceName"]
-    );
-
-    return HomeScreenState();
-  }
-}
-
-
-
-class HomeScreenState extends State
-{
-  // Variables
-  List<Widget> _screens = [];
-
-  HomeScreenState()
+  HomeScreen(this._userInfo)
   {
     this._screens = [
       WorkoutScheduleScreen(),
@@ -45,6 +23,12 @@ class HomeScreenState extends State
       //AllProgressGraphsScreen(),
       UserProfileScreen(),
     ];
+
+    StrydeUserStorage.userExperience = new UserExperience(
+      this._userInfo["id"], this._userInfo["username"],
+      this._userInfo["password"], this._userInfo["goal"],
+      this._userInfo["experienceName"]
+    );
   }
 
 

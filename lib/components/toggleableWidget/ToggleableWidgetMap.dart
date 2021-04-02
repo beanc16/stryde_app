@@ -1,4 +1,4 @@
-import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
+import 'ToggleableWidget.dart';
 
 
 class ToggleableWidgetMap<K>

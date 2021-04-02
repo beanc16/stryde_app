@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/toggleables/EmptyWidget.dart';
+import 'EmptyWidget.dart';
 
 
 class ToggleableWidget extends StatefulWidget

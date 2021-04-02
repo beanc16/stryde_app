@@ -5,12 +5,12 @@ import 'StartupScreen.dart';
 
 void main()
 {
-  runApp(MyApp());
+  runApp(Stryde());
 }
 
 
 
-class MyApp extends StatelessWidget
+class Stryde extends StatelessWidget
 {
   @override
   Widget build(BuildContext context)

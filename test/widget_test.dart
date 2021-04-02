@@ -7,14 +7,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-//import 'file:///C:/Users/cbean/Documents/Homework/MSJ/20-21%20(Fall)/Senior%20Research/Bean%20Senior%20Project%20-%20App/workout_buddy/lib/screens/loggedOut/main.dart';
-import 'file:///C:/Users/cbean/Documents/Homework/MSJ/20-21 (Fall)/Senior Research/Bean Senior Project - App/workout_buddy_web/lib/screens/loggedOut/main.dart';
+import 'package:workout_buddy/screens/loggedOut/main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(Stryde());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -7,7 +7,7 @@ import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStora
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
+import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
 import 'package:workout_buddy/utilities/NavigateTo.dart';

@@ -8,8 +8,8 @@ import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressInd
 import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeSuccessText.dart';
-import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
-import 'package:workout_buddy/components/toggleables/ToggleableWidgetMap.dart';
+import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
+import 'package:workout_buddy/components/toggleableWidget/ToggleableWidgetMap.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/UserExperience.dart';
 import 'package:workout_buddy/screens/loggedOut/StartupScreen.dart';
