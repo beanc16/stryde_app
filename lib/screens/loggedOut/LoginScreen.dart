@@ -57,7 +57,7 @@ class LoginScreenState extends State<LoginScreen>
     List<Widget> children = [
       getDefaultPadding(),
 
-      TextHeader1("Login", color: StrydeColors.darkGray),
+      TextHeader1(displayText: "Login", color: StrydeColors.darkGray),
       getDefaultPadding(),
 
       this._usernameInput,
@@ -80,7 +80,7 @@ class LoginScreenState extends State<LoginScreen>
     if (hasError)
     {
       children.addAll([
-        TextHeader2("Failed to login"),
+        TextHeader2(displayText: "Failed to login"),
         getDefaultPadding(),
       ]);
     }

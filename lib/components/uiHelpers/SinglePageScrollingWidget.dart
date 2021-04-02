@@ -6,13 +6,17 @@ class SinglePageScrollingWidget extends StatefulWidget
 {
   // Variable
   Widget _child;
-  final bool shouldKeepAlive;
+  bool _shouldKeepAlive;
+  double _marginAroundScreens;
 
   // Constructor
   SinglePageScrollingWidget({@required Widget child,
-                             this.shouldKeepAlive: true})
+                             shouldKeepAlive: true,
+                             double marginAroundScreens = 0})
   {
     this._child = child;
+    this._shouldKeepAlive = shouldKeepAlive;
+    this._marginAroundScreens = marginAroundScreens;
   }
 
 
@@ -20,7 +24,9 @@ class SinglePageScrollingWidget extends StatefulWidget
   @override
   State<StatefulWidget> createState()
   {
-    return SinglePageScrollingWidgetState(this._child, this.shouldKeepAlive);
+    return SinglePageScrollingWidgetState(this._child,
+                                          this._shouldKeepAlive,
+                                          this._marginAroundScreens);
   }
 }
 
@@ -33,9 +39,11 @@ class SinglePageScrollingWidgetState extends
   // Variable
   final Widget _child;
   final bool _shouldKeepAlive;
+  final double _marginAroundScreens;
 
   // Constructor
-  SinglePageScrollingWidgetState(this._child, this._shouldKeepAlive);
+  SinglePageScrollingWidgetState(this._child, this._shouldKeepAlive,
+                                 this._marginAroundScreens);
 
 
 
@@ -51,7 +59,10 @@ class SinglePageScrollingWidgetState extends
               minHeight: viewportConstraints.maxHeight,
             ),
 
-            child: this._child,
+            child: Container(
+              margin: EdgeInsets.all(_marginAroundScreens),
+              child: _child,
+            ),
           )
         );
       }

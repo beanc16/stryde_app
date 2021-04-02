@@ -32,7 +32,7 @@ class RegisterScreenState extends State<RegisterScreen>
   {
     _usernameInput = LabeledTextInputElement("Username", "Enter username");
     _passwordInput = LabeledTextInputElement.password("Password", "Enter password");
-    setHasError(false);
+    hasError = false;
   }
 
   @override
@@ -45,7 +45,7 @@ class RegisterScreenState extends State<RegisterScreen>
   {
     setState(()
     {
-      hasError = false;
+      this.hasError = hasError;
     });
   }
 
@@ -56,7 +56,7 @@ class RegisterScreenState extends State<RegisterScreen>
     List<Widget> children = [
       getDefaultPadding(),
 
-      TextHeader1("Register", color: StrydeColors.darkGray),
+      TextHeader1(displayText: "Register", color: StrydeColors.darkGray),
       getDefaultPadding(),
 
       this._usernameInput,
@@ -79,7 +79,7 @@ class RegisterScreenState extends State<RegisterScreen>
     if (hasError)
     {
       children.addAll([
-        TextHeader2("Failed to register"),
+        TextHeader2(displayText: "Failed to register"),
         getDefaultPadding(),
       ]);
     }

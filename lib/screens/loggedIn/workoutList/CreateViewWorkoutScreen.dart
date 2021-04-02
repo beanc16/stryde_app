@@ -140,7 +140,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
             Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(left: 10, right: 10),
-                  child: TextHeader2("Error loading workout"),
+                  child: TextHeader2(displayText: "Error loading workout"),
                 )
             ),
           ],

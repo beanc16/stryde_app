@@ -3,12 +3,18 @@ import 'package:flutter/material.dart';
 
 class TextHeader extends StatelessWidget
 {
-  final String _displayText;
-  final double _fontSize;
+  String _displayText;
+  double _fontSize;
   Color _color;
 
-  TextHeader(this._displayText, this._fontSize, {Color color})
+  TextHeader({
+    @required String displayText,
+    @required double fontSize,
+    Color color
+  })
   {
+    _displayText = displayText;
+    _fontSize = fontSize;
     _color = color;
   }
 
@@ -28,13 +34,19 @@ class TextHeader extends StatelessWidget
   }
 }
 
+
+
 class TextHeader1 extends StatelessWidget
 {
-  final String _displayText;
+  String _displayText;
   Color _color;
 
-  TextHeader1(this._displayText, {Color color})
+  TextHeader1({
+    @required String displayText,
+    Color color
+  })
   {
+    _displayText = displayText;
     _color = color;
   }
 
@@ -43,17 +55,27 @@ class TextHeader1 extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    return TextHeader(_displayText, 48, color: _color);
+    return TextHeader(
+      displayText: _displayText,
+      fontSize: 48,
+      color: _color,
+    );
   }
 }
 
+
+
 class TextHeader2 extends StatelessWidget
 {
-  final String _displayText;
+  String _displayText;
   Color _color;
 
-  TextHeader2(this._displayText, {Color color})
+  TextHeader2({
+    @required String displayText,
+    Color color
+  })
   {
+    _displayText = displayText;
     _color = color;
   }
 
@@ -62,6 +84,10 @@ class TextHeader2 extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    return TextHeader(_displayText, 36, color: _color);
+    return TextHeader(
+      displayText: _displayText,
+      fontSize: 36,
+      color: _color,
+    );
   }
 }

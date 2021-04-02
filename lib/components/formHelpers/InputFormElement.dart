@@ -79,6 +79,13 @@ class InputFormElement extends StatefulWidget
 
 
 
+  void setInputText(String str)
+  {
+    this.textEditingController.text = str;
+  }
+
+
+
   @override
   State<StatefulWidget> createState()
   {
@@ -122,12 +129,12 @@ class InputFormElementState extends State<InputFormElement>
       decoration: InputDecoration(
         hintText: this._placeholderText,
         hintStyle: TextStyle(
-          fontSize: this.placeholderTextSize.toDouble()
+          fontSize: this.placeholderTextSize.toDouble(),
         )
       ),
 
       style: TextStyle(
-        fontSize: this.inputTextSize.toDouble()
+        fontSize: this.inputTextSize.toDouble(),
       ),
       obscureText: _obscureText,
 

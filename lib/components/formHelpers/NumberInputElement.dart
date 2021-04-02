@@ -61,6 +61,13 @@ class LabeledNumberInputElement extends StatelessWidget
 
 
 
+  void setInputText(String str)
+  {
+    this.inputElement.setInputText(str);
+  }
+
+
+
   @override
   Widget build(BuildContext context)
   {
