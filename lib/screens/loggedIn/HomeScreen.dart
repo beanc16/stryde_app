@@ -13,22 +13,23 @@ import 'workoutSchedule/WorkoutScheduleScreen.dart';
 
 class HomeScreen extends StatelessWidget
 {
-  List<Widget> _screens = [];Map<String, dynamic> _userInfo;
+  List<Widget> _screens = [];
+  Map<String, dynamic> _userInfo;
 
   HomeScreen(this._userInfo)
   {
+    StrydeUserStorage.userExperience = new UserExperience(
+      this._userInfo["id"], this._userInfo["username"],
+      this._userInfo["password"], this._userInfo["goal"],
+      this._userInfo["experienceName"]
+    );
+
     this._screens = [
       WorkoutScheduleScreen(),
       WorkoutAndSupersetListScreen(),
       //AllProgressGraphsScreen(),
       UserProfileScreen(),
     ];
-
-    StrydeUserStorage.userExperience = new UserExperience(
-      this._userInfo["id"], this._userInfo["username"],
-      this._userInfo["password"], this._userInfo["goal"],
-      this._userInfo["experienceName"]
-    );
   }
 
 

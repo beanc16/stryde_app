@@ -31,10 +31,13 @@ class UserProfileScreen extends StatelessWidget
     _user = StrydeUserStorage.userExperience;
     _goalInput = LabeledTextInputElement.textArea("Goal", "Enter goal");
 
-    if (_user.goal != null)
+    if (_user != null)
     {
-      _goalInput.setInputText(_user.goal);
-      _curSavedGoal = _user.goal;
+      if (_user.goal != null)
+      {
+        _goalInput.setInputText(_user.goal);
+        _curSavedGoal = _user.goal;
+      }
     }
 
     _toggleableWidgets = ToggleableWidgetMap({
