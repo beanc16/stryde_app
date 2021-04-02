@@ -3,7 +3,7 @@ class UserExperience
   final int id;
   final String username;
   final String password;
-  final String goal;
+  String goal;
   final String experienceName;
 
   UserExperience(this.id, this.username, this.password, this.goal,

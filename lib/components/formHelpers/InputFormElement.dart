@@ -79,6 +79,11 @@ class InputFormElement extends StatefulWidget
 
 
 
+  String getInputText()
+  {
+    return this.textEditingController.text;
+  }
+
   void setInputText(String str)
   {
     this.textEditingController.text = str;

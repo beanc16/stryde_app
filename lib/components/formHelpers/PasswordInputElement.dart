@@ -49,6 +49,11 @@ class LabeledPasswordInputElement extends StatelessWidget
 
 
 
+  String getInputText()
+  {
+    return this.inputElement.getInputText();
+  }
+
   void setInputText(String str)
   {
     this.inputElement.setInputText(str);

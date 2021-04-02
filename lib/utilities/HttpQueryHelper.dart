@@ -15,14 +15,20 @@ class HttpQueryHelper
 
 
   static Future<void> get(String route,
-													{Function(dynamic) onSuccess,
-													 Function(dynamic) onFailure}) async
+													{Function() onBeforeQuery,
+													 Function(dynamic) onSuccess,
+													 Function(dynamic) onFailure,}) async
 	{
 		try
 		{
-			await tryInitializeUrls();
+			await _tryInitializeUrls();
 
 			Uri httpUri = Uri.http(url, route);
+
+			if (onBeforeQuery != null)
+			{
+				onBeforeQuery();
+			}
 
 			http.get(httpUri)
 				.then((http.Response response)
@@ -51,15 +57,21 @@ class HttpQueryHelper
   }
 
   static Future<void> post(String route, body,
-													 {Function(dynamic) onSuccess,
-														Function(dynamic) onFailure})
+													 {Function() onBeforeQuery,
+														Function(dynamic) onSuccess,
+														Function(dynamic) onFailure,})
   async
 	{
     try
 		{
-			await tryInitializeUrls();
+			await _tryInitializeUrls();
 
 			Uri httpUri = Uri.http(url, route);
+
+			if (onBeforeQuery != null)
+			{
+				onBeforeQuery();
+			}
 
 			http.post(httpUri, body: body)
 				.then((http.Response response)
@@ -89,7 +101,7 @@ class HttpQueryHelper
   
   
   
-  static Future tryInitializeUrls() async
+  static Future _tryInitializeUrls() async
 	{
 		// Don't run the rest of the function if everything is initialized
 		if (_envIsInitialized() && _urlIsInitialized())
