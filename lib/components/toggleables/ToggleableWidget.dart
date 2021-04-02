@@ -18,13 +18,13 @@ class ToggleableWidget extends StatefulWidget
     Widget loadingIndicator,
     bool showLoadingIndicatorOnLoading = true,
     bool isLoading = false,
-    bool hideAllChildren = false,
+    bool hideOnStartup = false,
   })
   {
     this._child = child;
     this._isLoading = isLoading;
     this._showLoadingIndicatorOnLoading = showLoadingIndicatorOnLoading;
-    this._hideAllChildren = hideAllChildren;
+    this._hideAllChildren = hideOnStartup;
 
     if (loadingIndicator == null)
     {
@@ -75,15 +75,40 @@ class ToggleableWidget extends StatefulWidget
     }
   }
 
+  void showChildAfter(Duration duration) async
+  {
+    await Future.delayed(duration);
+    showChild();
+  }
+
+  void showChildFor(Duration duration) async
+  {
+    showChild();
+    await Future.delayed(duration);
+    hideChildAndLoadingIcon();
+  }
+
   void showChild()
   {
     this._setIsLoading(false);
     this.showChildOrLoadingIcon();
   }
 
+  void hideChildAfter(Duration duration) async
+  {
+    await Future.delayed(duration);
+    hideChild();
+  }
+
   void hideChild()
   {
     this._setIsLoading(true);
+  }
+
+  void showLoadingIconAfter(Duration duration) async
+  {
+    await Future.delayed(duration);
+    showLoadingIcon();
   }
 
   void showLoadingIcon()
@@ -92,14 +117,32 @@ class ToggleableWidget extends StatefulWidget
     this.showChildOrLoadingIcon();
   }
 
+  void hideLoadingIconAfter(Duration duration) async
+  {
+    await Future.delayed(duration);
+    hideLoadingIcon();
+  }
+
   void hideLoadingIcon()
   {
     this._setIsLoading(false);
   }
 
+  void showChildOrLoadingIconAfter(Duration duration) async
+  {
+    await Future.delayed(duration);
+    showChildOrLoadingIcon();
+  }
+
   void showChildOrLoadingIcon()
   {
     this._setHideAllChildren(false);
+  }
+
+  void hideChildAndLoadingIconAfter(Duration duration) async
+  {
+    await Future.delayed(duration);
+    hideChildAndLoadingIcon();
   }
 
   void hideChildAndLoadingIcon()

@@ -5,6 +5,8 @@ import 'package:workout_buddy/components/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
 import 'package:workout_buddy/utilities/NavigateTo.dart';
@@ -27,26 +29,38 @@ class WorkoutListState extends State<WorkoutListScreen> with
     AutomaticKeepAliveClientMixin<WorkoutListScreen>
 {
   List<Workout> _workouts;
-  bool _isLoading;
-  bool _hasError;
-  Center _loadingIcon;
   ListView _listView;
+  ToggleableWidget _loadingErrorMsg;
 
   @override
   void initState()
   {
-    _isLoading = false;
-    _hasError = false;
+    super.initState();
     _workouts = [];
-
-    _loadingIcon = getCircularProgressIndicatorCentered();
-
-    _fetchWorkouts();
+    _loadingErrorMsg = _getLoadingErrorMsg();
   }
+
+  ToggleableWidget _getLoadingErrorMsg()
+  {
+    return ToggleableWidget(
+      isLoading: true,
+      loadingIndicator: StrydeProgressIndicator(),
+
+      child: Text(
+        "Error loading exercises",
+        style: TextStyle(
+          color: StrydeColors.darkRedError,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+
 
   void _fetchWorkouts() async
   {
-    setIsLoading(true);
+    _loadingErrorMsg.showLoadingIcon();
     resetWorkouts();
 
     if (StrydeUserStorage.workouts != null)
@@ -54,8 +68,8 @@ class WorkoutListState extends State<WorkoutListScreen> with
       this._workouts = StrydeUserStorage.workouts;
       _setListView();
 
-      setIsLoading(false);
-      setHasError(false);
+      // Hide loading icon & error msg
+      _loadingErrorMsg.hideChildAndLoadingIcon();
     }
 
     else
@@ -63,9 +77,9 @@ class WorkoutListState extends State<WorkoutListScreen> with
       // Get all workouts created by the current user
       HttpQueryHelper.get(
         "/user/workouts/" + StrydeUserStorage.userExperience
-            .id.toString(),
-        onSuccess: (dynamic response) => _onGetWorkoutsSuccess(response["_results"]),
-        onFailure: (dynamic response) => _onGetWorkoutsFail(response)
+                                             .id.toString(),
+        onSuccess: (response) => _onGetWorkoutsSuccess(response["_results"]),
+        onFailure: (response) => _onGetWorkoutsFail(response)
       );
     }
   }
@@ -86,16 +100,17 @@ class WorkoutListState extends State<WorkoutListScreen> with
     // Send models to listview
     _setListView();
 
-    setIsLoading(false);
-    setHasError(false);
+    // Hide loading icon & error msg
+    _loadingErrorMsg.hideChildAndLoadingIcon();
   }
 
   void _onGetWorkoutsFail(dynamic results)
   {
-    print("_onGetWorkoutsFail:\n" + results.toString());
+    // Show error message
+    _loadingErrorMsg.hideLoadingIcon();
+    _loadingErrorMsg.showChild();
 
-    setIsLoading(false);
-    setHasError(true);
+    print("_onGetWorkoutsFail:\n" + results.toString());
   }
 
   void _convertWorkoutResults(List<dynamic> nonEmptyWorkouts,
@@ -120,22 +135,6 @@ class WorkoutListState extends State<WorkoutListScreen> with
   }
 
 
-
-  void setIsLoading(bool isLoading)
-  {
-    setState(()
-    {
-      this._isLoading = isLoading;
-    });
-  }
-
-  void setHasError(bool hasError)
-  {
-    setState(()
-    {
-      this._hasError = hasError;
-    });
-  }
 
   void resetWorkouts()
   {
@@ -178,7 +177,6 @@ class WorkoutListState extends State<WorkoutListScreen> with
   {
     return ListTile(
       contentPadding: EdgeInsets.all(5),
-      //tileColor: StrydeColors.lightGray,
       title: Padding(
         padding: EdgeInsets.only(left: 5),
         child: Text(
@@ -214,14 +212,12 @@ class WorkoutListState extends State<WorkoutListScreen> with
 
   Widget _getWidgetToDisplay()
   {
-    if (_isLoading)
+    if (_loadingErrorMsg.childOrLoadingIconIsVisible())
     {
-      return _loadingIcon;
-    }
-
-    else if (_hasError)
-    {
-      return Text("Error loading workouts");
+      return Container(
+        margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+        child: _loadingErrorMsg,
+      );
     }
 
     else
@@ -265,6 +261,7 @@ class WorkoutListState extends State<WorkoutListScreen> with
   @override
   Widget build(BuildContext context)
   {
+    _fetchWorkouts();
     return _getWidgetToDisplay();
   }
 

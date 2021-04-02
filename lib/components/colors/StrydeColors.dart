@@ -9,4 +9,8 @@ class StrydeColors
   static const Color purple = Color.fromRGBO(139, 64, 230, 1);
   static const Color lightGray = Color.fromRGBO(146, 148, 174, 1);
   static const Color darkGray = Color.fromRGBO(109, 110, 131, 1);
+
+  // Miscellaneous
+  static const Color darkRedError = Color.fromRGBO(139, 0, 0, 1);
+  static const Color darkGreenSuccess = Color.fromRGBO(0, 139, 0, 1);
 }

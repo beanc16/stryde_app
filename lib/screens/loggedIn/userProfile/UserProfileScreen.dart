@@ -7,6 +7,7 @@ import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
+import 'package:workout_buddy/components/toggleables/ToggleableWidgetMap.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/UserExperience.dart';
 import 'package:workout_buddy/screens/loggedOut/StartupScreen.dart';
@@ -20,9 +21,7 @@ class UserProfileScreen extends StatelessWidget
 {
   UserExperience _user;
   LabeledTextInputElement _goalInput;
-  ToggleableWidget _goalSuccessMessage;
-  ToggleableWidget _goalQueryErrorMessage;
-  ToggleableWidget _goalValidationErrorMessage;
+  ToggleableWidgetMap<String> _toggleableWidgets;
   String _curSavedGoal = "";
 
   UserProfileScreen()
@@ -36,9 +35,11 @@ class UserProfileScreen extends StatelessWidget
       _curSavedGoal = _user.goal;
     }
 
-    _goalSuccessMessage = _getGoalSuccessMessage();
-    _goalQueryErrorMessage = _getGoalQueryErrorMessage();
-    _goalValidationErrorMessage = _getGoalValidationErrorMessage();
+    _toggleableWidgets = ToggleableWidgetMap({
+      "successMsg": _getGoalSuccessMessage(),
+      "queryErrorMsg": _getGoalQueryErrorMessage(),
+      "validationErrorMsg": _getGoalValidationErrorMessage(),
+    });
   }
 
 
@@ -46,7 +47,7 @@ class UserProfileScreen extends StatelessWidget
   ToggleableWidget _getGoalSuccessMessage()
   {
     return ToggleableWidget(
-      hideAllChildren: true,
+      hideOnStartup: true,
 
       loadingIndicator: Column(
         children: [
@@ -60,7 +61,7 @@ class UserProfileScreen extends StatelessWidget
           Text(
             "Goal Successfully Saved",
             style: TextStyle(
-              color: Color.fromRGBO(0, 139, 0, 1),  // Dark green
+              color: StrydeColors.darkGreenSuccess,
               fontSize: 16,
             ),
           ),
@@ -73,7 +74,7 @@ class UserProfileScreen extends StatelessWidget
   ToggleableWidget _getGoalQueryErrorMessage()
   {
     return ToggleableWidget(
-      hideAllChildren: true,
+      hideOnStartup: true,
       showLoadingIndicatorOnLoading: false,
 
       child: Column(
@@ -81,7 +82,7 @@ class UserProfileScreen extends StatelessWidget
           Text(
             "Goal Failed to Save",
             style: TextStyle(
-              color: Color.fromRGBO(139, 0, 0, 1),  // Dark red
+              color: StrydeColors.darkRedError,
               fontSize: 16,
             ),
           ),
@@ -94,7 +95,7 @@ class UserProfileScreen extends StatelessWidget
   ToggleableWidget _getGoalValidationErrorMessage()
   {
     return ToggleableWidget(
-      hideAllChildren: true,
+      hideOnStartup: true,
       showLoadingIndicatorOnLoading: false,
 
       child: Column(
@@ -102,7 +103,7 @@ class UserProfileScreen extends StatelessWidget
           Text(
             "Must change goal before saving",
             style: TextStyle(
-              color: Color.fromRGBO(139, 0, 0, 1),  // Dark red
+              color: StrydeColors.darkRedError,
               fontSize: 16,
             ),
           ),
@@ -145,41 +146,42 @@ class UserProfileScreen extends StatelessWidget
 
   void _onBeforeSaveGoal()
   {
-    _goalQueryErrorMessage.hideChildAndLoadingIcon();
-    _goalValidationErrorMessage.hideChildAndLoadingIcon();
-    _goalSuccessMessage.showLoadingIcon();
+    _toggleableWidgets.hideChildAndLoadingIcon("queryErrorMsg");
+    _toggleableWidgets.hideChildAndLoadingIcon("validationErrorMsg");
+    _toggleableWidgets.showLoadingIcon("successMsg");
   }
 
   void _onSaveGoalSuccess(dynamic response) async
   {
     // Display success message
-    _goalSuccessMessage.showChild();
+    _toggleableWidgets.showChild("successMsg");
 
     // Update local storage of goal
     StrydeUserStorage.userExperience.goal = this._goalInput.getInputText();
     _curSavedGoal = this._goalInput.getInputText();
 
     // Hide success msg after the given number of seconds
-    await Future.delayed(const Duration(seconds: 3));
-    _goalSuccessMessage.hideChildAndLoadingIcon();
+    _toggleableWidgets.hideChildAndLoadingIconAfter(
+      "successMsg", const Duration(seconds: 3)
+    );
   }
 
   void _onSaveGoalFail(dynamic response)
   {
-    _goalSuccessMessage.hideChildAndLoadingIcon();
-    _goalQueryErrorMessage.showChild();
-    print("Failed to save goal:\n" + response.toString());
+    _toggleableWidgets.hideChildAndLoadingIcon("successMsg");
+    _toggleableWidgets.showChild("queryErrorMsg");
   }
 
   void _onValidationFail() async
   {
-    _goalSuccessMessage.hideChildAndLoadingIcon();
-    _goalQueryErrorMessage.hideChildAndLoadingIcon();
-    _goalValidationErrorMessage.showChild();
+    _toggleableWidgets.hideChildAndLoadingIcon("successMsg");
+    _toggleableWidgets.hideChildAndLoadingIcon("queryErrorMsg");
+    _toggleableWidgets.showChild("validationErrorMsg");
 
     // Hide error msg after the given number of seconds
-    await Future.delayed(const Duration(seconds: 3));
-    _goalValidationErrorMessage.hideChildAndLoadingIcon();
+    _toggleableWidgets.hideChildAndLoadingIconAfter(
+      "validationErrorMsg", const Duration(seconds: 3)
+    );
   }
 
   void _logOut(BuildContext context)
@@ -212,9 +214,10 @@ class UserProfileScreen extends StatelessWidget
           _goalInput,
           getDefaultPadding(),
 
-          _goalSuccessMessage,
-          _goalQueryErrorMessage,
-          _goalValidationErrorMessage,
+          // successMsg, queryErrorMsg, validationErrorMsg
+          _toggleableWidgets.get("successMsg"),
+          _toggleableWidgets.get("queryErrorMsg"),
+          _toggleableWidgets.get("validationErrorMsg"),
 
           StrydeButton(
             displayText: "Save Goal",

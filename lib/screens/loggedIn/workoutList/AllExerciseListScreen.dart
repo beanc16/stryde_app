@@ -6,6 +6,9 @@ import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/listViews/searchableListView/SearchableListView.dart';
 import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
@@ -27,30 +30,41 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 {
   List<Exercise> _exercises;
   List<String> _listTileDisplayText;
-  bool _isLoading;
-  bool _hasError;
-  Center _loadingIcon;
+  ToggleableWidget _loadingErrorMsg;
   List<Map< String, dynamic>> _selectedExercises;
 
   @override
   void initState()
   {
-    _isLoading = false;
-    _hasError = false;
+    super.initState();
+
     _exercises = [];
     _listTileDisplayText = [];
     _selectedExercises = [];
+    _loadingErrorMsg = _getLoadingErrorMsg();
+  }
 
-    _loadingIcon = getCircularProgressIndicatorCentered();
+  ToggleableWidget _getLoadingErrorMsg()
+  {
+    return ToggleableWidget(
+      isLoading: true,
+      loadingIndicator: StrydeProgressIndicator(),
 
-    _fetchExercises();
+      child: Text(
+        "Error loading exercises",
+        style: TextStyle(
+          color: StrydeColors.darkRedError,
+          fontSize: 16,
+        ),
+      ),
+    );
   }
 
 
 
   void _fetchExercises() async
   {
-    setIsLoading(true);
+    _loadingErrorMsg.showLoadingIcon();
 
     if (StrydeUserStorage.allExercises != null)
     {
@@ -59,8 +73,8 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       // Convert _exercises to _listTileDisplayText
       _listTileDisplayText = _exercises.map((e) => e.name).toList();
 
-      setIsLoading(false);
-      setHasError(false);
+      // Hide loading icon & error msg
+      _loadingErrorMsg.hideChildAndLoadingIcon();
     }
 
     else
@@ -83,18 +97,22 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     StrydeUserStorage.allExercises = this._exercises;
 
     // Convert _exercises to _listTileDisplayText
-    _listTileDisplayText = _exercises.map((e) => e.name).toList();
+    setState(()
+    {
+      _listTileDisplayText = _exercises.map((e) => e.name).toList();
+    });
 
-    setIsLoading(false);
-    setHasError(false);
+    // Hide loading icon & error msg
+    _loadingErrorMsg.hideChildAndLoadingIcon();
   }
 
   void _onGetExercisesFail(dynamic results)
   {
-    print("_onGetExercisesFail:\n" + results.toString());
+    // Show error message
+    _loadingErrorMsg.hideLoadingIcon();
+    _loadingErrorMsg.showChild();
 
-    setIsLoading(false);
-    setHasError(true);
+    print("_onGetExercisesFail:\n" + results.toString());
   }
 
   void _convertExerciseResults(List<dynamic> exerciseList)
@@ -132,34 +150,14 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
 
 
-  void setIsLoading(bool isLoading)
-  {
-    setState(()
-    {
-      this._isLoading = isLoading;
-    });
-  }
-
-  void setHasError(bool hasError)
-  {
-    setState(()
-    {
-      this._hasError = hasError;
-    });
-  }
-
-
-
   Widget _getWidgetToDisplay()
   {
-    if (_isLoading)
+    if (_loadingErrorMsg.childOrLoadingIconIsVisible())
     {
-      return _loadingIcon;
-    }
-
-    else if (_hasError)
-    {
-      return Text("Error loading exercises");
+      return Container(
+        margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+        child: _loadingErrorMsg,
+      );
     }
 
     else
@@ -168,22 +166,10 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       {
         return Container(
           margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: SearchableListView(
-            // Text
-            _listTileDisplayText,
-            textColor: StrydeColors.darkGray,
-            textSize: 20,
-            searchBarPlaceholderText: "Search exercises...",
-
-            // Border
-            borderColor: StrydeColors.darkBlue,
-            borderWidth: 2,
-
-            // Miscellaneous
-            spaceBetweenTiles: 15,
-            onTapListTile: (context, index) =>
-                _onTapExerciseListTile(context, index),
-            onTapColor: StrydeColors.lightBlue,
+          child: StrydeExerciseSearchableListView(
+            listTileDisplayText: _listTileDisplayText,
+            onTapListTile: (BuildContext context, int index) =>
+                                _onTapExerciseListTile(context, index),
           )
         );
       }
@@ -192,13 +178,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       {
         return Container(
           margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: Column(
-            children: [
-              getDefaultPadding(),
-
-              LabelTextElement("No exercises...")
-            ],
-          )
+          child: LabelTextElement("No exercises..."),
         );
       }
     }
@@ -219,6 +199,8 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   @override
   Widget build(BuildContext context)
   {
+    _fetchExercises();
+
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "Add Exercise"),
       body: _getWidgetToDisplay()
