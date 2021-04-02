@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/buttons/StrydeButton.dart';
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
@@ -178,11 +177,14 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                   children: [
                     Flexible(
                       flex: 2,
-                      child: getRaisedButton("Add", 14, ()
-                      {
-                        NavigateTo.screen(context, () => AllExerciseListScreen());
-                      }, buttonColor: StrydeColors.purple,
-                         textColor: Colors.white),
+                      child: StrydeButton(
+                        displayText: "Add",
+                        textSize: 14,
+                        onTap: () =>
+                            NavigateTo.screen(
+                                context, () => AllExerciseListScreen()
+                            ),
+                      ),
                     ),
                     Flexible(
                       flex: 1,

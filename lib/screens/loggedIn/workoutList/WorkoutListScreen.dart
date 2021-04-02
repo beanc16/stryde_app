@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:workout_buddy/components/buttons/StrydeButton.dart';
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/listViews/searchableListView/SearchableListView.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 
 
 class StrydeExerciseSearchableListView extends SearchableListView

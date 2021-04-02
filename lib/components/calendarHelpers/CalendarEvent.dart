@@ -1,7 +1,5 @@
 import 'dart:ui';
-
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
-
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 
 
 class CalendarEvent

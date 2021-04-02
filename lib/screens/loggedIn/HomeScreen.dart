@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/uiHelpers/MultiPageScrollingWidget.dart';
 import 'package:workout_buddy/models/UserExperience.dart';
 import 'package:workout_buddy/screens/loggedIn/progressGraphs/AllProgressGraphsScreen.dart';

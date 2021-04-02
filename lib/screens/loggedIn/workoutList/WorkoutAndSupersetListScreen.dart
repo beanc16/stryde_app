@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:workout_buddy/components/uiHelpers/TabMenuMultiPageScrollingWidget.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/WorkoutListScreen.dart';
 import 'SupersetListScreen.dart';

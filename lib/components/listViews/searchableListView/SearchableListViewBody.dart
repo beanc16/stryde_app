@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
 import 'SearchableListTile.dart';
 
 class SearchableListViewBody extends StatefulWidget

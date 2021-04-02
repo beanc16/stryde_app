@@ -1,17 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/listViews/searchableListView/SearchableListView.dart';
-import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/strydeHelpers/StrydeUserStorage.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
 import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
 
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:workout_buddy/components/listViews/ListViewCard.dart';
 import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
-import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/utilities/NavigateTo.dart';

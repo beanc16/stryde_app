@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:workout_buddy/components/colors/StrydeColors.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 
 
 class StrydeAppBar extends AppBar

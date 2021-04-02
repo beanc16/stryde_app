@@ -1,9 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
-
-import 'SinglePageScrollingWidget.dart';
 
 
 class TabMenuMultiPageScrollingWidget extends StatefulWidget
