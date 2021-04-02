@@ -7,6 +7,7 @@ import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStora
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
@@ -47,14 +48,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     return ToggleableWidget(
       isLoading: true,
       loadingIndicator: StrydeProgressIndicator(),
-
-      child: Text(
-        "Error loading exercises",
-        style: TextStyle(
-          color: StrydeColors.darkRedError,
-          fontSize: 16,
-        ),
-      ),
+      child: StrydeErrorText(displayText: "Error loading exercises"),
     );
   }
 

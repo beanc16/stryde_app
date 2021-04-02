@@ -4,6 +4,7 @@ import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidgetMap.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
@@ -39,13 +40,7 @@ class LoginScreen extends StatelessWidget
 
       child: Column(
         children: [
-          Text(
-            "Login failed",
-            style: TextStyle(
-              color: StrydeColors.darkRedError,
-              fontSize: 16,
-            ),
-          ),
+          StrydeErrorText(displayText: "Login failed"),
           getDefaultPadding(),
         ],
       ),
@@ -68,13 +63,8 @@ class LoginScreen extends StatelessWidget
 
       child: Column(
         children: [
-          Text(
-            "Please enter a username & password",
-            style: TextStyle(
-              color: StrydeColors.darkRedError,
-              fontSize: 16,
-            ),
-          ),
+          StrydeErrorText(displayText: "Please enter a username " +
+                                       "& password"),
           getDefaultPadding(),
         ],
       ),

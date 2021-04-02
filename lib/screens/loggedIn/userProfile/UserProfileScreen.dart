@@ -6,6 +6,8 @@ import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.da
 import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeSuccessText.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidget.dart';
 import 'package:workout_buddy/components/toggleables/ToggleableWidgetMap.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
@@ -58,13 +60,7 @@ class UserProfileScreen extends StatelessWidget
 
       child: Column(
         children: [
-          Text(
-            "Goal Successfully Saved",
-            style: TextStyle(
-              color: StrydeColors.darkGreenSuccess,
-              fontSize: 16,
-            ),
-          ),
+          StrydeSuccessText(displayText: "Goal Successfully Saved"),
           getDefaultPadding(),
         ],
       ),
@@ -79,13 +75,7 @@ class UserProfileScreen extends StatelessWidget
 
       child: Column(
         children: [
-          Text(
-            "Goal Failed to Save",
-            style: TextStyle(
-              color: StrydeColors.darkRedError,
-              fontSize: 16,
-            ),
-          ),
+          StrydeErrorText(displayText: "Goal Failed to Save"),
           getDefaultPadding(),
         ],
       ),
@@ -100,13 +90,8 @@ class UserProfileScreen extends StatelessWidget
 
       child: Column(
         children: [
-          Text(
-            "Must change goal before saving",
-            style: TextStyle(
-              color: StrydeColors.darkRedError,
-              fontSize: 16,
-            ),
-          ),
+          StrydeErrorText(displayText: "Must change goal before " +
+                                       "saving"),
           getDefaultPadding(),
         ],
       ),
