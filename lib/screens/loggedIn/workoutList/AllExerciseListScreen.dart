@@ -1,15 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:workout_buddy/components/tagDisplay/MultiTagDisplay.dart';
 import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
@@ -33,20 +31,22 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   List<String> _listTileDisplayText;
   ToggleableWidget _loadingErrorMsg;
   List<Map< String, dynamic>> _selectedExercises;
-
-  AllExerciseListState()
-  {
-    _loadingErrorMsg = _getLoadingErrorMsg();
-  }
+  StrydeMultiTagDisplay _selectExercisesTagDisplay;
 
   @override
   void initState()
   {
     super.initState();
 
+    _loadingErrorMsg = _getLoadingErrorMsg();
     _exercises = [];
     _listTileDisplayText = [];
     _selectedExercises = [];
+    _selectExercisesTagDisplay = StrydeMultiTagDisplay(
+      displayText: [],
+      onDeleteTag: (int index, String displayStr) =>
+                          _onDeselectExerciseTag(index, displayStr),
+    );
   }
 
   ToggleableWidget _getLoadingErrorMsg()
@@ -164,10 +164,20 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       {
         return Container(
           margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: StrydeExerciseSearchableListView(
-            listTileDisplayText: _listTileDisplayText,
-            onTapListTile: (BuildContext context, int index) =>
-                                _onTapExerciseListTile(context, index),
+          child: Column(
+            children: [
+              Expanded(
+                child: StrydeExerciseSearchableListView(
+                  listTileDisplayText: _listTileDisplayText,
+                  onTapListTile: (BuildContext context, int index) =>
+                                  _onTapExerciseListTile(context, index),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(bottom: 15),
+                child: _selectExercisesTagDisplay,
+              ),
+            ]
           )
         );
       }
@@ -182,14 +192,29 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     }
   }
 
+
+
   void _onTapExerciseListTile(BuildContext context, int index)
   {
-    _selectedExercises.add({
-      "exercise": _exercises[index],
-      "displayText": _listTileDisplayText[index],
+    setState(()
+    {
+      _selectedExercises.add({
+        "exercise": _exercises[index],
+        "displayText": _listTileDisplayText[index],
+      });
+
+      _selectExercisesTagDisplay.addTag(_listTileDisplayText[index]);
     });
 
     print("\n\n_selectedExercises: " + _selectedExercises.toString());
+  }
+
+  void _onDeselectExerciseTag(int index, String displayStr)
+  {
+    setState(()
+    {
+      _selectedExercises.removeAt(index);
+    });
   }
 
 
@@ -201,7 +226,6 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "Add Exercise"),
-      //body: _getWidgetToDisplay()
       body: _getWidgetToDisplay(),
     );
   }

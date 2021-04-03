@@ -15,6 +15,7 @@ class MultiTagDisplay extends StatefulWidget
   CrossAxisAlignment _crossAxisAlignment;
   MultiTagDisplayAs _displayAsEnum;
   Function(int, String) _onDeleteTag;
+  MultiTagDisplayState state;
 
   MultiTagDisplay({
     @required List<String> displayText,
@@ -41,16 +42,27 @@ class MultiTagDisplay extends StatefulWidget
 
 
 
+  void addTag(String displayStr)
+  {
+    if (this.state != null)
+    {
+      this.state.addTag(displayStr);
+    }
+  }
+
+
+
   @override
   State<StatefulWidget> createState()
   {
-    return MultiTagDisplayState(this._displayText, this._tagColor,
-                                this._textColor, this._deleteIconColor,
-                                this._spaceBetweenTags,
-                                this._mainAxisAlignment,
-                                this._crossAxisAlignment,
-                                this._displayAsEnum,
-                                this._onDeleteTag);
+    this.state = MultiTagDisplayState(
+      this._displayText, this._tagColor, this._textColor,
+      this._deleteIconColor, this._spaceBetweenTags,
+      this._mainAxisAlignment, this._crossAxisAlignment,
+      this._displayAsEnum, this._onDeleteTag
+    );
+
+    return this.state;
   }
 }
 
@@ -134,6 +146,37 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
         children: _tags,
       );
     }
+  }
+
+
+
+  void addTag(String displayStr)
+  {
+    EdgeInsets padding;
+
+    if (_displayAsEnum == MultiTagDisplayAs.Row)
+    {
+      padding = EdgeInsets.only(left: _spaceBetweenTags);
+    }
+    else if (_displayAsEnum == MultiTagDisplayAs.Column)
+    {
+      padding = EdgeInsets.only(top: _spaceBetweenTags);
+    }
+
+    setState(()
+    {
+      _displayText.add(displayStr);
+      _tags.add(Padding(
+        padding: padding,
+        child: Tag(
+          displayText: displayStr,
+          tagColor: _tagColor,
+          textColor: _textColor,
+          onDeleted: () => _onDeleteTag(displayStr),
+          deleteIconColor: _deleteIconColor,
+        )
+      ));
+    });
   }
 
 

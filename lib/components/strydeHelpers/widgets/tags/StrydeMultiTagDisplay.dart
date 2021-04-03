@@ -18,5 +18,6 @@ class StrydeMultiTagDisplay extends MultiTagDisplay
         deleteIconColor: Color.fromRGBO(255, 255, 255, 0.75), // Transparent white
         mainAxisAlignment: MainAxisAlignment.start,
         onDeleteTag: onDeleteTag,
+        spaceBetweenTags: 15,
       );
 }

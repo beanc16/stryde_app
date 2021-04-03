@@ -85,13 +85,6 @@ class LoginScreen extends StatelessWidget
   List<Widget> _getChildren(BuildContext context)
   {
     List<Widget> children = [
-      StrydeMultiTagDisplay(
-        displayText: [
-          "Tag 1",
-          "Tag 2",
-          "Tag 3",
-        ],
-      ),
       getDefaultPadding(),
 
       TextHeader1(displayText: "Login", color: StrydeColors.darkGray),

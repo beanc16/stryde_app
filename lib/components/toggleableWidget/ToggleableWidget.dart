@@ -50,14 +50,9 @@ class ToggleableWidget extends StatefulWidget
     if (_state != null)
     {
       this._state.setIsLoading(isLoading);
-      this._isLoading = isLoading;
     }
 
-    else
-    {
-      print("\nWARNING: Tried to call _setIsLoading on a " +
-            "ToggleableWidget with an uninitialized state\n");
-    }
+    this._isLoading = isLoading;
   }
 
   void _setHideAllChildren(bool shouldHideAllChildren)
@@ -65,14 +60,9 @@ class ToggleableWidget extends StatefulWidget
     if (_state != null)
     {
       this._state.setHideAllChildren(shouldHideAllChildren);
-      this._hideAllChildren = shouldHideAllChildren;
     }
 
-    else
-    {
-      print("\nWARNING: Tried to call _setHideAllChildren on a " +
-                "ToggleableWidget with an uninitialized state\n");
-    }
+    this._hideAllChildren = shouldHideAllChildren;
   }
 
   void showChildAfter(Duration duration) async

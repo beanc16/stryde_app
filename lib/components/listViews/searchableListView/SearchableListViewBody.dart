@@ -91,6 +91,7 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
 
       child: ListView.separated(
         shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
         separatorBuilder: (BuildContext context, int index)
         {
           return Padding(
