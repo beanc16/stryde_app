@@ -4,7 +4,10 @@ import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:workout_buddy/components/tagDisplay/MultiTagDisplay.dart';
+import 'package:workout_buddy/components/tagDisplay/MultiTagDisplayAs.dart';
 import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
 import 'package:workout_buddy/components/toggleableWidget/ToggleableWidgetMap.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
@@ -82,6 +85,13 @@ class LoginScreen extends StatelessWidget
   List<Widget> _getChildren(BuildContext context)
   {
     List<Widget> children = [
+      StrydeMultiTagDisplay(
+        displayText: [
+          "Tag 1",
+          "Tag 2",
+          "Tag 3",
+        ],
+      ),
       getDefaultPadding(),
 
       TextHeader1(displayText: "Login", color: StrydeColors.darkGray),

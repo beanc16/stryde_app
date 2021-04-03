@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:workout_buddy/components/tagDisplay/MultiTagDisplay.dart';
 import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
@@ -31,6 +34,11 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   ToggleableWidget _loadingErrorMsg;
   List<Map< String, dynamic>> _selectedExercises;
 
+  AllExerciseListState()
+  {
+    _loadingErrorMsg = _getLoadingErrorMsg();
+  }
+
   @override
   void initState()
   {
@@ -39,7 +47,6 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     _exercises = [];
     _listTileDisplayText = [];
     _selectedExercises = [];
-    _loadingErrorMsg = _getLoadingErrorMsg();
   }
 
   ToggleableWidget _getLoadingErrorMsg()
@@ -194,7 +201,8 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "Add Exercise"),
-      body: _getWidgetToDisplay()
+      //body: _getWidgetToDisplay()
+      body: _getWidgetToDisplay(),
     );
   }
 }

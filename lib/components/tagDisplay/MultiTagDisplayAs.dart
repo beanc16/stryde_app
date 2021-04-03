@@ -1,0 +1,5 @@
+enum MultiTagDisplayAs
+{
+  Column,
+  Row,
+}
