@@ -189,7 +189,20 @@ class AllExerciseListState extends State<AllExerciseListScreen>
               ),
               Container(
                 margin: EdgeInsets.only(bottom: 15),
-                child: _selectExercisesTagDisplay,
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    LabelTextElement(
+                      "Selected Exercises",
+                      labelTextSize: 14,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: _selectExercisesTagDisplay,
+                    ),
+                  ],
+                ),
               ),
             ]
           )
