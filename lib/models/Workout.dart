@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'Superset.dart';
 
@@ -15,11 +16,18 @@ class Workout
   bool isReorderable = true;
 
   Workout(this.name, this.exercisesAndSupersets,
-          {int workoutId, int userId, String description})
+          {int workoutId,
+           int userId = -1,
+           String description = ""})
   {
     this.workoutId = workoutId;
     this.userId = userId;
     this.description = description;
+
+    if (userId == -1)
+    {
+      this.userId = StrydeUserStorage.userExperience.id;
+    }
   }
 
   Workout.notReorderable(this.name, this.exercisesAndSupersets,
@@ -30,6 +38,32 @@ class Workout
     this.workoutId = workoutId;
     this.userId = userId;
     this.description = description;
+  }
+
+
+
+  void addExerciseOrSuperset(Object obj)
+  {
+    if (obj is Exercise || obj is Superset)
+    {
+      this.exercisesAndSupersets.add(obj);
+    }
+
+    else
+    {
+      String objTypeStr = obj.runtimeType.toString();
+      print("\nWARNING: Tried to add an object of type " + objTypeStr +
+            " to a workout. But, only Exercises and Supersets can" +
+            " be added.");
+    }
+  }
+
+  void addExercisesOrSupersets(List<Object> objs)
+  {
+    for (int i = 0; i < objs.length; i++)
+    {
+      this.addExerciseOrSuperset(objs[i]);
+    }
   }
 
 
@@ -109,24 +143,38 @@ class Workout
 
   ListView getAsListView()
   {
-    List<Widget> exercisesAndSupersetsListViewCardsAndHeaders = this.getAsWidgets();
+    List<Widget> exercisesAndSupersetsListViewCardsAndHeaders =
+      this.getAsWidgets();
+    print("exercisesAndSupersetsListViewCardsAndHeaders: " +
+              exercisesAndSupersetsListViewCardsAndHeaders.toString());
 
     if (exercisesAndSupersetsListViewCardsAndHeaders.length == 0)
     {
-      List<Widget> emptyWorkoutList = [];
-
+      print("length is 0");
       return ListView(
         key: Key(this.name),
-        children: emptyWorkoutList,
+        children: [],
         shrinkWrap: true,
       );
     }
+    print("length is NOT 0 (good news)");
 
+    return ListView.builder(
+      //key: Key(this.name),
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int index)
+      {
+        return exercisesAndSupersetsListViewCardsAndHeaders[index];
+      }
+    );
+
+    /*
     return ListView(
       key: Key(this.name),
       children: exercisesAndSupersetsListViewCardsAndHeaders,
       shrinkWrap: true,
     );
+     */
   }
 
 

@@ -285,6 +285,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
                   onPressed: (()
                   {
                     Workout newWorkout = getListViewAsWorkout();
+                    newWorkout.isReorderable = false;
                     print(newWorkout.toString());
 
                     // TODO: Test if the workout has changed

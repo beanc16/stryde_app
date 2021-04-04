@@ -168,7 +168,7 @@ class ListViewCardState extends State<ListViewCard>
             Flexible(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
+                children: [
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     alignment: Alignment.topLeft,
@@ -179,6 +179,7 @@ class ListViewCardState extends State<ListViewCard>
                       maxLines: 5,
                     ),
                   ),
+                  /*
                   Container(
                     padding: const EdgeInsets.all(8.0),
                     alignment: Alignment.topLeft,
@@ -192,6 +193,7 @@ class ListViewCardState extends State<ListViewCard>
                       maxLines: 5,
                     ),
                   ),
+                  */
                 ],
               ),
             ),

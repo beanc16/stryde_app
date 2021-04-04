@@ -19,6 +19,20 @@ class NavigateTo
     );
   }
 
+  static Future<dynamic> screenReturnsData(BuildContext context,
+                                           Function() route) async
+  {
+    return await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context)
+        {
+          return route();
+        }
+      )
+    );
+  }
+
   // Go to a screen w/ a back button & run callback
   static void screenThen(BuildContext context,
                          Function() route,
@@ -75,6 +89,12 @@ class NavigateTo
   static void previousScreen(BuildContext context)
   {
     Navigator.pop(context);
+  }
+
+  static void previousScreenWithData(BuildContext context,
+                                     dynamic data)
+  {
+    Navigator.pop(context, data);
   }
 
   static void previousScreenThen(BuildContext context,

@@ -5,6 +5,7 @@ import 'package:workout_buddy/components/formHelpers/TextElements.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
+import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
 import 'package:workout_buddy/utilities/NavigateTo.dart';
@@ -44,37 +45,42 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   Workout workout;
   LabeledTextInputElement _titleInput;
   LabeledTextInputElement _descriptionInput;
-  bool hasError;
-  bool _makingNewWorkout;
+  List<dynamic> _listViewElements;
 
 
   CreateViewWorkoutState()
   {
-    workout = null;
-    _makingNewWorkout = true;
+    workout = Workout.notReorderable("", []);
+    _listViewElements = workout.getAsWidgets();
+
     _titleInput = LabeledTextInputElement("Title", "Enter title");
-    _descriptionInput = LabeledTextInputElement.textArea("Description", "Enter description");
-    hasError = false;
+    _descriptionInput = LabeledTextInputElement.textArea(
+      "Description",
+      "Enter description"
+    );
   }
 
   CreateViewWorkoutState.workout(Workout workout)
   {
     this.workout = workout;
-    _makingNewWorkout = false;
+    _listViewElements = workout.getAsWidgets();
+
     _titleInput = LabeledTextInputElement("Title", "Enter title");
-    _descriptionInput = LabeledTextInputElement.textArea("Description", "Enter description");
-    hasError = false;
+    _descriptionInput = LabeledTextInputElement.textArea(
+      "Description",
+      "Enter description"
+    );
   }
 
   @override
   initState()
   {
-    hasError = false;
-
     if (workout != null)
     {
-      _titleInput.inputElement.textEditingController.text = workout.name;
-      _descriptionInput.inputElement.textEditingController.text = workout.description;
+      _titleInput.inputElement.textEditingController.text =
+          workout.name;
+      _descriptionInput.inputElement.textEditingController.text =
+          workout.description;
     }
   }
 
@@ -90,6 +96,9 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
       this._descriptionInput,
       getPadding(15),
+
+      // Exercise & Superset widget
+      this._getListViewHeader(),
     ];
 
     if (workout != null)
@@ -97,50 +106,36 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       workout.isReorderable = false;
     }
 
-    // There's no errors & workout has an exercises(s) and/or superset(s)
-    if (!hasError && workout != null && !workout.hasNoExercisesOrSupersets())
+    // Workout exists and has an exercises(s) and/or a superset(s)
+    if (workout != null && !workout.hasNoExercisesOrSupersets())
     {
       children.addAll([
-        // Exercise & Superset widget
-        this._getListViewHeader(),
-
-        workout.getAsListView(),
-        getDefaultPadding(),
-      ]);
-    }
-
-    // There's no errors and workout doesn't exist or it has no exercises or supersets
-    else if (!hasError)
-    {
-      children.addAll([
-        // Exercise & Superset widget
-        this._getListViewHeader(),
-
-        Row(
-          children: [
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 10, top: 10),
-                child: LabelTextElement("No exercises..."),
-              )
-            ),
-          ],
+        Flexible(
+          child: ListView.builder(
+            itemCount: _listViewElements.length,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),  // Lets parent handle scrolling
+            itemBuilder: (BuildContext context, int index)
+            {
+              return _listViewElements[index];
+            }
+          ),
         ),
         getDefaultPadding(),
       ]);
     }
 
-    // Error
+    // Workout doesn't exist or it has no exercises or supersets
     else
     {
       children.addAll([
         Row(
           children: [
             Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: TextHeader2(displayText: "Error loading workout"),
-                )
+              child: Padding(
+                padding: EdgeInsets.only(left: 4, top: 10),
+                child: LabelTextElement("No exercises..."),
+              )
             ),
           ],
         ),
@@ -160,7 +155,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(left: 3),
                 child: LabelTextElement("Exercises"),
               )
             ],
@@ -171,7 +166,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Padding(
-                padding: EdgeInsets.only(right: 15),
+                padding: EdgeInsets.only(right: 4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -180,10 +175,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                       child: StrydeButton(
                         displayText: "Add",
                         textSize: 14,
-                        onTap: () =>
-                            NavigateTo.screen(
-                                context, () => AllExerciseListScreen()
-                            ),
+                        onTap: () => _onTapAddButton(),
                       ),
                     ),
                     Flexible(
@@ -222,13 +214,35 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     else
     {
       return StrydeButton(
-        displayText: "Edit", textSize: 14, onTap: ()
-        {
-          workout.isReorderable = true;
-          NavigateTo.screen(context, () => EditWorkoutScreen(workout));
-        }
+        displayText: "Edit",
+        textSize: 14,
+        onTap: () => _onTapEditButton()
       );
     }
+  }
+
+  void _onTapAddButton() async
+  {
+    List<dynamic> exercisesToAdd = await NavigateTo.screenReturnsData(
+      context, () => AllExerciseListScreen()
+    );
+
+    if (exercisesToAdd != null && exercisesToAdd.length > 0)
+    {
+      setState(()
+      {
+        workout.addExercisesOrSupersets(exercisesToAdd);
+        // TODO: Delete one line of code below
+        //_listViewElements.addAll(workout.getAsWidgets());
+        _listViewElements = workout.getAsWidgets();
+      });
+    }
+  }
+
+  void _onTapEditButton()
+  {
+    workout.isReorderable = true;
+    NavigateTo.screen(context, () => EditWorkoutScreen(workout));
   }
 
 
@@ -236,24 +250,19 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   @override
   Widget build(BuildContext context)
   {
-    double padding = 5;
-
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "View Workout"),
-      body: Padding(
-        padding: EdgeInsets.only(
-          left: padding,
-          right: padding,
-        ),
-
-        child: SinglePageScrollingWidget(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(left: 15, right: 15),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: getChildren(),
           )
-        ),
-      )
+        )
+      ),
     );
   }
 }

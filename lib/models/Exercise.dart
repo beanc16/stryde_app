@@ -48,6 +48,13 @@ class Exercise
     this.exerciseWeightType = ExerciseWeightType(exerciseWeightType);
     this.exerciseMuscleType = ExerciseMuscleType(exerciseMuscleType);
     this.exerciseMovementType = ExerciseMovementType(exerciseMovementType);
+
+    this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
+      this.name,
+      this.description,
+      Key("${this.name}"),
+      false
+    );
   }
 
 

@@ -12,6 +12,7 @@ import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart'
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
 import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
+import 'package:workout_buddy/utilities/NavigateTo.dart';
 
 
 class AllExerciseListScreen extends StatefulWidget
@@ -30,8 +31,14 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   List<Exercise> _exercises;
   List<String> _listTileDisplayText;
   ToggleableWidget _loadingErrorMsg;
-  List<Map< String, dynamic>> _selectedExercises;
+  List<Exercise> _selectedExercises;
   StrydeMultiTagDisplay _selectExercisesTagDisplay;
+
+  /* TODO: Put this in a parent StatelessWidget screen. Make it have
+           an "Exercise" (this screen) and "Superset" tab at the top.
+           Make it be a tab menu like WorkoutAndSupersetListScreen, but
+           for selecting exercises and supersets.
+  */
 
   @override
   void initState()
@@ -47,6 +54,10 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       onDeleteTag: (int index, String displayStr) =>
                           _onDeselectExerciseTag(index, displayStr),
     );
+
+    // Get exercises after build method is called
+    WidgetsBinding.instance.addPostFrameCallback((timestamp) =>
+                                                    _fetchExercises());
   }
 
   ToggleableWidget _getLoadingErrorMsg()
@@ -69,7 +80,10 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       this._exercises = StrydeUserStorage.allExercises;
 
       // Convert _exercises to _listTileDisplayText
-      _listTileDisplayText = _exercises.map((e) => e.name).toList();
+      setState(()
+      {
+        _listTileDisplayText = _exercises.map((e) => e.name).toList();
+      });
 
       // Hide loading icon & error msg
       _loadingErrorMsg.hideChildAndLoadingIcon();
@@ -196,17 +210,12 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
   void _onTapExerciseListTile(BuildContext context, int index)
   {
+    _selectedExercises.add(_exercises[index]);
+
     setState(()
     {
-      _selectedExercises.add({
-        "exercise": _exercises[index],
-        "displayText": _listTileDisplayText[index],
-      });
-
       _selectExercisesTagDisplay.addTag(_listTileDisplayText[index]);
     });
-
-    print("\n\n_selectedExercises: " + _selectedExercises.toString());
   }
 
   void _onDeselectExerciseTag(int index, String displayStr)
@@ -219,14 +228,26 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
 
 
+  Future<bool> _onBackButtonPressed(BuildContext context) async
+  {
+    // Send the selected exercises back to the previous screen
+    NavigateTo.previousScreenWithData(context, _selectedExercises);
+
+    // True vs False doesn't matter in this case
+    return true;
+  }
+
+
+
   @override
   Widget build(BuildContext context)
   {
-    _fetchExercises();
-
-    return Scaffold(
-      appBar: StrydeAppBar(titleStr: "Add Exercise"),
-      body: _getWidgetToDisplay(),
+    return WillPopScope(
+      onWillPop: () => _onBackButtonPressed(context),
+      child: Scaffold(
+          appBar: StrydeAppBar(titleStr: "Add Exercise"),
+        body: _getWidgetToDisplay()
+      ),
     );
   }
 }
