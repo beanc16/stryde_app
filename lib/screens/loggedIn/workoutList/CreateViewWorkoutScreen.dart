@@ -239,10 +239,15 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     }
   }
 
-  void _onTapEditButton()
+  void _onTapEditButton() async
   {
     workout.isReorderable = true;
-    NavigateTo.screen(context, () => EditWorkoutScreen(workout));
+    //NavigateTo.screen(context, () => EditWorkoutScreen(workout));
+
+    Workout newWorkout = await NavigateTo.screenReturnsData(
+      context, () => EditWorkoutScreen(workout)
+    );
+    print("newWorkout:\n" + newWorkout.toString());
   }
 
 

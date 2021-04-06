@@ -140,7 +140,7 @@ class EditSupersetState extends State<EditSupersetScreen>
                     // Test if the workout has changed
                     // Save the workout if there has been changes
 
-                    return NavigateTo.screenWithoutBackUntil(
+                    return NavigateTo.screenAfterPopping(
                       context,
                       () => CreateViewSupersetScreen.superset(newSuperset),
                       2

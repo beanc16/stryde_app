@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/listViews/ListViewCard.dart';
 import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:workout_buddy/components/willPopScope/WillPopScopeSaveDontSave.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/models/Workout.dart';
@@ -123,6 +125,61 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     }
 
     return Workout(workout.name, models);
+  }
+
+  List<Object> getListViewAsExercisesAndSupersets()
+  {
+    List<Object> models = [];
+    Superset curSuperset = null;
+    bool inSuperset = false;
+
+    for (int i = 0; i < listViewWidgets.length; i++)
+    {
+      Widget widget = listViewWidgets[i];
+
+      if (widget is ListViewHeader)
+      {
+        inSuperset = true;
+
+        curSuperset = Superset(widget.title, [], () => deleteFromListView(widget));
+      }
+
+      else if (widget is Divider && inSuperset)
+      {
+        models.add(curSuperset);
+        inSuperset = false;
+      }
+
+      else
+      {
+        if (inSuperset && widget is ListViewCard)
+        {
+          Exercise exercise = Exercise(
+              widget.title,
+              widget.description,
+                  () => deleteFromListView(widget)
+              );
+          curSuperset.addExercise(exercise);
+
+          if (i + 1 == listViewWidgets.length)
+          {
+            models.add(curSuperset);
+          }
+        }
+
+        else if (widget is ListViewCard)
+        {
+          Exercise exercise = Exercise(
+              widget.title,
+              widget.description,
+                  () => deleteFromListView(widget)
+              );
+          models.add(exercise);
+        }
+      }
+    }
+
+    return models;
   }
 
 
@@ -257,53 +314,47 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     }
   }
 
-  Future<bool> _onBackButtonPressed() async
+  void _onSave(BuildContext context)
   {
-      return (
-        await showDialog(
-          context: context,
-          builder: (context)
-          {
-            return AlertDialog(
-              content: Text("Would you like to save your changes?"),
-              actions: <Widget>[
-                FlatButton(
-                  onPressed: (()
-                  {
-                    return Navigator.of(context).pop(false);
-                  }),
-                  child: Text("Keep Editing"),
-                ),
-                FlatButton(
-                  onPressed: (()
-                  {
-                    return Navigator.of(context).pop(true);
-                  }),
-                  child: Text("Don't Save"),
-                ),
-                FlatButton(
-                  onPressed: (()
-                  {
-                    Workout newWorkout = getListViewAsWorkout();
-                    newWorkout.isReorderable = false;
-                    print(newWorkout.toString());
+    Workout newWorkout = getListViewAsWorkout();
+    newWorkout.isReorderable = false;
+    print(newWorkout.toString());
 
-                    // TODO: Test if the workout has changed
-                    // TODO: Save the workout if there has been changes
+    // TODO: Test if the workout has changed
+    // TODO: Save the workout if there has been changes
 
-                    return NavigateTo.screenWithoutBackUntil(
-                      context,
-                      () => CreateViewWorkoutScreen.workout(newWorkout),
-                      2
-                    );
-                  }),
-                  child: Text("Save"),
-                ),
-              ],
-            );
-          }
-        )
-      ) ?? false;
+    return NavigateTo.screenAfterPopping(
+      context,
+          () => CreateViewWorkoutScreen.workout(newWorkout),
+      2
+    );
+  }
+
+  void _onReorder(int oldIndex, int newIndex)
+  {
+    Widget draggedWidget = listViewWidgets[oldIndex];
+
+    if (draggedWidget is ExerciseListViewCard)
+    {
+      setState(()
+      {
+        updateListView(oldIndex, newIndex);
+      });
+    }
+
+    // TODO: Fix reordering entire superset. Sometimes it...
+    //       works, sometimes it doesn't. It might be having...
+    //       trouble reordering multiple items based on newIndex?
+    else if (draggedWidget is SupersetListViewHeader)
+    {
+      bool isInSuperset = widgetIsInSuperset(newIndex);
+
+      if (!isInSuperset)
+      {
+        int dividerIndex = getEndIndexOfSuperset(oldIndex);
+        updateListViewRange(oldIndex, dividerIndex, newIndex);
+      }
+    }
   }
 
 
@@ -311,40 +362,19 @@ class EditWorkoutState extends State<EditWorkoutScreen>
   @override
   Widget build(BuildContext context)
   {
-    return new WillPopScope(
-      onWillPop: _onBackButtonPressed,
+    return WillPopScopeSaveDontSave(
+      buttonTextColor: StrydeColors.lightBlue,
+      onSave: (BuildContext context) => _onSave(context),
+
       child: Scaffold(
         appBar: StrydeAppBar(titleStr: "Edit Workout"),
         body: ReorderableListView(
-        children: listViewWidgets,
+          children: listViewWidgets,
+          scrollDirection: Axis.vertical,
 
-        scrollDirection: Axis.vertical,
-        onReorder: (int oldIndex, int newIndex)
-        {
-          Widget draggedWidget = listViewWidgets[oldIndex];
-
-          if (draggedWidget is ExerciseListViewCard)
-          {
-            setState(()
-            {
-              updateListView(oldIndex, newIndex);
-            });
-          }
-
-          // TODO: Fix reordering entire superset. Sometimes it...
-          //       works, sometimes it doesn't. It might be having...
-          //       trouble reordering multiple items based on newIndex?
-          else if (draggedWidget is SupersetListViewHeader)
-          {
-            bool isInSuperset = widgetIsInSuperset(newIndex);
-
-            if (!isInSuperset)
-            {
-              int dividerIndex = getEndIndexOfSuperset(oldIndex);
-              updateListViewRange(oldIndex, dividerIndex, newIndex);
-            }
-          }
-        })
+          onReorder: (int oldIndex, int newIndex) =>
+              _onReorder(oldIndex, newIndex)
+        ),
       ),
     );
   }

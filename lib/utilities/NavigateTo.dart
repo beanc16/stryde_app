@@ -107,32 +107,40 @@ class NavigateTo
 
 
   // Pop the given number of screens, then go to the given route
-  static void screenWithoutBackUntil(BuildContext context,
-                                     Function() route,
-                                     int numOfScreensToGoBack)
+  static void screenAfterPopping(BuildContext context,
+                                 Function() route,
+                                 int numOfScreensToPop)
   {
     int numOfRoutes = 0;
 
-    Navigator.pushAndRemoveUntil(
+    // Pop the given number of screens
+    Navigator.popUntil(
+      context,
+      ((Route<dynamic> route)
+      {
+        if (route is MaterialPageRoute<dynamic>)
+        {
+          if (numOfRoutes >= numOfScreensToPop)
+          {
+            return true;
+          }
+
+          numOfRoutes++;
+        }
+
+        return false;
+      })
+    );
+
+    // Push the given screen
+    Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context)
         {
           return route();
         }
-      ),
-      ((Route<dynamic> route)
-      {
-        if (route is MaterialPageRoute<dynamic>)
-        {
-          if (numOfRoutes > numOfScreensToGoBack)
-          {
-            return true;
-          }
-        }
-
-        return false;
-      })
+      )
     );
   }
 }

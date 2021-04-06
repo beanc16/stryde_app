@@ -258,7 +258,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     return WillPopScope(
       onWillPop: () => _onBackButtonPressed(context),
       child: Scaffold(
-          appBar: StrydeAppBar(titleStr: "Add Exercise"),
+        appBar: StrydeAppBar(titleStr: "Add Exercise"),
         body: _getWidgetToDisplay()
       ),
     );

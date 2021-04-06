@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 
 class ListViewCard extends StatefulWidget
 {
@@ -275,6 +276,7 @@ class ListViewCardState extends State<ListViewCard>
   {
     if (this.isReorderable)
     {
+      // TODO: Update this to return a StrydeColor, but make it a MaterialColor
       return Colors.blue;
     }
 
