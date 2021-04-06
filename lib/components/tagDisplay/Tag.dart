@@ -1,14 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:workout_buddy/components/tagDisplay/MultiTagDisplayAs.dart';
 
 
-class Tag extends Chip
+class Tag extends StatelessWidget
 {
   static const Color _defaultTagColor = Colors.grey;
   static const Color _defaultTextColor = Colors.black;
   static const Color _defaultDeleteIconColor = Colors.black;
+
+  String _displayText;
+  Color _tagColor;
+  Color _textColor;
+  Function() _onDeleted;
+  Color _deleteIconColor;
+  EdgeInsets _padding;
+  UniqueKey _key;
 
   Tag({
     @required String displayText,
@@ -16,32 +23,47 @@ class Tag extends Chip
     Color textColor = _defaultTextColor,
     Function() onDeleted,
     Color deleteIconColor = _defaultDeleteIconColor,
-  }) :
-    super(
-      backgroundColor: tagColor,
-      label: Text(
-        displayText,
-        style: TextStyle(
-          color: textColor,
-        ),
-      ),
-      onDeleted: onDeleted,
-      deleteIconColor: deleteIconColor,
-    );
+    EdgeInsets padding = EdgeInsets.zero,
+    Key key,
+  })
+  {
+    this._displayText = displayText;
+    this._tagColor = tagColor;
+    this._textColor = textColor;
+    this._onDeleted = onDeleted;
+    this._deleteIconColor = deleteIconColor;
+    this._padding = padding;
+
+    if (key == null)
+    {
+      this._key = UniqueKey();
+    }
+    else
+    {
+      this._key = key;
+    }
+  }
 
 
 
-  static List<Widget> generateList({
+  bool keyEquals(Key key)
+  {
+    return (_key == key);
+  }
+
+
+
+  static List<Tag> generateList({
     @required List<String> displayText,
     Color tagColor = _defaultTagColor,
     Color textColor = _defaultTextColor,
     Color deleteIconColor = _defaultDeleteIconColor,
-    Function(String) onDeleted,
+    Function(Key) onDeleted,
     double spaceBetweenTags = 5,
     MultiTagDisplayAs displayedAs = MultiTagDisplayAs.Row
   })
   {
-    List<Widget> tags = [];
+    List<Tag> tags = [];
 
     for (int i = 0; i < displayText.length; i++)
     {
@@ -50,15 +72,15 @@ class Tag extends Chip
         spaceBetweenTags = 0;
       }
 
-      tags.add(Padding(
+      Key key = UniqueKey();
+      tags.add(Tag(
+        displayText: displayText[i],
+        tagColor: tagColor,
+        textColor: textColor,
+        deleteIconColor: deleteIconColor,
+        onDeleted: () => onDeleted(key),
         padding: _getEdgeInsets(displayedAs, spaceBetweenTags),
-        child: Tag(
-          displayText: displayText[i],
-          tagColor: tagColor,
-          textColor: textColor,
-          deleteIconColor: deleteIconColor,
-          onDeleted: () => onDeleted(displayText[i]),
-        ),
+        key: key,
       ));
     }
 
@@ -77,5 +99,35 @@ class Tag extends Chip
     {
       return EdgeInsets.only(bottom: spaceBetweenTags);
     }
+
+    return EdgeInsets.zero;
+  }
+
+
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return Padding(
+      padding: _padding,
+      child: Chip(
+        key: _key,  // Fixes bug if > one Tag has the same _displayText
+        backgroundColor: _tagColor,
+        label: Text(
+          _displayText,
+          style: TextStyle(
+            color: _textColor,
+          ),
+        ),
+        onDeleted: _onDeleted,
+        deleteIconColor: _deleteIconColor,
+      )
+    );
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info})
+  {
+    return 'Tag{$_displayText}';
   }
 }

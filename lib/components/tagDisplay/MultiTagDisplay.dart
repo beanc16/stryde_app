@@ -70,7 +70,7 @@ class MultiTagDisplay extends StatefulWidget
 
 class MultiTagDisplayState extends State<MultiTagDisplay>
 {
-  List<Widget> _tags;
+  List<Tag> _tags;
   List<String> _displayText;
   Color _tagColor;
   Color _textColor;
@@ -97,29 +97,37 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
       tagColor: _tagColor,
       textColor: _textColor,
       spaceBetweenTags: _spaceBetweenTags,
-      onDeleted: (String displayStr) => _onDeleteTag(displayStr),
+      onDeleted: _onDeleteTag,
       deleteIconColor: _deleteIconColor,
       displayedAs: _displayAsEnum,
     );
   }
 
-  void _onDeleteTag(String displayStr)
+  void _onDeleteTag(Key uniqueKey)
   {
+    // Get index of tag
+    int index = _tags.indexWhere((Widget tag)
+    {
+      if (tag is Tag)
+      {
+        return tag.keyEquals(uniqueKey);
+      }
+
+    return false;
+    });
+
     // Need the duplicate list, or it throws errors
     setState(()
     {
-      // Get index of tag
-      List tempCopy = _displayText.toList();
-      int index = tempCopy.indexOf(displayStr);
-
       // Remove the tag from the list of Strings
-      tempCopy.removeAt(index);
-      _displayText = tempCopy;
+      List tempCopy = _displayText.toList();
+      String displayStr = tempCopy.removeAt(index);
+      _displayText = tempCopy.toList();
 
       // Remove the tag from the list of Widgets
       tempCopy = _tags.toList();
       tempCopy.removeAt(index);
-      _tags = tempCopy;
+      _tags = tempCopy.toList();
 
       if (_onDeleteTagCallback != null)
       {
@@ -146,35 +154,38 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
         children: _tags,
       );
     }
+
+    return null;
   }
 
 
 
   void addTag(String displayStr)
   {
+    Key key = UniqueKey();
     EdgeInsets padding;
 
     if (_displayAsEnum == MultiTagDisplayAs.Row)
     {
-      padding = EdgeInsets.only(left: _spaceBetweenTags);
+      padding = EdgeInsets.only(right: _spaceBetweenTags);
     }
     else if (_displayAsEnum == MultiTagDisplayAs.Column)
     {
-      padding = EdgeInsets.only(top: _spaceBetweenTags);
+      padding = EdgeInsets.only(bottom: _spaceBetweenTags);
     }
 
     setState(()
     {
       _displayText.add(displayStr);
-      _tags.add(Padding(
+
+      _tags.add(Tag(
+        key: key,
+        displayText: displayStr,
+        tagColor: _tagColor,
+        textColor: _textColor,
+        onDeleted: () => _onDeleteTag(key),
+        deleteIconColor: _deleteIconColor,
         padding: padding,
-        child: Tag(
-          displayText: displayStr,
-          tagColor: _tagColor,
-          textColor: _textColor,
-          onDeleted: () => _onDeleteTag(displayStr),
-          deleteIconColor: _deleteIconColor,
-        )
       ));
     });
   }
@@ -184,6 +195,7 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
   @override
   Widget build(BuildContext context)
   {
+    print("build _tags: " + _tags.toString());
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: _getTagDisplay(),
