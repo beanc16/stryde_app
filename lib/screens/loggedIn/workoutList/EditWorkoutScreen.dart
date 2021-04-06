@@ -240,41 +240,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     }
   }
 
-  bool widgetIsInSuperset(int index)
-  {
-    // Loop over all widgets before the given widget
-    for (int i = index - 1; i >= 0; i--)
-    {
-      // In superset
-      if (listViewWidgets[i] is ListViewHeader)
-      {
-        return true;
-      }
-
-      // Not in superset
-      else if (listViewWidgets[i] is Divider)
-      {
-        return false;
-      }
-    }
-
-    // Outside of a superset and no supersets before it
-    return false;
-  }
-
-  int getEndIndexOfSuperset(int headerIndex)
-  {
-    for (int i = headerIndex + 1; i <= listViewWidgets.length; i++)
-    {
-      if (listViewWidgets[i] is Divider)
-      {
-        return i;
-      }
-    }
-
-    return null;
-  }
-
   void deleteFromListView(Widget listViewCardOrHeader)
   {
     if (listViewCardOrHeader is ListViewCard)
@@ -314,21 +279,42 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     }
   }
 
-  void _onSave(BuildContext context)
+  int getEndIndexOfSuperset(int headerIndex)
   {
-    Workout newWorkout = getListViewAsWorkout();
-    newWorkout.isReorderable = false;
-    print(newWorkout.toString());
+    for (int i = headerIndex + 1; i <= listViewWidgets.length; i++)
+    {
+      if (listViewWidgets[i] is Divider)
+      {
+        return i;
+      }
+    }
 
-    // TODO: Test if the workout has changed
-    // TODO: Save the workout if there has been changes
-
-    return NavigateTo.screenAfterPopping(
-      context,
-          () => CreateViewWorkoutScreen.workout(newWorkout),
-      2
-    );
+    return null;
   }
+
+  bool widgetIsInSuperset(int index)
+  {
+    // Loop over all widgets before the given widget
+    for (int i = index - 1; i >= 0; i--)
+    {
+      // In superset
+      if (listViewWidgets[i] is ListViewHeader)
+      {
+        return true;
+      }
+
+      // Not in superset
+      else if (listViewWidgets[i] is Divider)
+      {
+        return false;
+      }
+    }
+
+    // Outside of a superset and no supersets before it
+    return false;
+  }
+
+
 
   void _onReorder(int oldIndex, int newIndex)
   {
@@ -342,8 +328,8 @@ class EditWorkoutState extends State<EditWorkoutScreen>
       });
     }
 
-    // TODO: Fix reordering entire superset. Sometimes it...
-    //       works, sometimes it doesn't. It might be having...
+    // TODO: Fix reordering entire superset. Sometimes it
+    //       works, sometimes it doesn't. It might be having
     //       trouble reordering multiple items based on newIndex?
     else if (draggedWidget is SupersetListViewHeader)
     {
@@ -357,11 +343,39 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     }
   }
 
+  Future<bool> _onBackButtonPressed(BuildContext context) async
+  {
+    Workout newWorkout = getListViewAsWorkout();
+    newWorkout.isReorderable = false;
+    print(newWorkout.toString());
+
+    // Send the selected exercises back to the previous screen
+    NavigateTo.previousScreenWithData(context, newWorkout);
+
+    // True vs False doesn't matter in this case
+    return true;
+  }
+
 
 
   @override
   Widget build(BuildContext context)
   {
+    return WillPopScope(
+      onWillPop: () => _onBackButtonPressed(context),
+      child: Scaffold(
+        appBar: StrydeAppBar(titleStr: "Add Exercise"),
+        body: ReorderableListView(
+          children: listViewWidgets,
+          scrollDirection: Axis.vertical,
+
+          onReorder: (int oldIndex, int newIndex) =>
+              _onReorder(oldIndex, newIndex)
+        )
+      ),
+    );
+
+    /*
     return WillPopScopeSaveDontSave(
       buttonTextColor: StrydeColors.lightBlue,
       onSave: (BuildContext context) => _onSave(context),
@@ -377,5 +391,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
         ),
       ),
     );
+    */
   }
 }

@@ -248,6 +248,17 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       context, () => EditWorkoutScreen(workout)
     );
     print("newWorkout:\n" + newWorkout.toString());
+
+    workout = newWorkout;
+    _updateListView();
+  }
+
+  void _updateListView()
+  {
+    setState(()
+    {
+      _listViewElements = workout.getAsWidgets();
+    });
   }
 
 
