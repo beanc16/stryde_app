@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 
-class SupersetListScreen extends StatefulWidget
+class UserSupersetListScreen extends StatefulWidget
 {
   @override
   State<StatefulWidget> createState()
@@ -12,8 +12,8 @@ class SupersetListScreen extends StatefulWidget
 
 
 
-class SupersetListState extends State<SupersetListScreen> with
-    AutomaticKeepAliveClientMixin<SupersetListScreen>
+class SupersetListState extends State<UserSupersetListScreen> with
+    AutomaticKeepAliveClientMixin<UserSupersetListScreen>
 {
   @override
   Widget build(BuildContext context)

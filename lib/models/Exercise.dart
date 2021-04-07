@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:workout_buddy/components/listViews/ListViewCard.dart';
 import 'package:workout_buddy/models/ExerciseMuscleType.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
+import 'package:workout_buddy/screens/loggedIn/workoutList/EditExerciseInformationScreen.dart';
+import 'package:workout_buddy/utilities/NavigateTo.dart';
 import 'ExerciseMovementType.dart';
 import 'ExerciseWeightType.dart';
 
@@ -19,41 +21,70 @@ class Exercise
 
   ExerciseListViewCard exerciseListViewCard;
 
-  Exercise(this.name, this.description, Function() onDeleteListViewCard)
+  Exercise(this.name, this.description, 
+           Function() onDeleteListViewCard,
+           {Function(BuildContext, dynamic) onTap})
   {
+    if (onTap == null)
+    {
+      onTap = _onTapDefault;
+    }
+
     this.exerciseListViewCard = ExerciseListViewCard(
       this.name,
       this.description,
       Key("${this.name}"),
       false,
-      onDeleteListViewCard
+      onDeleteListViewCard,
+      onTap: onTap,
     );
   }
 
-  Exercise.notReorderable(this.name, this.description)
+  Exercise.notReorderable(this.name, this.description, 
+                          {Function(BuildContext, dynamic) onTap})
   {
+    if (onTap == null)
+    {
+      onTap = _onTapDefault;
+    }
+
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
       this.name,
       this.description,
       Key("${this.name}"),
-      false
+      false,
+      onTap: onTap,
     );
   }
 
   Exercise.model(this.id, this.name, this.description,
                  String exerciseWeightType, String exerciseMuscleType,
                  String exerciseMovementType,
-                 this.muscleGroups)
+                 this.muscleGroups, {Function(BuildContext, dynamic) onTap})
   {
     this.exerciseWeightType = ExerciseWeightType(exerciseWeightType);
     this.exerciseMuscleType = ExerciseMuscleType(exerciseMuscleType);
     this.exerciseMovementType = ExerciseMovementType(exerciseMovementType);
 
+    if (onTap == null)
+    {
+      onTap = _onTapDefault;
+    }
+
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
       this.name,
       this.description,
       Key("${this.name}"),
-      false
+      false,
+      onTap: onTap,
+    );
+  }
+
+  void _onTapDefault(BuildContext context, dynamic data)
+  {
+    NavigateTo.screen(
+      context,
+      () => EditExerciseInformationScreen(this),
     );
   }
 
@@ -85,20 +116,33 @@ class ExerciseListViewCard extends ListViewCard
 {
   ExerciseListViewCard(String title, String description, Key key,
                        bool shouldLeftIndent,
-                       Function() onDeleteListViewCard) :
+                       Function() onDeleteListViewCard,
+                       {
+                         Function(BuildContext, dynamic) onTap,
+                         Exercise exercise
+                       }) :
         super(title, description, key, shouldLeftIndent,
-              onDeleteListViewCard);
+              onDeleteListViewCard, onTap: onTap, data: exercise);
 
   ExerciseListViewCard.exercise(Exercise exercise, Key key,
                                 bool shouldLeftIndent,
-                                Function() onDeleteListViewCard) :
+                                Function() onDeleteListViewCard,
+                                {
+                                  Function(BuildContext, dynamic) onTap,
+                                }) :
         super(exercise.name, exercise.description, key,
-              shouldLeftIndent, onDeleteListViewCard);
+              shouldLeftIndent, onDeleteListViewCard, onTap: onTap,
+              data: exercise);
 
   ExerciseListViewCard.notReorderable(String title, String description,
-                                      Key key, bool shouldLeftIndent) :
+                                      Key key, bool shouldLeftIndent,
+                                      {
+                                        Function(BuildContext, dynamic) onTap,
+                                        Exercise exercise
+                                      }) :
         super.notReorderable(title, description, key,
-                             shouldLeftIndent);
+                             shouldLeftIndent, onTap: onTap,
+                             data: exercise);
 
 
 

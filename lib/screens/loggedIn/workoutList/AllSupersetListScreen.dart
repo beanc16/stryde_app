@@ -11,35 +11,29 @@ import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorT
 import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/MuscleGroup.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/EditExerciseInformationScreen.dart';
+import 'package:workout_buddy/models/Superset.dart';
 import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
 import 'package:workout_buddy/utilities/NavigateTo.dart';
 
 
-class AllExerciseListScreen extends StatefulWidget
+class AllSupersetListScreen extends StatefulWidget
 {
   @override
   State<StatefulWidget> createState()
   {
-    return AllExerciseListState();
+    return AllSupersetListScreenState();
   }
 }
 
 
 
-class AllExerciseListState extends State<AllExerciseListScreen>
+class AllSupersetListScreenState extends State<AllSupersetListScreen>
 {
-  List<Exercise> _exercises;
+  List<Superset> _supersets;
   List<String> _listTileDisplayText;
   ToggleableWidget _loadingErrorMsg;
-  List<Exercise> _selectedExercises;
-  StrydeMultiTagDisplay _selectExercisesTagDisplay;
-
-  /* TODO: Put this in a parent StatelessWidget screen. Make it have
-           an "Exercise" (this screen) and "Superset" tab at the top.
-           Make it be a tab menu like WorkoutAndSupersetListScreen, but
-           for selecting exercises and supersets.
-  */
+  List<Superset> _selectedSupersets;
+  StrydeMultiTagDisplay _selectSupersetsTagDisplay;
 
   @override
   void initState()
@@ -47,18 +41,20 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     super.initState();
 
     _loadingErrorMsg = _getLoadingErrorMsg();
-    _exercises = [];
+    _supersets = [];
     _listTileDisplayText = [];
-    _selectedExercises = [];
-    _selectExercisesTagDisplay = StrydeMultiTagDisplay(
+    _selectedSupersets = [];
+    _selectSupersetsTagDisplay = StrydeMultiTagDisplay(
       displayText: [],
       onDeleteTag: (int index, String displayStr) =>
-                          _onDeselectExerciseTag(index, displayStr),
+                          _onDeselectSupersetTag(index, displayStr),
     );
 
     // Get exercises after build method is called
+    /*
     WidgetsBinding.instance.addPostFrameCallback((timestamp) =>
-                                                    _fetchExercises());
+                                                    _fetchSupersets());
+    */
   }
 
   ToggleableWidget _getLoadingErrorMsg()
@@ -66,24 +62,24 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     return ToggleableWidget(
       isLoading: true,
       loadingIndicator: StrydeProgressIndicator(),
-      child: StrydeErrorText(displayText: "Error loading exercises"),
+      child: StrydeErrorText(displayText: "Error loading supersets"),
     );
   }
 
 
 
-  void _fetchExercises() async
+  void _fetchSupersets() async
   {
     _loadingErrorMsg.showLoadingIcon();
 
-    if (StrydeUserStorage.allExercises != null)
+    if (StrydeUserStorage.supersets != null)
     {
-      this._exercises = StrydeUserStorage.allExercises;
+      this._supersets = StrydeUserStorage.supersets;
 
-      // Convert _exercises to _listTileDisplayText
+      // Convert _supersets to _listTileDisplayText
       setState(()
       {
-        _listTileDisplayText = _exercises.map((e) => e.name).toList();
+        _listTileDisplayText = _supersets.map((e) => e.name).toList();
       });
 
       // Hide loading icon & error msg
@@ -92,73 +88,83 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
     else
     {
-      // Get all exercises available to the user
+      // Get all supersets owned by the user
       HttpQueryHelper.get(
-        "/user/exercises/",
-        onSuccess: (dynamic response) => _onGetExercisesSuccess(response),
-        onFailure: (dynamic response) => _onGetExercisesFail(response)
+        "/user/supersets/",
+        onSuccess: (dynamic response) => _onGetSupersetsSuccess(response),
+        onFailure: (dynamic response) => _onGetSupersetsFail(response)
       );
     }
   }
 
-  void _onGetExercisesSuccess(Map<String, dynamic> workoutsJson)
+  void _onGetSupersetsSuccess(Map<String, dynamic> supersetsJson)
   {
+    print("supersetsJson: " + supersetsJson.toString());
+
     // Convert exercises to model
-    _convertExerciseResults(workoutsJson["_results"]);
+    _convertSupersetResults(supersetsJson["_results"]);
 
     // Save to session-long storage
-    StrydeUserStorage.allExercises = this._exercises;
+    StrydeUserStorage.supersets = this._supersets;
 
     // Convert _exercises to _listTileDisplayText
     setState(()
     {
-      _listTileDisplayText = _exercises.map((e) => e.name).toList();
+      _listTileDisplayText = _supersets.map((e) => e.name).toList();
     });
 
     // Hide loading icon & error msg
     _loadingErrorMsg.hideChildAndLoadingIcon();
   }
 
-  void _onGetExercisesFail(dynamic results)
+  void _onGetSupersetsFail(dynamic results)
   {
     // Show error message
     _loadingErrorMsg.hideLoadingIcon();
     _loadingErrorMsg.showChild();
 
-    print("_onGetExercisesFail:\n" + results.toString());
+    print("_onGetSupersetsFail:\n" + results.toString());
   }
 
-  void _convertExerciseResults(List<dynamic> exerciseList)
+  void _convertSupersetResults(List<dynamic> supersetList)
   {
-    for (int i = 0; i < exerciseList.length; i++)
+    for (int i = 0; i < supersetList.length; i++)
     {
       // Helper variables
-      Map<String, dynamic> exercise = exerciseList[i];
-      List<dynamic> muscleGroupInfo = exercise["mgInfo"];
+      Map<String, dynamic> superset = supersetList[i];
+      List<dynamic> exercises = superset["mgInfo"];
 
-      // Get a list of the current exercise's muscle groups
-      List<MuscleGroup> muscleGroups = [];
-      for (int i = 0; i < muscleGroupInfo.length; i++)
+      // Convert the current superset's exercises into models
+      List<Exercise> supExercises = [];
+      for (int i = 0; i < exercises.length; i++)
       {
-        // Convert muscle group info to a model
-        MuscleGroup mg = MuscleGroup(muscleGroupInfo[i]["mgName"]);
-        muscleGroups.add(mg);
+        // Convert the current exercise's muscle groups into models
+        List<dynamic> muscleGroupInfo = exercises[i]["mgInfo"];
+        List<MuscleGroup> muscleGroups = [];
+        for (int i = 0; i < muscleGroupInfo.length; i++)
+        {
+          MuscleGroup mg = MuscleGroup(muscleGroupInfo[i]["mgName"]);
+          muscleGroups.add(mg);
+        }
+
+        Exercise ex = Exercise.model(
+          exercises[i]["exerciseId"], exercises[i]["exerciseName"],
+          exercises[i]["exerciseDescription"],
+          exercises[i]["exerciseWeightTypeName"],
+          exercises[i]["exerciseMuscleTypeName"],
+          exercises[i]["exerciseMovementTypeName"], muscleGroups
+        );
+        supExercises.add(ex);
       }
 
       // Convert exercise info to a model and add it to _exercises
-      Exercise ex = Exercise.model(
-        exercise["exerciseId"],
-        exercise["exerciseName"],
-        exercise["exerciseDescription"],
-        exercise["exerciseWeightTypeName"],
-        exercise["exerciseMuscleTypeName"],
-        exercise["exerciseMovementTypeName"],
-        muscleGroups,
+      Superset sup = Superset.notDeletable(
+        superset["supersetName"], supExercises
       );
 
       setState(()
       {
-        this._exercises.add(ex);
+        this._supersets.add(sup);
       });
     }
   }
@@ -173,7 +179,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
         margin: EdgeInsets.only(left: 15, right: 15, top: 15),
         alignment: Alignment.topCenter,
         child: Center(
-          child: _loadingErrorMsg
+          child: _loadingErrorMsg,
         ),
       );
     }
@@ -190,7 +196,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
                 child: StrydeExerciseSearchableListView(
                   listTileDisplayText: _listTileDisplayText,
                   onTapListTile: (BuildContext context, int index) =>
-                                  _onTapExerciseListTile(context, index),
+                                  _onTapSupersetListTile(context, index),
                 ),
               ),
               Container(
@@ -205,7 +211,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 5),
-                      child: _selectExercisesTagDisplay,
+                      child: _selectSupersetsTagDisplay,
                     ),
                   ],
                 ),
@@ -227,21 +233,21 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
 
 
-  void _onTapExerciseListTile(BuildContext context, int index)
+  void _onTapSupersetListTile(BuildContext context, int index)
   {
-    _selectedExercises.add(_exercises[index]);
+    _selectedSupersets.add(_supersets[index]);
 
     setState(()
     {
-      _selectExercisesTagDisplay.addTag(_listTileDisplayText[index]);
+      _selectSupersetsTagDisplay.addTag(_listTileDisplayText[index]);
     });
   }
 
-  void _onDeselectExerciseTag(int index, String displayStr)
+  void _onDeselectSupersetTag(int index, String displayStr)
   {
     setState(()
     {
-      _selectedExercises.removeAt(index);
+      _selectedSupersets.removeAt(index);
     });
   }
 
@@ -250,7 +256,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   Future<bool> _onBackButtonPressed(BuildContext context) async
   {
     // Send the selected exercises back to the previous screen
-    NavigateTo.previousScreenWithData(context, _selectedExercises);
+    NavigateTo.previousScreenWithData(context, _selectedSupersets);
 
     // True vs False doesn't matter in this case
     return true;
@@ -266,7 +272,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       child: _getWidgetToDisplay(),
       /*
       child: Scaffold(
-        appBar: StrydeAppBar(titleStr: "Add Exercise"),
+        appBar: StrydeAppBar(titleStr: "Add Superset"),
         body: _getWidgetToDisplay()
       ),
        */

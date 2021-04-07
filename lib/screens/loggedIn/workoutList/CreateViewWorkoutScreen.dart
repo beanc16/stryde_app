@@ -2,9 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
 import 'package:workout_buddy/components/formHelpers/TextElements.dart';
+import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:workout_buddy/components/toggleableWidget/EmptyWidget.dart';
 import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
+import 'package:workout_buddy/components/willPopScope/WillPopScopeSaveDontSave.dart';
 import 'package:workout_buddy/models/Exercise.dart';
 import 'package:workout_buddy/models/Workout.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
@@ -12,6 +16,9 @@ import 'package:workout_buddy/utilities/NavigateTo.dart';
 import 'package:workout_buddy/utilities/TextHelpers.dart';
 import 'package:workout_buddy/utilities/UiHelpers.dart';
 import 'package:workout_buddy/screens/loggedIn/workoutList/EditWorkoutScreen.dart';
+
+import 'AllExerciseAndSupersetListScreen.dart';
+import 'EditExerciseInformationScreen.dart';
 
 
 class CreateViewWorkoutScreen extends StatefulWidget
@@ -224,7 +231,8 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   void _onTapAddButton() async
   {
     List<dynamic> exercisesToAdd = await NavigateTo.screenReturnsData(
-      context, () => AllExerciseListScreen()
+      //context, () => AllExerciseListScreen()
+      context, () => AllExerciseAndSupersetListScreen()
     );
 
     if (exercisesToAdd != null && exercisesToAdd.length > 0)
@@ -263,22 +271,69 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
 
 
+  Future<dynamic> _onSave(BuildContext context)
+  {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context)
+      {
+        return Dialog(
+
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              getDefaultPadding(),
+
+              StrydeProgressIndicator(),
+              getDefaultPadding(),
+
+              Text(
+                "Saving...",
+                style: TextStyle(
+                  color: StrydeColors.darkGray
+                ),
+              ),
+              getDefaultPadding(),
+            ],
+          )
+        );
+      }
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context)
   {
-    return Scaffold(
-      appBar: StrydeAppBar(titleStr: "View Workout"),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(left: 15, right: 15),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: getChildren(),
+    /*
+    workout.updateOnTapFunc((BuildContext context, dynamic exercise)
+    {
+      NavigateTo.screen(
+        context,
+        () => EditExerciseInformationScreen(exercise)
+      );
+    });
+    */
+
+    return WillPopScopeSaveDontSave(
+      onSave: (BuildContext context) => _onSave(context),
+      child: Scaffold(
+        appBar: StrydeAppBar(titleStr: "View Workout"),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: getChildren(),
+            )
           )
-        )
-      ),
+        ),
+      )
     );
   }
 }

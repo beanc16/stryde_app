@@ -30,6 +30,7 @@ dependencies:
   universal_io: ^1.0.2          # To fix Platform.environment not working in browsers
   multi_select_flutter: ^4.0.0  # Multi select dropdown menus
   syncfusion_flutter_calendar: ^18.4.49   # For calendar
+  editable: ^2.0.0              # For editable spreadsheet-like tables
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeWorkoutAndSupertsetTabMenu.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/WorkoutListScreen.dart';
-import 'SupersetListScreen.dart';
+import 'package:workout_buddy/screens/loggedIn/workoutList/UserWorkoutListScreen.dart';
+import 'UserSupersetListScreen.dart';
 
 
 class WorkoutAndSupersetListScreen extends StatelessWidget
@@ -12,8 +12,8 @@ class WorkoutAndSupersetListScreen extends StatelessWidget
   WorkoutAndSupersetListScreen()
   {
     _screens = [
-      WorkoutListScreen(),
-      SupersetListScreen()
+      UserWorkoutListScreen(),
+      UserSupersetListScreen()
     ];
   }
 
@@ -22,6 +22,6 @@ class WorkoutAndSupersetListScreen extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
-    return StrydeWorkoutAndSupertsetTabMenu(screens: _screens);
+    return StrydeWorkoutAndSupersetTabMenu(screens: _screens);
   }
 }

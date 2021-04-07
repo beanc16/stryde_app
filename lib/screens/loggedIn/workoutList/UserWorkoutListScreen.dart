@@ -15,7 +15,7 @@ import 'package:workout_buddy/utilities/UiHelpers.dart';
 import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
 
 
-class WorkoutListScreen extends StatefulWidget
+class UserWorkoutListScreen extends StatefulWidget
 {
   @override
   State<StatefulWidget> createState()
@@ -26,8 +26,8 @@ class WorkoutListScreen extends StatefulWidget
 
 
 
-class WorkoutListState extends State<WorkoutListScreen> with
-    AutomaticKeepAliveClientMixin<WorkoutListScreen>
+class WorkoutListState extends State<UserWorkoutListScreen> with
+    AutomaticKeepAliveClientMixin<UserWorkoutListScreen>
 {
   List<Workout> _workouts;
   ListView _listView;
@@ -210,7 +210,10 @@ class WorkoutListState extends State<WorkoutListScreen> with
     {
       return Container(
         margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-        child: _loadingErrorMsg,
+        alignment: Alignment.topCenter,
+        child: Center(
+          child: _loadingErrorMsg,
+        ),
       );
     }
 

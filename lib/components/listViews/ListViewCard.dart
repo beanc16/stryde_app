@@ -10,18 +10,58 @@ class ListViewCard extends StatefulWidget
   bool shouldLeftIndent;
   bool isReorderable = true;
   Function() onDeleteListViewCard;
+  Function(BuildContext, dynamic) onTap;
   ListViewCardState state;
+  dynamic data;
 
   ListViewCard(this.title, this.description, this.key,
-               this.shouldLeftIndent, this.onDeleteListViewCard);
+               this.shouldLeftIndent, this.onDeleteListViewCard,
+               {
+                 Function(BuildContext, dynamic) onTap,
+                 dynamic data
+               })
+  {
+    this.data = data;
+    
+    if (onTap != null)
+    {
+      this.onTap = onTap;
+    }
+    
+    else
+    {
+      this.onTap = (BuildContext, dynamic)
+      {
+      };
+    }
+  }
 
-  ListViewCard.notReorderable(this.title, this.description, this.key, this.shouldLeftIndent)
+  ListViewCard.notReorderable(this.title, this.description, this.key, 
+                              this.shouldLeftIndent,
+                              {
+                                Function(BuildContext, dynamic) onTap,
+                                dynamic data
+                              })
   {
     this.isReorderable = false;
-    onDeleteListViewCard = ()
+    this.data = data;
+    
+    this.onDeleteListViewCard = ()
     {
       // Do nothing, the delete button won't be displayed
     };
+    
+    if (onTap != null)
+    {
+      this.onTap = onTap;
+    }
+
+    else
+    {
+      this.onTap = (BuildContext, dynamic)
+      {
+      };
+    }
   }
 
 
@@ -32,7 +72,9 @@ class ListViewCard extends StatefulWidget
     state = ListViewCardState(
       this.shouldLeftIndent,
       this.isReorderable,
-      this.onDeleteListViewCard
+      this.onDeleteListViewCard,
+      this.onTap,
+      this.data,
     );
 
     return state;
@@ -107,8 +149,11 @@ class ListViewCardState extends State<ListViewCard>
   bool shouldLeftIndent;
   bool isReorderable;
   Function() onDeleteListViewCard;
+  Function(BuildContext, dynamic) onTap;
+  dynamic data;
 
-  ListViewCardState(this.shouldLeftIndent, this.isReorderable, this.onDeleteListViewCard);
+  ListViewCardState(this.shouldLeftIndent, this.isReorderable, 
+                    this.onDeleteListViewCard, this.onTap, this.data);
 
 
 
@@ -156,9 +201,7 @@ class ListViewCardState extends State<ListViewCard>
       child: InkWell(
         splashColor: this._getSplashColor(),
 
-        onTap: (()
-        {
-        }),
+        onTap: () => this.onTap(context, data),
 
         child: Row(
           mainAxisSize: MainAxisSize.min,

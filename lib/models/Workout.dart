@@ -246,6 +246,49 @@ class Workout
     }
   }
 
+  void updateOnTapFunc(Function(BuildContext, dynamic) onTap)
+  {
+    for (Object exerciseOrSuperset in exercisesAndSupersets)
+    {
+      if (exerciseOrSuperset is Superset)
+      {
+        // Update superset's onTap
+        _updateOnTapFunc(exerciseOrSuperset, onTap);
+
+        // Update each superset exercise's onTap
+        for (Exercise exercise in exerciseOrSuperset.exercises)
+        {
+          _updateOnTapFunc(exercise, onTap);
+        }
+      }
+
+      // Update exercise's onTap
+      else if (exerciseOrSuperset is Exercise)
+      {
+        _updateOnTapFunc(exerciseOrSuperset, onTap);
+      }
+    }
+  }
+
+  void _updateOnTapFunc(Object exerciseOrSuperset,
+                        Function(BuildContext, dynamic) onTap)
+  {
+    if (exerciseOrSuperset is Exercise)
+    {
+      ExerciseListViewCard exerciseListViewCard =
+          exerciseOrSuperset.exerciseListViewCard;
+      exerciseListViewCard.onTap = onTap;
+    }
+
+    else if (exerciseOrSuperset is Superset)
+    {
+      SupersetListViewHeader listViewHeader =
+          exerciseOrSuperset.listViewHeader;
+      // TODO: Add onTap to superset headers
+      //listViewHeader.onTap = onTap;
+    }
+  }
+
 
 
   @override

@@ -3,14 +3,14 @@ import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.da
 import 'package:workout_buddy/components/uiHelpers/TabMenuMultiPageScrollingWidget.dart';
 
 
-class StrydeWorkoutAndSupersetTabMenu extends TabMenuMultiPageScrollingWidget
+class StrydeExerciseAndSupersetTabMenu extends TabMenuMultiPageScrollingWidget
 {
-  StrydeWorkoutAndSupersetTabMenu({
+  StrydeExerciseAndSupersetTabMenu({
     @required List<Widget> screens
   }) :
       super(
         screens: screens,
-        tabsDisplayText: ["Workouts", "Supersets"],
+        tabsDisplayText: ["Exercises", "Supersets"],
         tabBarSelectedItemColor: StrydeColors.lightBlue,
         tabBarUnselectedItemColor: StrydeColors.darkGray,
       );
