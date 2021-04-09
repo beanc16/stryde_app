@@ -1,7 +1,7 @@
-import 'package:workout_buddy/models/ExerciseMovementType.dart';
-import 'package:workout_buddy/models/ExerciseMuscleType.dart';
-import 'package:workout_buddy/models/ExerciseWeightType.dart';
-import 'package:workout_buddy/models/MuscleGroup.dart';
+import 'package:Stryde/models/ExerciseMovementType.dart';
+import 'package:Stryde/models/ExerciseMuscleType.dart';
+import 'package:Stryde/models/ExerciseWeightType.dart';
+import 'package:Stryde/models/MuscleGroup.dart';
 
 
 class StrydeConstants

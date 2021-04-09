@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
 
 
 
 class StrydeButton extends StatelessWidget
 {
-  String _displayText;
-  double _textSize;
-  Function() _onTap;
+  late final String _displayText;
+  late final double _textSize;
+  late final Function()? _onTap;
 
-  StrydeButton({@required String displayText,
-                @required double textSize,
-                @required Function() onTap})
+  StrydeButton({required String displayText,
+                required double textSize,
+                required Function()? onTap})
   {
     this._displayText = displayText;
     this._textSize = textSize;

@@ -1,11 +1,11 @@
-import 'package:workout_buddy/models/enums/ExerciseMovementTypeEnum.dart';
+import 'package:Stryde/models/enums/ExerciseMovementTypeEnum.dart';
 
 
 
 class ExerciseMovementType
 {
-  int id;
-  ExerciseMovementTypeEnum value;
+  late final int? id;
+  late final ExerciseMovementTypeEnum value;
 
   ExerciseMovementType(String exerciseMovementType)
   {

@@ -1,29 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/toggleableWidget/EmptyWidget.dart';
-import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
-import 'package:workout_buddy/components/willPopScope/WillPopScopeSaveDontSave.dart';
-import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/models/Workout.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
-import 'package:workout_buddy/utilities/TextHelpers.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/EditWorkoutScreen.dart';
-
+import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
+import 'package:Stryde/components/formHelpers/TextElements.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:Stryde/components/willPopScope/WillPopScopeSaveDontSave.dart';
+import 'package:Stryde/models/Workout.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
+import 'package:Stryde/screens/loggedIn/workoutList/EditWorkoutScreen.dart';
 import 'AllExerciseAndSupersetListScreen.dart';
-import 'EditExerciseInformationScreen.dart';
 
 
 class CreateViewWorkoutScreen extends StatefulWidget
 {
-  Workout workout;
+  Workout? workout;
 
   CreateViewWorkoutScreen();
   CreateViewWorkoutScreen.workout(this.workout);
@@ -35,7 +28,7 @@ class CreateViewWorkoutScreen extends StatefulWidget
   {
     if (this.workout != null)
     {
-      return CreateViewWorkoutState.workout(this.workout);
+      return CreateViewWorkoutState.workout(this.workout!);
     }
 
     else
@@ -49,10 +42,10 @@ class CreateViewWorkoutScreen extends StatefulWidget
 
 class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 {
-  Workout workout;
-  LabeledTextInputElement _titleInput;
-  LabeledTextInputElement _descriptionInput;
-  List<dynamic> _listViewElements;
+  late Workout workout;
+  late final LabeledTextInputElement _titleInput;
+  late final LabeledTextInputElement _descriptionInput;
+  late List<dynamic> _listViewElements;
 
 
   CreateViewWorkoutState()
@@ -210,7 +203,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   Widget _getEditButton()
   {
     // Disable the button if there IS NO exercises or supersets
-    if (workout == null || workout.hasNoExercisesOrSupersets())
+    if (workout.hasNoExercisesOrSupersets())
     {
       return StrydeButton(
         displayText: "Edit", textSize: 14, onTap: null
@@ -230,12 +223,12 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
   void _onTapAddButton() async
   {
-    List<dynamic> exercisesToAdd = await NavigateTo.screenReturnsData(
+    List<Object> exercisesToAdd = await NavigateTo.screenReturnsData(
       //context, () => AllExerciseListScreen()
       context, () => AllExerciseAndSupersetListScreen()
     );
 
-    if (exercisesToAdd != null && exercisesToAdd.length > 0)
+    if (exercisesToAdd.length > 0)
     {
       setState(()
       {

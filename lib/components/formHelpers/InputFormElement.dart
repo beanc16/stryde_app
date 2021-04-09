@@ -9,9 +9,9 @@ class InputFormElement extends StatefulWidget
 {
   // Variables
   final String _placeholderText;
-  TextInputType _inputType;
-  TextEditingController textEditingController;
-  bool _obscureText;
+  late TextInputType _inputType;
+  late TextEditingController textEditingController;
+  late bool _obscureText;
   final int inputTextSize;
   final int placeholderTextSize;
 
@@ -111,7 +111,7 @@ class InputFormElementState extends State<InputFormElement>
   final TextInputType _inputType;
   final TextEditingController textEditingController;
   final bool _obscureText;
-  TextField inputElement;
+  late TextField inputElement;
   final int inputTextSize;
   final int placeholderTextSize;
 
@@ -121,7 +121,7 @@ class InputFormElementState extends State<InputFormElement>
                         {this.inputTextSize = FormSettings.defaultInputTextSize,
                          this.placeholderTextSize = FormSettings.defaultPlaceholderTextSize})
   {
-    int maxLines = 1;
+    int? maxLines = 1;
     if (this._inputType == TextInputType.multiline)
     {
       maxLines = null;

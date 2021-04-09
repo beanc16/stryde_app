@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeExerciseAndSupersetTabMenu.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeWorkoutAndSupertsetTabMenu.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
-
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeExerciseAndSupersetTabMenu.dart';
+import 'package:Stryde/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
 import 'AllSupersetListScreen.dart';
 
 
 class AllExerciseAndSupersetListScreen extends StatelessWidget
 {
-  List<Widget> _screens;
+  late List<Widget> _screens;
 
   AllExerciseAndSupersetListScreen()
   {

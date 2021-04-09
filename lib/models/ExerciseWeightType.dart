@@ -4,8 +4,8 @@ import 'enums/ExerciseWeightTypeEnum.dart';
 
 class ExerciseWeightType
 {
-  int id;
-  ExerciseWeightTypeEnum value;
+  late final int? id;
+  late final ExerciseWeightTypeEnum value;
 
   ExerciseWeightType(String exerciseWeightType)
   {

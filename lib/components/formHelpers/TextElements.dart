@@ -47,8 +47,8 @@ class LabeledTextInputElement extends StatelessWidget
 {
   String _labelText;
   String _placeholderText;
-  String _value;
-  TextInputElement inputElement;
+  late String _value;
+  late TextInputElement inputElement;
   int labelTextSize;
 
 
@@ -103,9 +103,12 @@ class LabeledTextInputElement extends StatelessWidget
     return this.inputElement.getInputText();
   }
 
-  void setInputText(String str)
+  void setInputText(String? str)
   {
-    this.inputElement.setInputText(str);
+    if (str != null)
+    {
+      this.inputElement.setInputText(str);
+    }
   }
 
 

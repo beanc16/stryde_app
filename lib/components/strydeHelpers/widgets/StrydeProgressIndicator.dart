@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 
 
 class StrydeProgressIndicator extends CircularProgressIndicator

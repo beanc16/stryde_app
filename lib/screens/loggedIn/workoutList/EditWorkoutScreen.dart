@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/listViews/ListViewCard.dart';
-import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/willPopScope/WillPopScopeSaveDontSave.dart';
-import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/models/Superset.dart';
-import 'package:workout_buddy/models/Workout.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
+import 'package:Stryde/components/listViews/ListViewCard.dart';
+import 'package:Stryde/components/listViews/ListViewHeader.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:Stryde/models/Exercise.dart';
+import 'package:Stryde/models/Superset.dart';
+import 'package:Stryde/models/Workout.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
 
 
 class EditWorkoutScreen extends StatefulWidget
@@ -31,8 +28,8 @@ class EditWorkoutScreen extends StatefulWidget
 
 class EditWorkoutState extends State<EditWorkoutScreen>
 {
-  List<Widget> listViewWidgets = [];
-  Workout workout;
+  late List<Widget> listViewWidgets = [];
+  final Workout workout;
 
   EditWorkoutState(this.workout);
 
@@ -41,10 +38,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
   {
     super.initState();
 
-    if (workout != null)
-    {
-      listViewWidgets = workout.getAsWidgets();
-    }
+    listViewWidgets = workout.getAsWidgets();
 
     int index = 0;
     for (Widget widget in listViewWidgets)
@@ -68,6 +62,8 @@ class EditWorkoutState extends State<EditWorkoutScreen>
         index++;
       }
     }
+
+    print(listViewWidgets.toString());
   }
 
 
@@ -75,7 +71,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
   Workout getListViewAsWorkout()
   {
     List<Object> models = [];
-    Superset curSuperset = null;
+    late Superset curSuperset;
     bool inSuperset = false;
 
     for (int i = 0; i < listViewWidgets.length; i++)
@@ -130,7 +126,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
   List<Object> getListViewAsExercisesAndSupersets()
   {
     List<Object> models = [];
-    Superset curSuperset = null;
+    Superset curSuperset = Superset.notDeletable("", []); // Same as a null superset
     bool inSuperset = false;
 
     for (int i = 0; i < listViewWidgets.length; i++)
@@ -223,20 +219,23 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     listViewWidgets.insertAll(newStartIndex, removedWidgets);
   }
 
-  void updateExerciseIndent(int index, ExerciseListViewCard exerciseCard)
+  void updateExerciseIndent(int index, Widget exerciseCard)
   {
-    bool isInSuperset = widgetIsInSuperset(index);
-
-    // In a superset but not indented
-    if (isInSuperset && !exerciseCard.isIndented())
+    if (exerciseCard is ExerciseListViewCard)
     {
-      exerciseCard.updateIndent(true);
-    }
+      bool isInSuperset = widgetIsInSuperset(index);
 
-    // Not in a superset but indented
-    else if (!isInSuperset && exerciseCard.isIndented())
-    {
-      exerciseCard.updateIndent(false);
+      // In a superset but not indented
+      if (isInSuperset && !exerciseCard.isIndented())
+      {
+        exerciseCard.updateIndent(true);
+      }
+
+      // Not in a superset but indented
+      else if (!isInSuperset && exerciseCard.isIndented())
+      {
+        exerciseCard.updateIndent(false);
+      }
     }
   }
 
@@ -289,7 +288,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
       }
     }
 
-    return null;
+    return -1;
   }
 
   bool widgetIsInSuperset(int index)
@@ -374,23 +373,5 @@ class EditWorkoutState extends State<EditWorkoutScreen>
         )
       ),
     );
-
-    /*
-    return WillPopScopeSaveDontSave(
-      buttonTextColor: StrydeColors.lightBlue,
-      onSave: (BuildContext context) => _onSave(context),
-
-      child: Scaffold(
-        appBar: StrydeAppBar(titleStr: "Edit Workout"),
-        body: ReorderableListView(
-          children: listViewWidgets,
-          scrollDirection: Axis.vertical,
-
-          onReorder: (int oldIndex, int newIndex) =>
-              _onReorder(oldIndex, newIndex)
-        ),
-      ),
-    );
-    */
   }
 }

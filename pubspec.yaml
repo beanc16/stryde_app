@@ -1,5 +1,5 @@
-name: workout_buddy
-description: A new Flutter project.
+name: Stryde
+description: A website & app that enables users to create custom workouts.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -18,24 +18,27 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.0                 # For HTTP requests
-  flutter_svg: ^0.19.3          # Display svg logo in AppBar
-  flutter_icons: ^1.1.0         # For more icons
-  flutter_dotenv: ^3.1.0        # For .env variables
-  universal_io: ^1.0.2          # To fix Platform.environment not working in browsers
+  flutter_svg: ^0.21.0+1        # Display svg logo in AppBar
+  flutter_dotenv: ^4.0.0-nullsafety.0     # For .env variables
+  universal_io: ^2.0.4          # To fix Platform.environment not working in browsers
   multi_select_flutter: ^4.0.0  # Multi select dropdown menus
-  syncfusion_flutter_calendar: ^18.4.49   # For calendar
+  syncfusion_flutter_calendar: ^19.1.55   # For calendar
   editable: ^2.0.0              # For editable spreadsheet-like tables
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.1
+
+# Needed or error occurs in console
+dependency_overrides:
+  crypto: ^3.0.0                # Dependency for universal_io
 
 dev_dependencies:
   flutter_test:

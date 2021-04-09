@@ -18,18 +18,18 @@ class CalendarEventDataSource extends CalendarDataSource
 
 
   // Events
-  List<CalendarEvent> getEvents()
+  List<dynamic>? getEvents()
   {
-    return appointments;
+    return super.appointments;
   }
 
   void addCalendarEvent(CalendarEvent event)
   {
-    appointments.add(event);
+    appointments?.add(event);
   }
 
   void addEvent(String eventName, DateTime to, DateTime from,
-                {Color backgroundColor})
+                {Color? backgroundColor})
   {
     CalendarEvent event = CalendarEvent(
       eventName, to, from,
@@ -40,7 +40,7 @@ class CalendarEventDataSource extends CalendarDataSource
 
   void removeEvent(CalendarEvent event)
   {
-    appointments.remove(event);
+    appointments?.remove(event);
   }
 
 
@@ -49,30 +49,30 @@ class CalendarEventDataSource extends CalendarDataSource
   @override
   DateTime getStartTime(int index)
   {
-    return appointments[index].startTime;
+    return appointments?[index].startTime;
   }
 
   @override
   DateTime getEndTime(int index)
   {
-    return appointments[index].endTime;
+    return appointments?[index].endTime;
   }
 
   @override
   String getSubject(int index)
   {
-    return appointments[index].eventName;
+    return appointments?[index].eventName;
   }
 
   @override
   Color getColor(int index)
   {
-    return appointments[index].backgroundColor;
+    return appointments?[index].backgroundColor;
   }
 
   @override
   bool isAllDay(int index)
   {
-    return appointments[index].isAllDay;
+    return appointments?[index].isAllDay;
   }
 }

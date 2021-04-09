@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/tagDisplay/MultiTagDisplay.dart';
-import 'package:workout_buddy/components/tagDisplay/MultiTagDisplayAs.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/tagDisplay/MultiTagDisplay.dart';
 
 
 class StrydeMultiTagDisplay extends MultiTagDisplay
 {
   StrydeMultiTagDisplay({
-    @required List<String> displayText,
-    Function(int, String) onDeleteTag,
+    required List<String> displayText,
+    Function(int, String)? onDeleteTag,
   }) :
       super(
         displayText: displayText,

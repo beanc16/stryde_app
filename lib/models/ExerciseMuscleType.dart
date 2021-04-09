@@ -4,8 +4,8 @@ import 'enums/ExerciseMuscleTypeEnum.dart';
 
 class ExerciseMuscleType
 {
-  int id;
-  ExerciseMuscleTypeEnum value;
+  late final int? id;
+  late final ExerciseMuscleTypeEnum value;
 
   ExerciseMuscleType(String exerciseMuscleType)
   {

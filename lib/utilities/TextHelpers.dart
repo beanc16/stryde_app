@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 class TextHeader extends StatelessWidget
 {
-  String _displayText;
-  double _fontSize;
-  Color _color;
+  late final String _displayText;
+  late final double _fontSize;
+  late final Color? _color;
 
   TextHeader({
-    @required String displayText,
-    @required double fontSize,
-    Color color
+    required String displayText,
+    required double fontSize,
+    Color? color
   })
   {
     _displayText = displayText;
@@ -38,12 +38,12 @@ class TextHeader extends StatelessWidget
 
 class TextHeader1 extends StatelessWidget
 {
-  String _displayText;
-  Color _color;
+  late final String _displayText;
+  late final Color? _color;
 
   TextHeader1({
-    @required String displayText,
-    Color color
+    required String displayText,
+    Color? color
   })
   {
     _displayText = displayText;
@@ -67,12 +67,12 @@ class TextHeader1 extends StatelessWidget
 
 class TextHeader2 extends StatelessWidget
 {
-  String _displayText;
-  Color _color;
+  late final String _displayText;
+  late final Color? _color;
 
   TextHeader2({
-    @required String displayText,
-    Color color
+    required String displayText,
+    Color? color
   })
   {
     _displayText = displayText;

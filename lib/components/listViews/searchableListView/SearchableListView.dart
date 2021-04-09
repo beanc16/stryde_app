@@ -7,20 +7,20 @@ import 'SearchableListViewBody.dart';
 class SearchableListView extends StatefulWidget
 {
   List<String> _listTileDisplayText;
-  String _searchBarPlaceholderText;
-  double _textSize;
-  Color _textColor;
-  Function _onTapListTile;
-  Color _onTapColor;
-  double _borderWidth;
-  Color _borderColor;
-  double _spaceBetweenTiles;
+  late final String _searchBarPlaceholderText;
+  late final double _textSize;
+  late Color? _textColor;
+  late Function(BuildContext, int)? _onTapListTile;
+  late final Color _onTapColor;
+  late final double _borderWidth;
+  late final Color _borderColor;
+  late final double _spaceBetweenTiles;
 
   SearchableListView(this._listTileDisplayText, {
     String searchBarPlaceholderText = "Search Here...",
     double textSize = 20,
-    Color textColor,
-    Function onTapListTile,
+    Color? textColor,
+    Function(BuildContext, int)? onTapListTile,
     Color onTapColor = Colors.lightBlue,
     double borderWidth = 0,
     Color borderColor = Colors.black,
@@ -71,15 +71,15 @@ class SearchableListViewState extends State<SearchableListView>
   List<String> _listTileDisplayText = [];
   List<String> _listTileAllText = [];
   String _searchBarPlaceholderText;
-  int _prevSearchLength;
+  late int _prevSearchLength;
   double _textSize;
-  Color _textColor;
-  Function _onTapListTile;
+  Color? _textColor;
+  Function(BuildContext, int)? _onTapListTile;
   Color _onTapColor;
   double _borderWidth;
   Color _borderColor;
   double _spaceBetweenTiles;
-  SearchableListViewBody _searchableListViewBody;
+  late SearchableListViewBody _searchableListViewBody;
 
   SearchableListViewState(this._listTileAllText,
                           this._searchBarPlaceholderText,

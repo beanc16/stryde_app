@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/listViews/ListViewHeader.dart';
-import 'package:workout_buddy/models/Exercise.dart';
+import 'package:Stryde/components/listViews/ListViewHeader.dart';
+import 'package:Stryde/models/Exercise.dart';
 
 
 
 class Superset
 {
-  final String name;
-  List<Exercise> exercises;
-  SupersetListViewHeader listViewHeader;
-  bool isReorderable = true;
+  late final String name;
+  late List<Exercise> exercises;
+  late SupersetListViewHeader listViewHeader;
+  late bool isReorderable = true;
 
   Superset(this.name, this.exercises,
            Function() onDeleteListViewHeader)

@@ -14,10 +14,10 @@ Center getCircularProgressIndicatorCentered()
 
 // Raised Button
 RaisedButton getRaisedButton(String displayText, double fontSize,
-                             Function() callback,
-                             {Color textColor, Color buttonColor,
-                              Color disabledTextColor,
-                              Color disabledColor})
+                             Function()? callback,
+                             {Color? textColor, Color? buttonColor,
+                              Color? disabledTextColor,
+                              Color? disabledColor})
 {
   return RaisedButton(
     child: Padding(

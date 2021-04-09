@@ -1,3 +1,5 @@
+import 'package:Stryde/components/toggleableWidget/ToggleableWidgetBody.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidgetController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'EmptyWidget.dart';
@@ -5,26 +7,26 @@ import 'EmptyWidget.dart';
 
 class ToggleableWidget extends StatefulWidget
 {
-  Widget _child;
-  Widget _loadingIndicator;
-  bool _isLoading;
-  bool _showLoadingIndicatorOnLoading;
-  bool _hideAllChildren;
-  ToggleableWidgetState _state;
+  late final Widget _child;
+  late final Widget _loadingIndicator;
+  late bool _showLoadingIndicatorOnLoading;
+  late final ToggleableWidgetController _controller;
 
 
   ToggleableWidget({
-    @required Widget child,
-    Widget loadingIndicator,
+    required Widget child,
+    Widget? loadingIndicator,
     bool showLoadingIndicatorOnLoading = true,
     bool isLoading = false,
     bool hideOnStartup = false,
   })
   {
     this._child = child;
-    this._isLoading = isLoading;
     this._showLoadingIndicatorOnLoading = showLoadingIndicatorOnLoading;
-    this._hideAllChildren = hideOnStartup;
+    this._controller = ToggleableWidgetController(
+      isLoading: isLoading,
+      hideOnStartup: hideOnStartup,
+    );
 
     if (loadingIndicator == null)
     {
@@ -45,24 +47,14 @@ class ToggleableWidget extends StatefulWidget
 
 
 
-  void _setIsLoading(bool isLoading)
+  void setIsLoading(bool isLoading)
   {
-    if (_state != null)
-    {
-      this._state.setIsLoading(isLoading);
-    }
-
-    this._isLoading = isLoading;
+    _controller.setIsLoading(isLoading);
   }
 
-  void _setHideAllChildren(bool shouldHideAllChildren)
+  void setHideAllChildren(bool shouldHideAllChildren)
   {
-    if (_state != null)
-    {
-      this._state.setHideAllChildren(shouldHideAllChildren);
-    }
-
-    this._hideAllChildren = shouldHideAllChildren;
+    _controller.setHideAllChildren(shouldHideAllChildren);
   }
 
   void showChildAfter(Duration duration) async
@@ -80,7 +72,7 @@ class ToggleableWidget extends StatefulWidget
 
   void showChild()
   {
-    this._setIsLoading(false);
+    this.setIsLoading(false);
     this.showChildOrLoadingIcon();
   }
 
@@ -92,7 +84,7 @@ class ToggleableWidget extends StatefulWidget
 
   void hideChild()
   {
-    this._setIsLoading(true);
+    this.setIsLoading(true);
   }
 
   void showLoadingIconAfter(Duration duration) async
@@ -103,7 +95,7 @@ class ToggleableWidget extends StatefulWidget
 
   void showLoadingIcon()
   {
-    this._setIsLoading(true);
+    this.setIsLoading(true);
     this.showChildOrLoadingIcon();
   }
 
@@ -115,7 +107,7 @@ class ToggleableWidget extends StatefulWidget
 
   void hideLoadingIcon()
   {
-    this._setIsLoading(false);
+    this.setIsLoading(false);
   }
 
   void showChildOrLoadingIconAfter(Duration duration) async
@@ -126,7 +118,7 @@ class ToggleableWidget extends StatefulWidget
 
   void showChildOrLoadingIcon()
   {
-    this._setHideAllChildren(false);
+    this.setHideAllChildren(false);
   }
 
   void hideChildAndLoadingIconAfter(Duration duration) async
@@ -137,51 +129,49 @@ class ToggleableWidget extends StatefulWidget
 
   void hideChildAndLoadingIcon()
   {
-    this._setHideAllChildren(true);
+    this.setHideAllChildren(true);
   }
 
 
 
   bool childIsVisible()
   {
-    return !this._isLoading;
+    return !_controller.isLoading;
   }
 
   bool childIsHidden()
   {
-    return this._isLoading;
+    return _controller.isLoading;
   }
 
   bool loadingIconIsVisible()
   {
-    return this._isLoading;
+    return _controller.isLoading;
   }
 
   bool loadingIconIsHidden()
   {
-    return !this._isLoading;
+    return !_controller.isLoading;
   }
 
   bool childOrLoadingIconIsVisible()
   {
-    return !this._hideAllChildren;
+    return !_controller.hideAllChildren;
   }
 
   bool childAndLoadingIconAreHidden()
   {
-    return this._hideAllChildren;
+    return _controller.hideAllChildren;
   }
 
 
   @override
   State<StatefulWidget> createState()
   {
-    this._state = ToggleableWidgetState(this._child,
-                                        this._loadingIndicator,
-                                        this._isLoading,
-                                        this._showLoadingIndicatorOnLoading,
-                                        this._hideAllChildren);
-    return this._state;
+    return ToggleableWidgetState(this._child,
+                                 this._loadingIndicator,
+                                 this._showLoadingIndicatorOnLoading,
+                                 this._controller);
   }
 }
 
@@ -191,14 +181,39 @@ class ToggleableWidgetState extends State<ToggleableWidget>
 {
   Widget _child;
   Widget _loadingIndicator;
-  bool _isLoading;
   bool _showLoadingIndicatorOnLoading;
-  bool _hideAllChildren;
+  late bool _isLoading;
+  late bool _hideAllChildren;
+  final ToggleableWidgetController _controller;
 
   ToggleableWidgetState(this._child, this._loadingIndicator,
-                        this._isLoading,
                         this._showLoadingIndicatorOnLoading,
-                        this._hideAllChildren);
+                        this._controller)
+  {
+    this._isLoading = this._controller.isLoading;
+    this._hideAllChildren = this._controller.hideAllChildren;
+
+    _intializeListeners();
+  }
+
+  void _intializeListeners()
+  {
+    _controller.addListener(()
+    {
+      if (_controller.isLoading != this._isLoading)
+      {
+        setIsLoading(_controller.isLoading);
+      }
+    });
+
+    _controller.addListener(()
+    {
+      if (_controller.hideAllChildren != this._hideAllChildren)
+      {
+        setHideAllChildren(_controller.hideAllChildren);
+      }
+    });
+  }
 
 
 
@@ -218,39 +233,17 @@ class ToggleableWidgetState extends State<ToggleableWidget>
     });
   }
 
-  Widget _getDisplayWidget()
-  {
-    if (_hideAllChildren)
-    {
-      // Display a widget that takes up no space
-      return EmptyWidget();
-    }
-
-    else if (_isLoading && !_hideAllChildren)
-    {
-      if (_showLoadingIndicatorOnLoading)
-      {
-        return _loadingIndicator;
-      }
-
-      else
-      {
-        // Display a widget that takes up no space
-        return EmptyWidget();
-      }
-    }
-
-    else if (!_isLoading && !_hideAllChildren)
-    {
-      return _child;
-    }
-  }
-
 
 
   @override
   Widget build(BuildContext context)
   {
-    return _getDisplayWidget();
+    return ToggleableWidgetBody(
+      child: _child,
+      loadingIndicator: _loadingIndicator,
+      isLoading: _isLoading,
+      showLoadingIndicatorOnLoading: _showLoadingIndicatorOnLoading,
+      hideAllChildren: _hideAllChildren
+    );
   }
 }

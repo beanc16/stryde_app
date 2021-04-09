@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/formHelpers/multiSelectFlutterHelpers/MultiSelectBottomSheetChipDisplay.dart';
-import 'package:workout_buddy/components/formHelpers/multiSelectFlutterHelpers/SingleSelectBottomSheetChipDisplay.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeConstants.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
-import 'package:workout_buddy/models/ExerciseMovementType.dart';
-import 'package:workout_buddy/models/ExerciseMuscleType.dart';
-import 'package:workout_buddy/models/ExerciseWeightType.dart';
-import 'package:workout_buddy/models/MuscleGroup.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'package:Stryde/components/formHelpers/TextElements.dart';
+import 'package:Stryde/components/formHelpers/multiSelectFlutterHelpers/MultiSelectBottomSheetChipDisplay.dart';
+import 'package:Stryde/components/formHelpers/multiSelectFlutterHelpers/SingleSelectBottomSheetChipDisplay.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeConstants.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:Stryde/components/uiHelpers/SinglePageScrollingWidget.dart';
+import 'package:Stryde/models/ExerciseMovementType.dart';
+import 'package:Stryde/models/ExerciseMuscleType.dart';
+import 'package:Stryde/models/ExerciseWeightType.dart';
+import 'package:Stryde/models/MuscleGroup.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
 
 
 class CreateEditExerciseScreen extends StatefulWidget
@@ -29,12 +29,12 @@ class CreateEditExerciseScreen extends StatefulWidget
 
 class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
 {
-  LabeledTextInputElement _nameInput;
-  LabeledTextInputElement _descriptionInput;
-  MultiSelectBottomSheetChipDisplay _muscleGroupDropdown;
-  SingleSelectBottomSheetChipDisplay _weightTypeDropdown;
-  SingleSelectBottomSheetChipDisplay _muscleTypeDropdown;
-  SingleSelectBottomSheetChipDisplay _movementTypeDropdown;
+  late final LabeledTextInputElement _nameInput;
+  late final LabeledTextInputElement _descriptionInput;
+  late MultiSelectBottomSheetChipDisplay _muscleGroupDropdown;
+  late SingleSelectBottomSheetChipDisplay _weightTypeDropdown;
+  late SingleSelectBottomSheetChipDisplay _muscleTypeDropdown;
+  late SingleSelectBottomSheetChipDisplay _movementTypeDropdown;
 
   CreateEditExerciseScreenState()
   {

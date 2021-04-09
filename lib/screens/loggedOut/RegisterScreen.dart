@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
-import 'package:workout_buddy/components/toggleableWidget/ToggleableWidgetMap.dart';
-import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
-import 'package:workout_buddy/screens/loggedIn/HomeScreen.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
-import 'package:workout_buddy/utilities/TextHelpers.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
+import 'package:Stryde/components/formHelpers/TextElements.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidget.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidgetMap.dart';
+import 'package:Stryde/components/uiHelpers/SinglePageScrollingWidget.dart';
+import 'package:Stryde/screens/loggedIn/HomeScreen.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
+import 'package:Stryde/utilities/TextHelpers.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
+import 'package:Stryde/utilities/HttpQueryHelper.dart';
 
 class RegisterScreen extends StatelessWidget
 {
-  LabeledTextInputElement _usernameInput;
-  LabeledTextInputElement _passwordInput;
-  ToggleableWidgetMap<String> _toggleableWidgets;
+  late final LabeledTextInputElement _usernameInput;
+  late final LabeledTextInputElement _passwordInput;
+  late ToggleableWidgetMap<String> _toggleableWidgets;
 
 
   RegisterScreen()
@@ -96,13 +96,13 @@ class RegisterScreen extends StatelessWidget
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _toggleableWidgets.get("queryError")
+          _toggleableWidgets.get("queryError")!
         ],
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _toggleableWidgets.get("inputValidationError")
+          _toggleableWidgets.get("inputValidationError")!
         ],
       ),
 

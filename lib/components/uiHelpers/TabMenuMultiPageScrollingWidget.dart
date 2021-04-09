@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class TabMenuMultiPageScrollingWidget extends StatefulWidget
 {
-  List<Widget> _screens;
-  List<String> _tabsDisplayText;
-  Color _tabBarSelectedItemColor;
-  Color _tabBarUnselectedItemColor;
-  Color _tabBarBackgroundColor;
+  late List<Widget> _screens;
+  late List<String> _tabsDisplayText;
+  late final Color _tabBarSelectedItemColor;
+  late final Color _tabBarUnselectedItemColor;
+  late final Color _tabBarBackgroundColor;
 
   TabMenuMultiPageScrollingWidget({
-    @required List<Widget> screens,
-    @required List<String> tabsDisplayText,
+    required List<Widget> screens,
+    required List<String> tabsDisplayText,
     Color tabBarSelectedItemColor = Colors.blue,
     Color tabBarUnselectedItemColor = Colors.black,
     Color tabBarBackgroundColor = Colors.white,
@@ -46,9 +46,9 @@ class TabMenuMultiPageScrollingWidgetState extends State<TabMenuMultiPageScrolli
 {
   List<Widget> _screens = [];
   List<String> _tabsDisplayText = [];
-  Color _tabBarSelectedItemColor;
-  Color _tabBarUnselectedItemColor;
-  Color _tabBarBackgroundColor;
+  late Color _tabBarSelectedItemColor;
+  late Color _tabBarUnselectedItemColor;
+  late Color _tabBarBackgroundColor;
 
   TabMenuMultiPageScrollingWidgetState(
     List<Widget> screens,

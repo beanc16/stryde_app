@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/tagDisplay/MultiTagDisplayAs.dart';
+import 'package:Stryde/components/tagDisplay/MultiTagDisplayAs.dart';
 
 
 class Tag extends StatelessWidget
@@ -9,22 +9,22 @@ class Tag extends StatelessWidget
   static const Color _defaultTextColor = Colors.black;
   static const Color _defaultDeleteIconColor = Colors.black;
 
-  String _displayText;
-  Color _tagColor;
-  Color _textColor;
-  Function() _onDeleted;
-  Color _deleteIconColor;
-  EdgeInsets _padding;
-  UniqueKey _key;
+  late final String _displayText;
+  late final Color _tagColor;
+  late final Color _textColor;
+  late final Function()? _onDeleted;
+  late final Color _deleteIconColor;
+  late final EdgeInsets _padding;
+  late final UniqueKey? _key;
 
   Tag({
-    @required String displayText,
+    required String displayText,
     Color tagColor = _defaultTagColor,
     Color textColor = _defaultTextColor,
-    Function() onDeleted,
+    Function()? onDeleted,
     Color deleteIconColor = _defaultDeleteIconColor,
     EdgeInsets padding = EdgeInsets.zero,
-    Key key,
+    UniqueKey? key,
   })
   {
     this._displayText = displayText;
@@ -54,11 +54,11 @@ class Tag extends StatelessWidget
 
 
   static List<Tag> generateList({
-    @required List<String> displayText,
+    required List<String> displayText,
     Color tagColor = _defaultTagColor,
     Color textColor = _defaultTextColor,
     Color deleteIconColor = _defaultDeleteIconColor,
-    Function(Key) onDeleted,
+    Function(Key)? onDeleted,
     double spaceBetweenTags = 5,
     MultiTagDisplayAs displayedAs = MultiTagDisplayAs.Row
   })
@@ -72,13 +72,13 @@ class Tag extends StatelessWidget
         spaceBetweenTags = 0;
       }
 
-      Key key = UniqueKey();
+      UniqueKey key = UniqueKey();
       tags.add(Tag(
         displayText: displayText[i],
         tagColor: tagColor,
         textColor: textColor,
         deleteIconColor: deleteIconColor,
-        onDeleted: () => onDeleted(key),
+        onDeleted: () => onDeleted!(key),
         padding: _getEdgeInsets(displayedAs, spaceBetweenTags),
         key: key,
       ));

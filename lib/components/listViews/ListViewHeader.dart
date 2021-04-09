@@ -5,9 +5,9 @@ class ListViewHeader extends StatefulWidget
 {
   final Key key;
   final String title;
-  bool isDeleteable;
-  Function() onDeleteListViewHeader;
-  ListViewHeaderState state;
+  late bool isDeleteable;
+  late Function() onDeleteListViewHeader;
+  late ListViewHeaderState state;
 
   ListViewHeader(this.title, this.key, this.isDeleteable,
                  this.onDeleteListViewHeader);
@@ -161,7 +161,7 @@ class ListViewHeaderState extends State<ListViewHeader>
     );
   }
 
-  MaterialColor _getSplashColor()
+  MaterialColor? _getSplashColor()
   {
     if (this.isDeleteable)
     {

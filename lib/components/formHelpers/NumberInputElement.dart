@@ -36,8 +36,8 @@ class LabeledNumberInputElement extends StatelessWidget
 {
   String _labelText;
   String _placeholderText;
-  String _value;
-  NumberInputElement inputElement;
+  late String _value;
+  late NumberInputElement inputElement;
   int labelTextSize;
 
   LabeledNumberInputElement(this._labelText, this._placeholderText,

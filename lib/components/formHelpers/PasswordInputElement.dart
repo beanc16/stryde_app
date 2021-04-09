@@ -23,8 +23,8 @@ class LabeledPasswordInputElement extends StatelessWidget
 {
   String _labelText;
   String _placeholderText;
-  String _value;
-  TextInputElement inputElement;
+  late String _value;
+  late TextInputElement inputElement;
   int labelTextSize;
 
 

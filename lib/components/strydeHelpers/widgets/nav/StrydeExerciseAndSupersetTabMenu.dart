@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/uiHelpers/TabMenuMultiPageScrollingWidget.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/uiHelpers/TabMenuMultiPageScrollingWidget.dart';
 
 
 class StrydeExerciseAndSupersetTabMenu extends TabMenuMultiPageScrollingWidget
 {
   StrydeExerciseAndSupersetTabMenu({
-    @required List<Widget> screens
+    required List<Widget> screens
   }) :
       super(
         screens: screens,

@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/tables/EditableTable.dart';
-import 'package:workout_buddy/components/tables/EditableTableController.dart';
-import 'package:workout_buddy/components/toggleableWidget/EmptyWidget.dart';
-import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/utilities/TextHelpers.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:Stryde/components/tables/EditableTable.dart';
+import 'package:Stryde/components/tables/EditableTableController.dart';
+import 'package:Stryde/models/Exercise.dart';
+import 'package:Stryde/utilities/TextHelpers.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
 
 
 class EditExerciseInformationScreen extends StatelessWidget
 {
   Exercise _exercise;
-  GlobalKey<EditableTableState> _tableKey;
-  EditableTableController _controller;
+  late final GlobalKey<EditableTableState> _tableKey;
+  late final EditableTableController _controller;
 
   EditExerciseInformationScreen(this._exercise)
   {
@@ -39,10 +38,12 @@ class EditExerciseInformationScreen extends StatelessWidget
     //_controller.deleteRow();
   }
 
+  /*
   List<dynamic> _getEditedRows()
   {
     //return _controller.getEditedRows();
   }
+   */
 
 
 
@@ -84,6 +85,21 @@ class EditExerciseInformationScreen extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
+    /* 
+	 * TODO: Add the following items:
+	 *       - TextArea for editing description
+	 *       - Tags for:
+	 *         - Weight Type (body weight / free weight / machine)
+	 *         - Muscle Type (compound / isolation)
+	 *         - Movement Type (push / pull / quad dominant / etc.)
+	 *         - Muscle Group (quads / hams / etc.)
+	 *         - Muscle Group Type (big / small)
+	 *       - Settings to hide & reorder fields for different exercises
+	 */
+
+    Color lGray = StrydeColors.lightGray;
+    Color dGray = StrydeColors.darkGray;
+
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "View Workout"),
       key: _tableKey,
@@ -106,6 +122,20 @@ class EditExerciseInformationScreen extends StatelessWidget
               Flexible(
                 child: EditableTable(
                   controller: _controller,
+                  stripeColor1: Color.fromRGBO(lGray.red, lGray.green, lGray.blue, 0.175),
+                  stripeColor2: Color.fromRGBO(dGray.red, dGray.green, dGray.blue, 0.2),
+
+                  onRowSaved: (value)
+                  {
+                    // On save button pressed
+                    print("Row saved: " + value.toString());
+                  },
+                  onSubmitted: (value)
+                  {
+                    // On edit complete (on mobile) or enter is tapped (on desktop)
+                    print("\n\n\nSubmitted: " + value.toString());
+                  },
+
                   columns: [
                     {
                       "title": "Set Number",

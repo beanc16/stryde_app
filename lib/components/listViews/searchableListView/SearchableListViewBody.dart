@@ -5,14 +5,14 @@ import 'SearchableListTile.dart';
 class SearchableListViewBody extends StatefulWidget
 {
   List<String> _listTileDisplayText = [];
-  double _textSize;
-  Color _textColor;
-  Function _onTapListTile;
-  Color _onTapColor;
-  double _borderWidth;
-  Color _borderColor;
-  double _spaceBetweenTiles;
-  SearchableListViewBodyState state;
+  final double _textSize;
+  final Color? _textColor;
+  Function(BuildContext, int)? _onTapListTile;
+  final Color _onTapColor;
+  final double _borderWidth;
+  final Color _borderColor;
+  final double _spaceBetweenTiles;
+  late SearchableListViewBodyState state;
 
   SearchableListViewBody(this._listTileDisplayText,
                          this._textSize,
@@ -52,8 +52,8 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
 {
   List<String> _listTileDisplayText;
   double _textSize;
-  Color _textColor;
-  Function _onTapListTile;
+  Color? _textColor;
+  Function(BuildContext, int)? _onTapListTile;
   Color _onTapColor;
   double _borderWidth;
   Color _borderColor;

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/listViews/ListViewCard.dart';
-import 'package:workout_buddy/models/ExerciseMuscleType.dart';
-import 'package:workout_buddy/models/MuscleGroup.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/EditExerciseInformationScreen.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
+import 'package:Stryde/components/listViews/ListViewCard.dart';
+import 'package:Stryde/models/ExerciseMuscleType.dart';
+import 'package:Stryde/models/MuscleGroup.dart';
+import 'package:Stryde/screens/loggedIn/workoutList/EditExerciseInformationScreen.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
 import 'ExerciseMovementType.dart';
 import 'ExerciseWeightType.dart';
 
@@ -11,19 +11,18 @@ import 'ExerciseWeightType.dart';
 
 class Exercise
 {
-  int id;
-  final String name;
-  final String description;
-  ExerciseWeightType exerciseWeightType;
-  ExerciseMuscleType exerciseMuscleType;
-  ExerciseMovementType exerciseMovementType;
-  List<MuscleGroup> muscleGroups;
-
-  ExerciseListViewCard exerciseListViewCard;
+  int? id;
+  late final String name;
+  late final String? description;
+  ExerciseWeightType? exerciseWeightType;
+  ExerciseMuscleType? exerciseMuscleType;
+  ExerciseMovementType? exerciseMovementType;
+  List<MuscleGroup>? muscleGroups;
+  late ExerciseListViewCard exerciseListViewCard;
 
   Exercise(this.name, this.description, 
            Function() onDeleteListViewCard,
-           {Function(BuildContext, dynamic) onTap})
+           {Function(BuildContext, dynamic)? onTap})
   {
     if (onTap == null)
     {
@@ -33,7 +32,7 @@ class Exercise
     this.exerciseListViewCard = ExerciseListViewCard(
       this.name,
       this.description,
-      Key("${this.name}"),
+      UniqueKey(),
       false,
       onDeleteListViewCard,
       onTap: onTap,
@@ -41,7 +40,7 @@ class Exercise
   }
 
   Exercise.notReorderable(this.name, this.description, 
-                          {Function(BuildContext, dynamic) onTap})
+                          {Function(BuildContext, dynamic)? onTap})
   {
     if (onTap == null)
     {
@@ -51,7 +50,7 @@ class Exercise
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
       this.name,
       this.description,
-      Key("${this.name}"),
+      UniqueKey(),
       false,
       onTap: onTap,
     );
@@ -60,7 +59,7 @@ class Exercise
   Exercise.model(this.id, this.name, this.description,
                  String exerciseWeightType, String exerciseMuscleType,
                  String exerciseMovementType,
-                 this.muscleGroups, {Function(BuildContext, dynamic) onTap})
+                 this.muscleGroups, {Function(BuildContext, dynamic)? onTap})
   {
     this.exerciseWeightType = ExerciseWeightType(exerciseWeightType);
     this.exerciseMuscleType = ExerciseMuscleType(exerciseMuscleType);
@@ -74,7 +73,7 @@ class Exercise
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
       this.name,
       this.description,
-      Key("${this.name}"),
+      UniqueKey(),
       false,
       onTap: onTap,
     );
@@ -114,12 +113,12 @@ class Exercise
 
 class ExerciseListViewCard extends ListViewCard
 {
-  ExerciseListViewCard(String title, String description, Key key,
+  ExerciseListViewCard(String title, String? description, Key key,
                        bool shouldLeftIndent,
                        Function() onDeleteListViewCard,
                        {
-                         Function(BuildContext, dynamic) onTap,
-                         Exercise exercise
+                         Function(BuildContext, dynamic)? onTap,
+                         Exercise? exercise
                        }) :
         super(title, description, key, shouldLeftIndent,
               onDeleteListViewCard, onTap: onTap, data: exercise);
@@ -128,17 +127,17 @@ class ExerciseListViewCard extends ListViewCard
                                 bool shouldLeftIndent,
                                 Function() onDeleteListViewCard,
                                 {
-                                  Function(BuildContext, dynamic) onTap,
+                                  Function(BuildContext, dynamic)? onTap,
                                 }) :
         super(exercise.name, exercise.description, key,
               shouldLeftIndent, onDeleteListViewCard, onTap: onTap,
               data: exercise);
 
-  ExerciseListViewCard.notReorderable(String title, String description,
+  ExerciseListViewCard.notReorderable(String title, String? description,
                                       Key key, bool shouldLeftIndent,
                                       {
-                                        Function(BuildContext, dynamic) onTap,
-                                        Exercise exercise
+                                        Function(BuildContext, dynamic)? onTap,
+                                        Exercise? exercise
                                       }) :
         super.notReorderable(title, description, key,
                              shouldLeftIndent, onTap: onTap,

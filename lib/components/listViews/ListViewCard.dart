@@ -1,23 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 
 class ListViewCard extends StatefulWidget
 {
-  final Key key;
-  final String title;
-  final String description;
-  bool shouldLeftIndent;
-  bool isReorderable = true;
-  Function() onDeleteListViewCard;
-  Function(BuildContext, dynamic) onTap;
-  ListViewCardState state;
-  dynamic data;
+  late final Key key;
+  late final String title;
+  late final String? description;
+  late bool shouldLeftIndent;
+  late bool isReorderable = true;
+  late Function()? onDeleteListViewCard;
+  late Function(BuildContext, dynamic)? onTap;
+  late ListViewCardState state;
+  late dynamic data;
 
   ListViewCard(this.title, this.description, this.key,
                this.shouldLeftIndent, this.onDeleteListViewCard,
                {
-                 Function(BuildContext, dynamic) onTap,
+                 Function(BuildContext, dynamic)? onTap,
                  dynamic data
                })
   {
@@ -39,7 +39,7 @@ class ListViewCard extends StatefulWidget
   ListViewCard.notReorderable(this.title, this.description, this.key, 
                               this.shouldLeftIndent,
                               {
-                                Function(BuildContext, dynamic) onTap,
+                                Function(BuildContext, dynamic)? onTap,
                                 dynamic data
                               })
   {
@@ -130,7 +130,7 @@ class ListViewCard extends StatefulWidget
   {
     this.isReorderable = isReorderable;
 
-    if (state != null)
+    //if (state != null)
     {
       /*
       state.setState(()
@@ -148,8 +148,8 @@ class ListViewCardState extends State<ListViewCard>
 {
   bool shouldLeftIndent;
   bool isReorderable;
-  Function() onDeleteListViewCard;
-  Function(BuildContext, dynamic) onTap;
+  Function()? onDeleteListViewCard;
+  Function(BuildContext, dynamic)? onTap;
   dynamic data;
 
   ListViewCardState(this.shouldLeftIndent, this.isReorderable, 
@@ -201,7 +201,7 @@ class ListViewCardState extends State<ListViewCard>
       child: InkWell(
         splashColor: this._getSplashColor(),
 
-        onTap: () => this.onTap(context, data),
+        onTap: () => this.onTap!(context, data),
 
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -300,7 +300,7 @@ class ListViewCardState extends State<ListViewCard>
             color: Colors.red,
             onPressed: ()
             {
-              this.onDeleteListViewCard();
+              this.onDeleteListViewCard!();
             },
           ),
         )
@@ -315,7 +315,7 @@ class ListViewCardState extends State<ListViewCard>
     );
   }
 
-  MaterialColor _getSplashColor()
+  MaterialColor? _getSplashColor()
   {
     if (this.isReorderable)
     {

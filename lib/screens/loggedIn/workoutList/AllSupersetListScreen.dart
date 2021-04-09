@@ -1,19 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
-import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/models/MuscleGroup.dart';
-import 'package:workout_buddy/models/Superset.dart';
-import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
+import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidget.dart';
+import 'package:Stryde/models/Exercise.dart';
+import 'package:Stryde/models/MuscleGroup.dart';
+import 'package:Stryde/models/Superset.dart';
+import 'package:Stryde/utilities/HttpQueryHelper.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
 
 
 class AllSupersetListScreen extends StatefulWidget
@@ -29,11 +28,11 @@ class AllSupersetListScreen extends StatefulWidget
 
 class AllSupersetListScreenState extends State<AllSupersetListScreen>
 {
-  List<Superset> _supersets;
-  List<String> _listTileDisplayText;
-  ToggleableWidget _loadingErrorMsg;
-  List<Superset> _selectedSupersets;
-  StrydeMultiTagDisplay _selectSupersetsTagDisplay;
+  late List<Superset> _supersets;
+  late List<String> _listTileDisplayText;
+  late ToggleableWidget _loadingErrorMsg;
+  late List<Superset> _selectedSupersets;
+  late StrydeMultiTagDisplay _selectSupersetsTagDisplay;
 
   @override
   void initState()
@@ -74,7 +73,7 @@ class AllSupersetListScreenState extends State<AllSupersetListScreen>
 
     if (StrydeUserStorage.supersets != null)
     {
-      this._supersets = StrydeUserStorage.supersets;
+      this._supersets = StrydeUserStorage.supersets ?? [];
 
       // Convert _supersets to _listTileDisplayText
       setState(()

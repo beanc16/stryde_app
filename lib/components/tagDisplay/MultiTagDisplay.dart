@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/tagDisplay/MultiTagDisplayAs.dart';
-import 'package:workout_buddy/components/tagDisplay/Tag.dart';
+import 'package:Stryde/components/tagDisplay/MultiTagDisplayAs.dart';
+import 'package:Stryde/components/tagDisplay/Tag.dart';
 
 
 class MultiTagDisplay extends StatefulWidget
 {
-  List<String> _displayText;
-  Color _tagColor;
-  Color _textColor;
-  Color _deleteIconColor;
-  double _spaceBetweenTags;
-  MainAxisAlignment _mainAxisAlignment;
-  CrossAxisAlignment _crossAxisAlignment;
-  MultiTagDisplayAs _displayAsEnum;
-  Function(int, String) _onDeleteTag;
-  MultiTagDisplayState state;
+  late List<String> _displayText;
+  late final Color _tagColor;
+  late final Color _textColor;
+  late final Color _deleteIconColor;
+  late final double _spaceBetweenTags;
+  late final MainAxisAlignment _mainAxisAlignment;
+  late final CrossAxisAlignment _crossAxisAlignment;
+  late final MultiTagDisplayAs _displayAsEnum;
+  late Function(int, String)? _onDeleteTag;
+  late MultiTagDisplayState state;
 
   MultiTagDisplay({
-    @required List<String> displayText,
+    required List<String> displayText,
     Color tagColor = Colors.grey,
     Color textColor = Colors.black,
     Color deleteIconColor = Colors.black,
@@ -26,7 +26,7 @@ class MultiTagDisplay extends StatefulWidget
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
     MultiTagDisplayAs multiTagDisplayAs = MultiTagDisplayAs.Row,
-    Function(int, String) onDeleteTag,
+    Function(int, String)? onDeleteTag,
   })
   {
     this._displayText = displayText;
@@ -70,7 +70,7 @@ class MultiTagDisplay extends StatefulWidget
 
 class MultiTagDisplayState extends State<MultiTagDisplay>
 {
-  List<Tag> _tags;
+  late List<Tag> _tags;
   List<String> _displayText;
   Color _tagColor;
   Color _textColor;
@@ -79,7 +79,7 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
   MainAxisAlignment _mainAxisAlignment;
   CrossAxisAlignment _crossAxisAlignment;
   MultiTagDisplayAs _displayAsEnum;
-  Function(int, String) _onDeleteTagCallback;
+  Function(int, String)? _onDeleteTagCallback;
 
   MultiTagDisplayState(this._displayText, this._tagColor,
                        this._textColor, this._deleteIconColor,
@@ -120,23 +120,23 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
     setState(()
     {
       // Remove the tag from the list of Strings
-      List tempCopy = _displayText.toList();
+      List<String> tempCopy = _displayText.toList();
       String displayStr = tempCopy.removeAt(index);
       _displayText = tempCopy.toList();
 
       // Remove the tag from the list of Widgets
-      tempCopy = _tags.toList();
-      tempCopy.removeAt(index);
-      _tags = tempCopy.toList();
+      List<Tag> tempCopy2 = _tags.toList();
+      tempCopy2.removeAt(index);
+      _tags = tempCopy2.toList();
 
       if (_onDeleteTagCallback != null)
       {
-        _onDeleteTagCallback(index, displayStr);
+        _onDeleteTagCallback!(index, displayStr);
       }
     });
   }
 
-  Widget _getTagDisplay()
+  Widget? _getTagDisplay()
   {
     if (_displayAsEnum == MultiTagDisplayAs.Row)
     {
@@ -162,8 +162,8 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
 
   void addTag(String displayStr)
   {
-    Key key = UniqueKey();
-    EdgeInsets padding;
+    UniqueKey key = UniqueKey();
+    EdgeInsets padding = EdgeInsets.zero;
 
     if (_displayAsEnum == MultiTagDisplayAs.Row)
     {

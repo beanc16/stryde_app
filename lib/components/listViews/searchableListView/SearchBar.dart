@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class SearchBar extends StatelessWidget
 {
-  Function(String) _onSearchChangedCallback;
-  String _searchBarPlaceholderText;
-  double _bottomPadding;
+  late Function(String) _onSearchChangedCallback;
+  late final String _searchBarPlaceholderText;
+  late final double _bottomPadding;
 
   SearchBar({
-    @required Function(String) onSearchChangedCallback,
+    required Function(String) onSearchChangedCallback,
     String searchBarPlaceholderText = "Search...",
     double bottomPadding = 15,
   })

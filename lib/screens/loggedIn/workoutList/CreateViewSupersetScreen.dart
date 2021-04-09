@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
-import 'package:workout_buddy/models/Superset.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
+import 'package:Stryde/components/formHelpers/TextElements.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:Stryde/components/uiHelpers/SinglePageScrollingWidget.dart';
+import 'package:Stryde/models/Superset.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
 import 'AllExerciseListScreen.dart';
 import 'EditSupersetScreen.dart';
 
 
 class CreateViewSupersetScreen extends StatefulWidget
 {
-  Superset superset;
+  late Superset superset;
 
   CreateViewSupersetScreen();
   CreateViewSupersetScreen.superset(this.superset);
@@ -40,9 +40,9 @@ class CreateViewSupersetScreen extends StatefulWidget
 
 class CreateViewSupersetState extends State<CreateViewSupersetScreen>
 {
-  Superset superset;
-  LabeledTextInputElement _titleInput;
-  bool hasError;
+  late Superset superset;
+  late final LabeledTextInputElement _titleInput;
+  late bool hasError;
 
 
   CreateViewSupersetState()

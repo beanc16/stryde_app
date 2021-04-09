@@ -8,22 +8,22 @@ import "package:universal_io/io.dart" show Platform;
 
 class HttpQueryHelper
 {
-	static String url = "";
+	static String? url = "";
   static String query = "";
-	static Map<String, String> env;
+  static Map<String, String>? env;
 
 
 
   static Future<void> get(String route,
-													{Function() onBeforeQuery,
-													 Function(dynamic) onSuccess,
-													 Function(dynamic) onFailure,}) async
+													{Function()? onBeforeQuery,
+													 Function(dynamic)? onSuccess,
+													 Function(dynamic)? onFailure,}) async
 	{
 		try
 		{
 			await _tryInitializeUrls();
 
-			Uri httpUri = Uri.http(url, route);
+			Uri httpUri = Uri.http(url!, route);
 
 			if (onBeforeQuery != null)
 			{
@@ -57,16 +57,16 @@ class HttpQueryHelper
   }
 
   static Future<void> post(String route, body,
-													 {Function() onBeforeQuery,
-														Function(dynamic) onSuccess,
-														Function(dynamic) onFailure,})
+													 {Function()? onBeforeQuery,
+														Function(dynamic)? onSuccess,
+														Function(dynamic)? onFailure,})
   async
 	{
     try
 		{
 			await _tryInitializeUrls();
 
-			Uri httpUri = Uri.http(url, route);
+			Uri httpUri = Uri.http(url!, route);
 
 			if (onBeforeQuery != null)
 			{
@@ -115,12 +115,12 @@ class HttpQueryHelper
 
 		// Log warnings if environment variables aren't set up
 		bool canSet = true;
-		if (env["SERVER_IP"] == null)
+		if (env?["SERVER_IP"] == null)
 		{
 			print("\nWARNING: env.SERVER_IP not set!\n");
 			canSet = false;
 		}
-		if (env["STRYDE_SERVER_PORT"] == null)
+		if (env?["STRYDE_SERVER_PORT"] == null)
 		{
 			print("\nWARNING: env.STRYDE_SERVER_PORT not set!\n");
 			canSet = false;
@@ -129,7 +129,12 @@ class HttpQueryHelper
 		// Update url
 		if (canSet)
 		{
-			url = env["SERVER_IP"] + env["STRYDE_SERVER_PORT"];
+			if (env?["SERVER_IP"] != null &&
+					env?["STRYDE_SERVER_PORT"] != null)
+			{
+				url = ((env?["SERVER_IP"])! ?? "") +
+						  ((env?["STRYDE_SERVER_PORT"])! ?? "");
+			}
 		}
 		else
 		{
@@ -141,7 +146,7 @@ class HttpQueryHelper
 	
 	static bool _urlIsInitialized()
 	{
-		return (url != null || url.length != 0);
+		return (url != null || url?.length != 0);
 	}
 
 	static bool _envIsInitialized()

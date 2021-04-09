@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/uiHelpers/MultiPageScrollingWidget.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/uiHelpers/MultiPageScrollingWidget.dart';
 import 'LoginScreen.dart';
 import 'RegisterScreen.dart';
 

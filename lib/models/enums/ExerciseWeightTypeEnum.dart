@@ -26,7 +26,7 @@ extension ExerciseWeightTypeEnumHelpers on ExerciseWeightTypeEnum
       return ExerciseWeightTypeEnum.MACHINE;
     }
 
-    return null;
+    return ExerciseWeightTypeEnum.MACHINE;
   }
 
   int getId()

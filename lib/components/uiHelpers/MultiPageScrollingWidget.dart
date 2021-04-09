@@ -1,22 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
 
 
 class MultiPageScrollingWidget extends StatefulWidget
 {
-  List<Widget> _screens;
-  List<BottomNavigationBarItem> _bottomNavigationBarItems;
-  Color _navBarSelectedItemColor;
-  Color _navBarUnselectedItemColor;
-  double _marginAroundScreens;
+  late List<Widget> _screens;
+  late List<BottomNavigationBarItem> _bottomNavigationBarItems;
+  late final Color _navBarSelectedItemColor;
+  late Color? _navBarUnselectedItemColor;
+  late final double _marginAroundScreens;
 
   MultiPageScrollingWidget({
-    @required List<Widget> screens,
-    @required List<BottomNavigationBarItem> bottomNavigationBarItems,
-    @required Color navBarSelectedItemColor,
-    Color navBarUnselectedItemColor,
+    required List<Widget> screens,
+    required List<BottomNavigationBarItem> bottomNavigationBarItems,
+    required Color navBarSelectedItemColor,
+    Color? navBarUnselectedItemColor,
     double marginAroundScreens = 20
   })
   {
@@ -45,21 +45,21 @@ class MultiPageScrollingWidget extends StatefulWidget
 class MultiPageScrollingWidgetState extends State
 {
   // Variables
-  PageController pageController;
-  List<Widget> screens = [];
-  PageView pageView;
-  int _index = 0;
-  List<BottomNavigationBarItem> _bottomNavigationBarItems;
-  Color _navBarSelectedItemColor;
-  Color _navBarUnselectedItemColor;
-  double _marginAroundScreens;
+  late final PageController pageController;
+  late List<Widget> screens = [];
+  PageView? pageView;
+  late int _index = 0;
+  late List<BottomNavigationBarItem> _bottomNavigationBarItems;
+  late final Color _navBarSelectedItemColor;
+  late final Color? _navBarUnselectedItemColor;
+  late final double _marginAroundScreens;
 
   // Constructor
   MultiPageScrollingWidgetState(
     List<Widget> screens,
     List<BottomNavigationBarItem> bottomNavigationBarItems,
     Color navBarSelectedItemColor,
-    Color navBarUnselectedItemColor,
+    Color? navBarUnselectedItemColor,
     double marginAroundScreens
   )
   {
@@ -73,7 +73,6 @@ class MultiPageScrollingWidgetState extends State
       keepPage: true,
       initialPage: 0,
     );
-    this.pageView = getPageView(pageController, screens, _onPageChanged);
   }
 
 

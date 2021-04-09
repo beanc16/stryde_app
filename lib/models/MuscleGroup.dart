@@ -1,11 +1,11 @@
-import 'package:workout_buddy/models/enums/MuscleGroupEnum.dart';
+import 'package:Stryde/models/enums/MuscleGroupEnum.dart';
 
 
 
 class MuscleGroup
 {
-  int id;
-  MuscleGroupEnum value;
+  late final int? id;
+  late final MuscleGroupEnum value;
 
   MuscleGroup(String muscleGroup)
   {

@@ -1,19 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
-import 'package:workout_buddy/models/Exercise.dart';
-import 'package:workout_buddy/models/MuscleGroup.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/EditExerciseInformationScreen.dart';
-import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
+import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidget.dart';
+import 'package:Stryde/models/Exercise.dart';
+import 'package:Stryde/models/MuscleGroup.dart';
+import 'package:Stryde/utilities/HttpQueryHelper.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
 
 
 class AllExerciseListScreen extends StatefulWidget
@@ -29,11 +27,11 @@ class AllExerciseListScreen extends StatefulWidget
 
 class AllExerciseListState extends State<AllExerciseListScreen>
 {
-  List<Exercise> _exercises;
-  List<String> _listTileDisplayText;
-  ToggleableWidget _loadingErrorMsg;
-  List<Exercise> _selectedExercises;
-  StrydeMultiTagDisplay _selectExercisesTagDisplay;
+  late List<Exercise> _exercises;
+  late List<String> _listTileDisplayText;
+  late ToggleableWidget _loadingErrorMsg;
+  late List<Exercise> _selectedExercises;
+  late StrydeMultiTagDisplay _selectExercisesTagDisplay;
 
   /* TODO: Put this in a parent StatelessWidget screen. Make it have
            an "Exercise" (this screen) and "Superset" tab at the top.
@@ -57,7 +55,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     );
 
     // Get exercises after build method is called
-    WidgetsBinding.instance.addPostFrameCallback((timestamp) =>
+    WidgetsBinding.instance?.addPostFrameCallback((timestamp) =>
                                                     _fetchExercises());
   }
 
@@ -78,7 +76,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
     if (StrydeUserStorage.allExercises != null)
     {
-      this._exercises = StrydeUserStorage.allExercises;
+      this._exercises = StrydeUserStorage.allExercises ?? [];
 
       // Convert _exercises to _listTileDisplayText
       setState(()
@@ -94,7 +92,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     {
       // Get all exercises available to the user
       HttpQueryHelper.get(
-        "/user/exercises/",
+        "/user/exercises",
         onSuccess: (dynamic response) => _onGetExercisesSuccess(response),
         onFailure: (dynamic response) => _onGetExercisesFail(response)
       );
@@ -103,6 +101,9 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
   void _onGetExercisesSuccess(Map<String, dynamic> workoutsJson)
   {
+    print("");
+    print(workoutsJson["_results"].toString());
+    print("");
     // Convert exercises to model
     _convertExerciseResults(workoutsJson["_results"]);
 

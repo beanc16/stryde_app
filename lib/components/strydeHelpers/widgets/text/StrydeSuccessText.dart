@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 
 
 class StrydeSuccessText extends Text
 {
   StrydeSuccessText({
-    @required String displayText
+    required String displayText
   }) :
       super(
         displayText,

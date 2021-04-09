@@ -1,30 +1,30 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/formHelpers/TextElements.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeSuccessText.dart';
-import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
-import 'package:workout_buddy/components/toggleableWidget/ToggleableWidgetMap.dart';
-import 'package:workout_buddy/components/uiHelpers/SinglePageScrollingWidget.dart';
-import 'package:workout_buddy/models/UserExperience.dart';
-import 'package:workout_buddy/screens/loggedOut/StartupScreen.dart';
-import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
-import 'package:workout_buddy/utilities/TextHelpers.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
+import 'package:Stryde/components/formHelpers/TextElements.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeSuccessText.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidget.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidgetMap.dart';
+import 'package:Stryde/components/uiHelpers/SinglePageScrollingWidget.dart';
+import 'package:Stryde/models/UserExperience.dart';
+import 'package:Stryde/screens/loggedOut/StartupScreen.dart';
+import 'package:Stryde/utilities/HttpQueryHelper.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
+import 'package:Stryde/utilities/TextHelpers.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
 
 
 class UserProfileScreen extends StatelessWidget
 {
-  UserExperience _user;
-  LabeledTextInputElement _goalInput;
-  ToggleableWidgetMap<String> _toggleableWidgets;
-  String _curSavedGoal = "";
+  late UserExperience? _user;
+  late LabeledTextInputElement _goalInput;
+  late ToggleableWidgetMap<String> _toggleableWidgets;
+  late String? _curSavedGoal = "";
 
   UserProfileScreen()
   {
@@ -33,10 +33,10 @@ class UserProfileScreen extends StatelessWidget
 
     if (_user != null)
     {
-      if (_user.goal != null)
+      if (_user?.goal != null)
       {
-        _goalInput.setInputText(_user.goal);
-        _curSavedGoal = _user.goal;
+        _goalInput.setInputText(_user?.goal);
+        _curSavedGoal = _user?.goal;
       }
     }
 
@@ -110,8 +110,8 @@ class UserProfileScreen extends StatelessWidget
 
   Future<void> _saveGoal() async
   {
-    Map<String, String> postData = {
-      "userId": StrydeUserStorage.userExperience.id.toString(),
+    Map<String, String?> postData = {
+      "userId": StrydeUserStorage.userExperience?.id.toString(),
       "userGoal": this._goalInput.getInputText(),
     };
 
@@ -145,7 +145,7 @@ class UserProfileScreen extends StatelessWidget
     _toggleableWidgets.showChild("successMsg");
 
     // Update local storage of goal
-    StrydeUserStorage.userExperience.goal = this._goalInput.getInputText();
+    StrydeUserStorage.userExperience?.goal = this._goalInput.getInputText();
     _curSavedGoal = this._goalInput.getInputText();
 
     // Hide success msg after the given number of seconds
@@ -193,7 +193,7 @@ class UserProfileScreen extends StatelessWidget
 
           Center(
             child: TextHeader1(
-              displayText: _user.username,
+              displayText: _user?.username ?? "",
               color: StrydeColors.darkGray,
             ),
           ),
@@ -203,9 +203,9 @@ class UserProfileScreen extends StatelessWidget
           getDefaultPadding(),
 
           // successMsg, queryErrorMsg, validationErrorMsg
-          _toggleableWidgets.get("successMsg"),
-          _toggleableWidgets.get("queryErrorMsg"),
-          _toggleableWidgets.get("validationErrorMsg"),
+          _toggleableWidgets.get("successMsg")!,
+          _toggleableWidgets.get("queryErrorMsg")!,
+          _toggleableWidgets.get("validationErrorMsg")!,
 
           StrydeButton(
             displayText: "Save Goal",

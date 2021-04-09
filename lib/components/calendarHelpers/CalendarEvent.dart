@@ -1,17 +1,17 @@
 import 'dart:ui';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 
 
 class CalendarEvent
 {
   String eventName;
   DateTime startTime;
-  DateTime endTime;
-  Color backgroundColor;
-  bool isAllDay;
+  late DateTime endTime;
+  Color? backgroundColor;
+  late bool isAllDay;
 
   CalendarEvent(this.eventName,  this.startTime, this.endTime,
-                {Color backgroundColor = StrydeColors.darkBlue})
+                {Color? backgroundColor = StrydeColors.darkBlue})
   {
     this.backgroundColor = backgroundColor;
     this.isAllDay = false;

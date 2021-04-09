@@ -76,7 +76,7 @@ extension MuscleGroupEnumHelpers on MuscleGroupEnum
       return MuscleGroupEnum.CALVES;
     }
 
-    return null;
+    return MuscleGroupEnum.CALVES;
   }
 
   int getId()

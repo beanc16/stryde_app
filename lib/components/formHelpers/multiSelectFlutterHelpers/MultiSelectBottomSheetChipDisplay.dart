@@ -8,21 +8,21 @@ import 'package:multi_select_flutter/util/multi_select_item.dart';
 class MultiSelectBottomSheetChipDisplay extends StatefulWidget
 {
   List<MultiSelectItem> _allSelectionItems;
-  List<MultiSelectItem<dynamic>> _chipDisplayItems;
-  Color _chipColor;
-  Color _chipTextColor;
-  Color _selectedColor;
-  Color _selectedTextColor;
-  String _buttonText;
-  String _selectionTitleText;
-  bool _isSearchable;
+  late List<MultiSelectItem<dynamic>>? _chipDisplayItems;
+  late Color? _chipColor;
+  late Color? _chipTextColor;
+  late Color? _selectedColor;
+  late Color? _selectedTextColor;
+  late String _buttonText;
+  late String _selectionTitleText;
+  late bool _isSearchable;
 
   MultiSelectBottomSheetChipDisplay(this._allSelectionItems, {
-    List<MultiSelectItem<dynamic>> chipDisplayItems,
-    Color chipColor,
-    Color chipTextColor,
-    Color selectedColor,
-    Color selectedTextColor,
+    List<MultiSelectItem<dynamic>>? chipDisplayItems,
+    Color? chipColor,
+    Color? chipTextColor,
+    Color? selectedColor,
+    Color? selectedTextColor,
     String buttonText = "",
     String selectionTitleText = "",
     bool isSearchable = true,
@@ -57,17 +57,17 @@ class MultiSelectBottomSheetChipDisplayState extends
     State<MultiSelectBottomSheetChipDisplay>
 {
   List<MultiSelectItem> _allSelectionItems;
-  MultiSelectChipDisplay selectedChipsDisplayList;
-  Text _buttonText;
-  Text _selectionTitleText;
-  Color _selectedColor;
-  Color _selectedTextColor;
+  late MultiSelectChipDisplay selectedChipsDisplayList;
+  late Text _buttonText;
+  late Text _selectionTitleText;
+  Color? _selectedColor;
+  Color? _selectedTextColor;
   bool _isSearchable;
 
   MultiSelectBottomSheetChipDisplayState(this._allSelectionItems,
-    List<MultiSelectItem<dynamic>> chipDisplayItems,
-    Color chipColor,
-    Color chipTextColor,
+    List<MultiSelectItem<dynamic>>? chipDisplayItems,
+    Color? chipColor,
+    Color? chipTextColor,
     this._selectedColor,
     this._selectedTextColor,
     String buttonText,

@@ -9,9 +9,9 @@ class ToggleableWidgetMap<K>
 
 
 
-  ToggleableWidget get(K key)
+  ToggleableWidget? get(K key)
   {
-    ToggleableWidget output = null;
+    ToggleableWidget? output;
 
     map.forEach((k, v)
     {
@@ -62,106 +62,148 @@ class ToggleableWidgetMap<K>
 
   List<ToggleableWidget> toList()
   {
-    return map.values;
+    return map.values.toList();
   }
 
 
 
   void showChildAfter(K key, Duration duration) async
   {
-    map[key].showChildAfter(duration);
+    map[key]?.showChildAfter(duration);
   }
 
   void showChildFor(K key, Duration duration)
   {
-    map[key].showChildFor(duration);
+    map[key]?.showChildFor(duration);
   }
 
   void showChild(K key)
   {
-    map[key].showChild();
+    map[key]?.showChild();
   }
 
   void hideChildAfter(K key, Duration duration) async
   {
-    map[key].hideChildAfter(duration);
+    map[key]?.hideChildAfter(duration);
   }
 
   void hideChild(K key)
   {
-    map[key].hideChild();
+    map[key]?.hideChild();
   }
 
   void showLoadingIconAfter(K key, Duration duration) async
   {
-    map[key].showLoadingIconAfter(duration);
+    map[key]?.showLoadingIconAfter(duration);
   }
 
   void showLoadingIcon(K key)
   {
-    map[key].showLoadingIcon();
+    map[key]?.showLoadingIcon();
   }
 
   void hideLoadingIconAfter(K key, Duration duration) async
   {
-    map[key].hideLoadingIconAfter(duration);
+    map[key]?.hideLoadingIconAfter(duration);
   }
 
   void hideLoadingIcon(K key)
   {
-    map[key].hideLoadingIcon();
+    map[key]?.hideLoadingIcon();
   }
 
   void showChildOrLoadingIconAfter(K key, Duration duration) async
   {
-    map[key].showChildOrLoadingIconAfter(duration);
+    map[key]?.showChildOrLoadingIconAfter(duration);
   }
 
   void showChildOrLoadingIcon(K key)
   {
-    map[key].showChildOrLoadingIcon();
+    map[key]?.showChildOrLoadingIcon();
   }
 
   void hideChildAndLoadingIconAfter(K key, Duration duration) async
   {
-    map[key].hideChildAndLoadingIconAfter(duration);
+    map[key]?.hideChildAndLoadingIconAfter(duration);
   }
 
   void hideChildAndLoadingIcon(K key)
   {
-    map[key].hideChildAndLoadingIcon();
+    map[key]?.hideChildAndLoadingIcon();
   }
 
 
 
   bool childIsVisible(K key)
   {
-    return map[key].childIsVisible();
+    bool? result = map[key]?.childIsVisible();
+
+    if (result == null)
+    {
+      return false;
+    }
+
+    return result;
   }
 
   bool childIsHidden(K key)
   {
-    return map[key].childIsHidden();
+    bool? result = map[key]?.childIsHidden();
+
+    if (result == null)
+    {
+      return false;
+    }
+
+    return result;
   }
 
   bool loadingIconIsVisible(K key)
   {
-    return map[key].loadingIconIsVisible();
+    bool? result = map[key]?.loadingIconIsVisible();
+
+    if (result == null)
+    {
+      return false;
+    }
+
+    return result;
   }
 
   bool loadingIconIsHidden(K key)
   {
-    return map[key].loadingIconIsHidden();
+    bool? result = map[key]?.loadingIconIsHidden();
+
+    if (result == null)
+    {
+      return false;
+    }
+
+    return result;
   }
 
   bool childOrLoadingIconIsVisible(K key)
   {
-    return map[key].childOrLoadingIconIsVisible();
+    bool? result = map[key]?.childOrLoadingIconIsVisible();
+
+    if (result == null)
+    {
+      return false;
+    }
+
+    return result;
   }
 
   bool childAndLoadingIconAreHidden(K key)
   {
-    return map[key].childAndLoadingIconAreHidden();
+    bool? result = map[key]?.childAndLoadingIconAreHidden();
+
+    if (result == null)
+    {
+      return false;
+    }
+
+    return result;
   }
 
 

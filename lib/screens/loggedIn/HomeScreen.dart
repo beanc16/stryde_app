@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:workout_buddy/components/uiHelpers/MultiPageScrollingWidget.dart';
-import 'package:workout_buddy/models/UserExperience.dart';
-import 'package:workout_buddy/screens/loggedIn/progressGraphs/AllProgressGraphsScreen.dart';
-import 'package:workout_buddy/screens/loggedIn/userProfile/UserProfileScreen.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/WorkoutAndSupersetListScreen.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
+import 'package:Stryde/components/uiHelpers/MultiPageScrollingWidget.dart';
+import 'package:Stryde/models/UserExperience.dart';
+import 'package:Stryde/screens/loggedIn/userProfile/UserProfileScreen.dart';
+import 'package:Stryde/screens/loggedIn/workoutList/WorkoutAndSupersetListScreen.dart';
 import 'workoutSchedule/WorkoutScheduleScreen.dart';
 
 
@@ -42,7 +40,7 @@ class HomeScreen extends StatelessWidget
         label: 'Schedule',
       ),
       BottomNavigationBarItem(
-        icon: Icon(FlutterIcons.ios_fitness_ion),
+        icon: Icon(Icons.fitness_center_rounded),
         label: 'Workouts',
       ),
       /*

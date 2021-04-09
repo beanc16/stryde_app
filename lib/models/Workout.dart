@@ -1,38 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:workout_buddy/models/Exercise.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
+import 'package:Stryde/models/Exercise.dart';
 import 'Superset.dart';
 
 
 
 class Workout
 {
-  int workoutId;
-  int userId;
-  final String name;
-  String description;
-  final List<Object> exercisesAndSupersets;
-  bool isReorderable = true;
+  late final int workoutId;
+  late final int userId;
+  late final String name;
+  late String description;
+  late final List<Object> exercisesAndSupersets;
+  late bool isReorderable = true;
 
   Workout(this.name, this.exercisesAndSupersets,
-          {int workoutId,
+          {int workoutId = -1,
            int userId = -1,
            String description = ""})
   {
     this.workoutId = workoutId;
-    this.userId = userId;
     this.description = description;
 
     if (userId == -1)
     {
-      this.userId = StrydeUserStorage.userExperience.id;
+      this.userId = StrydeUserStorage.userExperience?.id ?? -1;
+    }
+    else
+    {
+      this.userId = userId;
     }
   }
 
   Workout.notReorderable(this.name, this.exercisesAndSupersets,
-                         {int workoutId, int userId,
-                          String description})
+                         {int workoutId = -1, int userId = -1,
+                          String description = ""})
   {
     this.isReorderable = false;
     this.workoutId = workoutId;

@@ -4,38 +4,48 @@ import 'package:flutter/material.dart';
 
 class WillPopScopeSaveDontSave extends StatelessWidget
 {
-  Widget _child;
-  Function(BuildContext) _onSave;
-  Function(BuildContext) _onDontSave;
-  Function(BuildContext) _onKeepEditing;
-  Color _buttonTextColor;
+  late final Widget _child;
+  late final Function(BuildContext)? _onSave;
+  late final Function(BuildContext)? _onDontSave;
+  late final Function(BuildContext)? _onKeepEditing;
+  late final Color _buttonTextColor;
 
   WillPopScopeSaveDontSave({
-    @required Widget child,
+    required Widget child,
     Color buttonTextColor = Colors.lightBlue,
-    Function(BuildContext) onSave,
-    Function(BuildContext) onDontSave,
-    Function(BuildContext) onKeepEditing,
+    Function(BuildContext)? onSave,
+    Function(BuildContext)? onDontSave,
+    Function(BuildContext)? onKeepEditing,
   })
   {
     this._child = child;
     this._buttonTextColor = buttonTextColor;
 
-    this._onSave = onSave;
-    this._onDontSave = onDontSave;
-    this._onKeepEditing = onKeepEditing;
-
     if (onSave == null)
     {
       this._onSave = (context) => _onSaveDefault(context);
     }
+    else
+    {
+      this._onSave = onSave;
+    }
+
     if (onDontSave == null)
     {
       this._onDontSave = (context) => _onDontSaveDefault(context);
     }
+    else
+    {
+      this._onDontSave = onDontSave;
+    }
+
     if (onKeepEditing == null)
     {
       this._onKeepEditing = (context) => _onKeepEditingDefault(context);
+    }
+    else
+    {
+      this._onKeepEditing = onKeepEditing;
     }
   }
 
@@ -77,7 +87,7 @@ class WillPopScopeSaveDontSave extends StatelessWidget
   }
 
   TextButton _getTextButton(String displayText,
-                            Function(BuildContext) onPress,
+                            Function(BuildContext)? onPress,
                             BuildContext context)
   {
     return TextButton(
@@ -87,7 +97,7 @@ class WillPopScopeSaveDontSave extends StatelessWidget
           color: _buttonTextColor
         ),
       ),
-      onPressed: (() => onPress(context)),
+      onPressed: (() => onPress!(context)),
     );
   }
 

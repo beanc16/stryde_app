@@ -63,7 +63,7 @@ extension ExerciseMovementTypeEnumHelpers on ExerciseMovementTypeEnum
       return ExerciseMovementTypeEnum.ACCESSORY_MOVEMENTS;
     }
 
-    return null;
+    return ExerciseMovementTypeEnum.ACCESSORY_MOVEMENTS;
   }
 
   int getId()

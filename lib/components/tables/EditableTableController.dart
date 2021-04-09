@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/tables/EditableTable.dart';
+import 'package:Stryde/components/tables/EditableTable.dart';
 
 class EditableTableController extends ChangeNotifier
 {
-  EditableTableState state;
-  bool shouldAddNewRow = false;
-  bool shouldDeleteLastRow = false;
+  late EditableTableState state;
+  late bool shouldAddNewRow = false;
+  late bool shouldDeleteLastRow = false;
 
   EditableTableController();
 

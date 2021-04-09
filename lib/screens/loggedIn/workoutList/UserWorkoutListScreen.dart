@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:workout_buddy/components/formHelpers/LabelTextElement.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
-import 'package:workout_buddy/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:workout_buddy/components/toggleableWidget/ToggleableWidget.dart';
-import 'package:workout_buddy/models/Workout.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
-import 'package:workout_buddy/utilities/NavigateTo.dart';
-import 'package:workout_buddy/utilities/UiHelpers.dart';
-import 'package:workout_buddy/utilities/HttpQueryHelper.dart';
+import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidget.dart';
+import 'package:Stryde/models/Workout.dart';
+import 'package:Stryde/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
+import 'package:Stryde/utilities/HttpQueryHelper.dart';
 
 
 class UserWorkoutListScreen extends StatefulWidget
@@ -29,9 +29,9 @@ class UserWorkoutListScreen extends StatefulWidget
 class WorkoutListState extends State<UserWorkoutListScreen> with
     AutomaticKeepAliveClientMixin<UserWorkoutListScreen>
 {
-  List<Workout> _workouts;
-  ListView _listView;
-  ToggleableWidget _loadingErrorMsg;
+  late List<Workout> _workouts;
+  late ListView _listView;
+  late ToggleableWidget _loadingErrorMsg;
 
   @override
   void initState()
@@ -59,7 +59,7 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
 
     if (StrydeUserStorage.workouts != null)
     {
-      this._workouts = StrydeUserStorage.workouts;
+      this._workouts = StrydeUserStorage.workouts ?? [];
       _setListView();
 
       // Hide loading icon & error msg
@@ -69,9 +69,9 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
     else
     {
       // Get all workouts created by the current user
+      String? id = StrydeUserStorage.userExperience?.id.toString();
       HttpQueryHelper.get(
-        "/user/workouts/" + StrydeUserStorage.userExperience
-                                             .id.toString(),
+        "/user/workouts/" + (id ?? ""),
         onSuccess: (response) => _onGetWorkoutsSuccess(response["_results"]),
         onFailure: (response) => _onGetWorkoutsFail(response)
       );

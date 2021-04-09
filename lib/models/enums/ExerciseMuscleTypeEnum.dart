@@ -19,6 +19,8 @@ extension ExerciseMuscleTypeEnumHelpers on ExerciseMuscleTypeEnum
     {
       return ExerciseMuscleTypeEnum.ISOLATION;
     }
+
+    return ExerciseMuscleTypeEnum.ISOLATION;
   }
 
   int getId()

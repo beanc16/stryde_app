@@ -30,7 +30,7 @@ class SliderElementState extends State<SliderElement>
   int sliderValue;
   double _min;
   double _max;
-  Slider slider;
+  late Slider slider;
 
   SliderElementState(this._min, this._max, this.sliderValue)
   {
@@ -69,7 +69,7 @@ class LabeledSliderElement extends StatefulWidget
   int sliderValue;
   double _min;
   double _max;
-  State<StatefulWidget> state;
+  late State<StatefulWidget> state;
   int labelTextSize;
 
   LabeledSliderElement(this._labelText, this._min, this._max, this.sliderValue,
@@ -97,7 +97,7 @@ class LabeledSliderElementState extends State<LabeledSliderElement>
   double _min;
   double _max;
   String _displayText = "";
-  Slider slider;
+  late Slider slider;
   int labelTextSize;
 
   LabeledSliderElementState(this._labelText, this._min, this._max, this.sliderValue,

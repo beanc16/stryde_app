@@ -1,6 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:workout_buddy/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
+import 'package:Stryde/screens/loggedIn/workoutList/AllExerciseListScreen.dart';
 import 'StartupScreen.dart';
 
 

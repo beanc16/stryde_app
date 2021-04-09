@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:workout_buddy/components/listViews/searchableListView/SearchableListView.dart';
-import 'package:workout_buddy/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:Stryde/components/listViews/searchableListView/SearchableListView.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 
 
 class StrydeExerciseSearchableListView extends SearchableListView
 {
   StrydeExerciseSearchableListView({
-    @required List<String> listTileDisplayText,
-    @required Function(BuildContext, int) onTapListTile
+    required List<String> listTileDisplayText,
+    required Function(BuildContext, int) onTapListTile
   }) :
       super(
         // Text
