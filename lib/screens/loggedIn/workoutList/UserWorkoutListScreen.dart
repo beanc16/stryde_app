@@ -1,7 +1,7 @@
+import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
@@ -245,7 +245,7 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
               _getButtonsAboveListView(),
               getDefaultPadding(),
 
-              LabelTextElement("No workouts...")
+              LabelText("No workouts...")
             ],
           )
         );

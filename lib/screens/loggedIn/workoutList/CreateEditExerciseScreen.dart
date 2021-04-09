@@ -1,10 +1,10 @@
+import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
+import 'package:Stryde/components/formHelpers/multiSelectFlutterHelpers/MultiSelectBottomSheetChipDisplay.dart';
+import 'package:Stryde/components/formHelpers/multiSelectFlutterHelpers/SingleSelectBottomSheetChipDisplay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:Stryde/components/formHelpers/TextElements.dart';
-import 'package:Stryde/components/formHelpers/multiSelectFlutterHelpers/MultiSelectBottomSheetChipDisplay.dart';
-import 'package:Stryde/components/formHelpers/multiSelectFlutterHelpers/SingleSelectBottomSheetChipDisplay.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeConstants.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
@@ -39,10 +39,13 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
   CreateEditExerciseScreenState()
   {
     // Name & Description
-    _nameInput = LabeledTextInputElement("Exercise", "Enter exercise");
+    _nameInput = LabeledTextInputElement(
+      labelText: "Exercise",
+      placeholderText: "Enter exercise",
+      );
     _descriptionInput = LabeledTextInputElement.textArea(
-      "Description",
-      "Enter description"
+      labelText: "Description",
+      placeholderText: "Enter description",
     );
 
     // Muscle Groups

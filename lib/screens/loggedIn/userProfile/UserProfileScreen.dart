@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Stryde/components/formHelpers/TextElements.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
@@ -28,15 +28,18 @@ class UserProfileScreen extends StatelessWidget
 
   UserProfileScreen()
   {
-    _user = StrydeUserStorage.userExperience;
-    _goalInput = LabeledTextInputElement.textArea("Goal", "Enter goal");
+  _user = StrydeUserStorage.userExperience;
+  _goalInput = LabeledTextInputElement.textArea(
+    labelText: "Goal",
+    placeholderText: "Enter goal",
+  );
 
     if (_user != null)
     {
       if (_user?.goal != null)
       {
-        _goalInput.setInputText(_user?.goal);
-        _curSavedGoal = _user?.goal;
+        _goalInput.inputText = _user?.goal ?? "";
+        _curSavedGoal = _user?.goal ?? "";
       }
     }
 
@@ -103,7 +106,7 @@ class UserProfileScreen extends StatelessWidget
 
   bool _goalHasBeenChanged()
   {
-    return (_curSavedGoal != _goalInput.getInputText());
+    return (_curSavedGoal != _goalInput.inputText);
   }
 
 
@@ -112,7 +115,7 @@ class UserProfileScreen extends StatelessWidget
   {
     Map<String, String?> postData = {
       "userId": StrydeUserStorage.userExperience?.id.toString(),
-      "userGoal": this._goalInput.getInputText(),
+      "userGoal": this._goalInput.inputText,
     };
 
     if (_goalHasBeenChanged())
@@ -145,8 +148,8 @@ class UserProfileScreen extends StatelessWidget
     _toggleableWidgets.showChild("successMsg");
 
     // Update local storage of goal
-    StrydeUserStorage.userExperience?.goal = this._goalInput.getInputText();
-    _curSavedGoal = this._goalInput.getInputText();
+    StrydeUserStorage.userExperience?.goal = this._goalInput.inputText;
+    _curSavedGoal = this._goalInput.inputText;
 
     // Hide success msg after the given number of seconds
     _toggleableWidgets.hideChildAndLoadingIconAfter(

@@ -1,7 +1,7 @@
+import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
+import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
-import 'package:Stryde/components/formHelpers/TextElements.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
@@ -48,27 +48,21 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   late List<dynamic> _listViewElements;
 
 
-  CreateViewWorkoutState()
-  {
-    workout = Workout.notReorderable("", []);
-    _listViewElements = workout.getAsWidgets();
-
-    _titleInput = LabeledTextInputElement("Title", "Enter title");
-    _descriptionInput = LabeledTextInputElement.textArea(
-      "Description",
-      "Enter description"
-    );
-  }
+  CreateViewWorkoutState() :
+    this.workout(Workout.notReorderable("", []));
 
   CreateViewWorkoutState.workout(Workout workout)
   {
     this.workout = workout;
     _listViewElements = workout.getAsWidgets();
 
-    _titleInput = LabeledTextInputElement("Title", "Enter title");
+    _titleInput = LabeledTextInputElement(
+      labelText: "Title",
+      placeholderText: "Enter title",
+    );
     _descriptionInput = LabeledTextInputElement.textArea(
-      "Description",
-      "Enter description"
+      labelText: "Description",
+      placeholderText: "Enter description",
     );
   }
 
@@ -77,10 +71,8 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   {
     if (workout != null)
     {
-      _titleInput.inputElement.textEditingController.text =
-          workout.name;
-      _descriptionInput.inputElement.textEditingController.text =
-          workout.description;
+      _titleInput.inputText = workout.name;
+      _descriptionInput.inputText = workout.description;
     }
   }
 
@@ -134,7 +126,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(left: 4, top: 10),
-                child: LabelTextElement("No exercises..."),
+                child: LabelText("No exercises..."),
               )
             ),
           ],
@@ -156,7 +148,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 3),
-                child: LabelTextElement("Exercises"),
+                child: LabelText("Exercises"),
               )
             ],
           )

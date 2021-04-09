@@ -1,6 +1,6 @@
+import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Stryde/components/formHelpers/TextElements.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
@@ -24,8 +24,14 @@ class LoginScreen extends StatelessWidget
 
   LoginScreen()
   {
-    _usernameInput = LabeledTextInputElement("Username", "Enter username");
-    _passwordInput = LabeledTextInputElement.password("Password", "Enter password");
+    _usernameInput = LabeledTextInputElement(
+      labelText: "Username",
+      placeholderText: "Enter Username",
+    );
+    _passwordInput = LabeledTextInputElement.password(
+      labelText: "Password",
+      placeholderText: "Enter password",
+    );
     _toggleableWidgets = ToggleableWidgetMap({
       "queryError": _getQueryErrorMessage(),
       "inputValidationError": _getValidationErrorMessage(),
@@ -73,8 +79,8 @@ class LoginScreen extends StatelessWidget
 
   bool _usernameAndPasswordAreTyped()
   {
-    return (_usernameInput.getInputText().length > 0 &&
-            _passwordInput.getInputText().length > 0);
+    return (_usernameInput.inputText.length > 0 &&
+            _passwordInput.inputText.length > 0);
   }
 
 
@@ -126,10 +132,8 @@ class LoginScreen extends StatelessWidget
   void _tryLogin(BuildContext context) async
   {
     Map<String, String> postData = {
-      "username": this._usernameInput.inputElement
-          .textEditingController.text,
-      "password": this._passwordInput.inputElement
-          .textEditingController.text,
+      "username": this._usernameInput.inputText,
+      "password": this._passwordInput.inputText,
     };
 
     if (!_usernameAndPasswordAreTyped())

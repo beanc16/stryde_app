@@ -1,7 +1,7 @@
+import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
@@ -204,7 +204,7 @@ class AllSupersetListScreenState extends State<AllSupersetListScreen>
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    LabelTextElement(
+                    LabelText(
                       "Selected Exercises",
                       labelTextSize: 14,
                     ),
@@ -224,7 +224,7 @@ class AllSupersetListScreenState extends State<AllSupersetListScreen>
       {
         return Container(
           margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: LabelTextElement("No exercises..."),
+          child: LabelText("No exercises..."),
         );
       }
     }

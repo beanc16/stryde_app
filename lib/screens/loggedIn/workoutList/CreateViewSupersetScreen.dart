@@ -1,7 +1,7 @@
+import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
+import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:Stryde/components/formHelpers/LabelTextElement.dart';
-import 'package:Stryde/components/formHelpers/TextElements.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:Stryde/components/uiHelpers/SinglePageScrollingWidget.dart';
@@ -45,17 +45,16 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
   late bool hasError;
 
 
-  CreateViewSupersetState()
-  {
-    superset = Superset.getDemoSuperset(() {}, () {});
-    _titleInput = LabeledTextInputElement("Title", "Enter title");
-    hasError = false;
-  }
+  CreateViewSupersetState() :
+    this.superset(Superset.getDemoSuperset(() {}, () {}));
 
   CreateViewSupersetState.superset(Superset superset)
   {
     this.superset = superset;
-    _titleInput = LabeledTextInputElement("Title", "Enter title");
+    _titleInput = LabeledTextInputElement(
+      labelText: "Title",
+      placeholderText: "Enter title",
+    );
     hasError = false;
   }
 
@@ -66,7 +65,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
 
     if (superset != null)
     {
-      _titleInput.inputElement.textEditingController.text = superset.name;
+      _titleInput.inputText = superset.name;
     }
   }
 
@@ -100,7 +99,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
         getPadding(30),
 
         // Exercise & Superset widget
-        LabelTextElement("Exercises"),
+        LabelText("Exercises"),
         superset.getAsListView(),
         getDefaultPadding(),
       ];
@@ -117,7 +116,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
             children: [
               Padding(
                 padding: EdgeInsets.only(left: 10),
-                child: LabelTextElement("Exercises"),
+                child: LabelText("Exercises"),
               )
             ],
           )
