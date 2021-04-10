@@ -6,6 +6,9 @@ import 'package:Stryde/screens/loggedIn/workoutList/EditExerciseInformationScree
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'ExerciseMovementType.dart';
 import 'ExerciseWeightType.dart';
+import './enums/ExerciseWeightTypeEnum.dart';
+import './enums/ExerciseMuscleTypeEnum.dart';
+import './enums/ExerciseMovementTypeEnum.dart';
 
 
 
@@ -79,12 +82,36 @@ class Exercise
     );
   }
 
+  Exercise.duplicate(Exercise exercise,
+                     Function(BuildContext, dynamic)? onTap)
+  {
+    this.id = exercise.id;
+    this.name = exercise.name;
+    this.description = exercise.description;
+    this.exerciseWeightType = exercise.exerciseWeightType;
+    this.exerciseMuscleType = exercise.exerciseMuscleType;
+    this.exerciseMovementType = exercise.exerciseMovementType;
+    this.muscleGroups = exercise.muscleGroups;
+    this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
+      this.name,
+      this.description,
+      UniqueKey(),
+      false,
+      onTap: onTap,
+    );
+  }
+
   void _onTapDefault(BuildContext context, dynamic data)
   {
     NavigateTo.screen(
       context,
       () => EditExerciseInformationScreen(this),
     );
+  }
+
+  Exercise duplicate()
+  {
+    return Exercise.duplicate(this, this.exerciseListViewCard.onTap);
   }
 
 
