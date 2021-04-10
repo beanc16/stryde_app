@@ -8,7 +8,6 @@ import 'package:Stryde/components/tables/EditableTable.dart';
 import 'package:Stryde/components/tables/EditableTableController.dart';
 import 'package:Stryde/models/Exercise.dart';
 import 'package:Stryde/utilities/TextHelpers.dart';
-import 'package:Stryde/utilities/UiHelpers.dart';
 import '../../../models/enums/ExerciseMovementTypeEnum.dart';
 import '../../../models/enums/ExerciseMuscleTypeEnum.dart';
 import '../../../models/enums/ExerciseWeightTypeEnum.dart';
@@ -51,6 +50,12 @@ class EditExerciseInformationScreen extends StatelessWidget
   }
    */
 
+  void _onAddRow(dynamic addedRow, int addRowIndex)
+  {
+    Map<dynamic, dynamic> newAddedRow = addedRow;
+    newAddedRow["setNum"] = addRowIndex + 1;
+  }
+
   List<String> _getExerciseTypeTagText()
   {
     // Get the muscle groups
@@ -72,6 +77,13 @@ class EditExerciseInformationScreen extends StatelessWidget
     ]);
 
     return result;
+  }
+
+
+
+  List<dynamic>? _getEditedRows()
+  {
+    return _controller.getEditedRows!();
   }
 
 
@@ -109,6 +121,69 @@ class EditExerciseInformationScreen extends StatelessWidget
     );
   }
 
+  List<dynamic> _getInitialTableRows()
+  {
+    return [
+      {
+        "setNum": 1,
+        "reps": 20,
+        "weight": 10,
+        "duration": "",
+        "resistance": "",
+      },
+      {
+        "setNum": 2,
+        "reps": 10,
+        "weight": 20,
+        "duration": "",
+        "resistance": "",
+      },
+      {
+        "setNum": 3,
+        "reps": 5,
+        "weight": 25,
+        "duration": "",
+        "resistance": "",
+      },
+    ];
+  }
+
+  List<dynamic> _getInitialTableColumns()
+  {
+    return [
+      {
+        "title": "Set Number",
+        //"widthFactor": 0.2,
+        "key": "setNum",
+        "editable": false
+      },
+      {
+        "title": "Reps",
+        //"widthFactor": 0.2,
+        "key": "reps",
+        "editable": true
+      },
+      {
+        "title": "Weight",
+        //"widthFactor": 0.2,
+        "key": "weight",
+        "editable": true
+      },
+      {
+        "title": "Duration",
+        //"widthFactor": 0.2,
+        "key": "duration",
+        "editable": true
+      },
+      {
+        "title": "Resistance",
+        //"widthFactor": 0.2,
+        "key": "resistance",
+        "editable": true
+      },
+    ];
+  }
+
 
 
   @override
@@ -116,14 +191,8 @@ class EditExerciseInformationScreen extends StatelessWidget
   {
     /* 
 	 * TODO: Add the following items:
-	 *       - Tags for:
-	 *         - Muscle Group (quads / hams / etc.)
-	 *         - Muscle Group Type (big / small)
 	 *       - Settings to hide & reorder fields for different exercises
 	 */
-
-    Color lGray = StrydeColors.lightGray;
-    Color dGray = StrydeColors.darkGray;
 
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "Edit Exercise"),
@@ -156,84 +225,14 @@ class EditExerciseInformationScreen extends StatelessWidget
               Flexible(
                 child: EditableTable(
                   controller: _controller,
-                  stripeColor1: Color.fromRGBO(lGray.red, lGray.green, lGray.blue, 0.175),
-                  stripeColor2: Color.fromRGBO(dGray.red, dGray.green, dGray.blue, 0.2),
+                  columns: _getInitialTableColumns(),
+                  rows: _getInitialTableRows(),
 
-                  onRowSaved: (value)
-                  {
-                    // On save button pressed
-                    print("Row saved: " + value.toString());
-                  },
-                  onSubmitted: (value)
-                  {
-                    // On edit complete (on mobile) or enter is tapped (on desktop)
-                    print("\n\n\nSubmitted: " + value.toString());
-                  },
+                  stripeColor1: (StrydeColors.lightGrayMat[100])!,
+                  stripeColor2: (StrydeColors.darkGrayMat[200])!,
+                  columnRatio: 0.175,
 
-                  columns: [
-                    {
-                      "title": "Set Number",
-                      //"widthFactor": 0.2,
-                      "key": "setNum",
-                      "editable": false
-                    },
-                    {
-                      "title": "Reps",
-                      //"widthFactor": 0.2,
-                      "key": "reps",
-                      "editable": true
-                    },
-                    {
-                      "title": "Weight",
-                      //"widthFactor": 0.2,
-                      "key": "weight",
-                      "editable": true
-                    },
-                    {
-                      "title": "Duration",
-                      //"widthFactor": 0.2,
-                      "key": "duration",
-                      "editable": true
-                    },
-                    {
-                      "title": "Distance",
-                      //"widthFactor": 0.2,
-                      "key": "distance",
-                      "editable": true
-                    },
-                    {
-                      "title": "Resistance",
-                      //"widthFactor": 0.2,
-                      "key": "resistance",
-                      "editable": true
-                    },
-                  ],
-                  rows: [
-                    {
-                      "setNum": 1,
-                      "reps": 20,
-                      "weight": 10,
-                      "duration": "",
-                      "distance": "",
-                      "resistance": "",
-                    },
-                    {
-                      "setNum": 2,
-                      "reps": 10,
-                      "weight": 20,
-                      "duration": "",
-                      "distance": "",
-                      "resistance": "",
-                    },
-                    {
-                      "setNum": 3,
-                      "reps": 5,
-                      "weight": 25,
-                      "duration": "",
-                      "distance": "",
-                      "resistance": "",
-                    },
-                  ],
+                  onAddRow: _onAddRow,
                 ),
               ),
 

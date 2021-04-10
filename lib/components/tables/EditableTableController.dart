@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:Stryde/components/tables/EditableTable.dart';
+
+
+typedef List<dynamic>? DynamicListCallback();
+
 
 class EditableTableController extends ChangeNotifier
 {
-  late EditableTableState state;
   late bool shouldAddNewRow = false;
   late bool shouldDeleteLastRow = false;
+  DynamicListCallback? getEditedRows;
 
   EditableTableController();
 

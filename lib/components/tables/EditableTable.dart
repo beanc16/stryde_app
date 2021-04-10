@@ -5,12 +5,15 @@ import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:Stryde/components/tables/EditableTableController.dart';
 
 
+typedef List<dynamic>? DynamicListCallback();
+
+
 class EditableTable extends StatefulWidget
 {
   late List _columns;
   late List _rows;
   late EditableTableController _controller;
-  late Function? _onAddRow;
+  late Function(dynamic, int)? _onAddRow;
   late Function? _onDeleteRow;
   late final Color _borderColor;
   late final Color _stripeColor1;
@@ -24,12 +27,13 @@ class EditableTable extends StatefulWidget
   late final TextStyle _thTextStyle;
   late Function(dynamic)? _onRowSaved;
   late Function(String)? _onSubmitted;
+  late double _columnRatio;
 
   EditableTable({
     required List columns,
     List rows = const [],
     required EditableTableController controller,
-    Function? onAddRow,
+    Function(dynamic, int)? onAddRow,
     Function? onDeleteRow,
     Color borderColor = Colors.blueGrey,
     Color stripeColor1 = Colors.grey,
@@ -52,6 +56,7 @@ class EditableTable extends StatefulWidget
     ),
     Function(dynamic)? onRowSaved,
     Function(String)? onSubmitted,
+    double columnRatio = 0.2
   })
   {
     this._columns = columns;
@@ -71,6 +76,7 @@ class EditableTable extends StatefulWidget
     this._thTextStyle = thTextStyle;
     this._onRowSaved = onRowSaved;
     this._onSubmitted = onSubmitted;
+    this._columnRatio = columnRatio;
   }
 
 
@@ -86,7 +92,7 @@ class EditableTable extends StatefulWidget
                               this._trHeight, this._tdTextAlign,
                               this._thTextAlign, this._tdTextStyle,
                               this._thTextStyle, this._onRowSaved,
-                              this._onSubmitted);
+                              this._onSubmitted, this._columnRatio);
   }
 }
 
@@ -98,7 +104,7 @@ class EditableTableState extends State<EditableTable>
   EditableTableController _controller;
   List _columns;
   List _rows;
-  Function? _onAddRow;
+  Function(dynamic, int)? _onAddRow;
   Function? _onDeleteRow;
   Color _borderColor;
   Color _stripeColor1;
@@ -112,6 +118,7 @@ class EditableTableState extends State<EditableTable>
   final TextStyle _thTextStyle;
   final Function(dynamic)? _onRowSaved;
   final Function(String)? _onSubmitted;
+  final double _columnRatio;
 
   EditableTableState(this._columns, this._rows, this._controller,
                      this._onAddRow, this._onDeleteRow,
@@ -120,10 +127,12 @@ class EditableTableState extends State<EditableTable>
                      this._tdPadding, this._trHeight,
                      this._tdTextAlign, this._thTextAlign,
                      this._tdTextStyle, this._thTextStyle,
-                     this._onRowSaved, this._onSubmitted)
+                     this._onRowSaved, this._onSubmitted,
+                     this._columnRatio)
   {
     this._tableKey = GlobalKey<EditableState>();
     _initializeListeners();
+    _controller.getEditedRows = _getEditedRowsForParent();
   }
 
   void _initializeListeners()
@@ -149,6 +158,14 @@ class EditableTableState extends State<EditableTable>
 
 
 
+  DynamicListCallback _getEditedRowsForParent()
+  {
+    return ()
+    {
+      return this._getEditedRows();
+    };
+  }
+
   void _addNewRow()
   {
     setState(()
@@ -158,7 +175,13 @@ class EditableTableState extends State<EditableTable>
 
     if (_onAddRow != null)
     {
-      _onAddRow!();
+      int? numOfRows = _tableKey.currentState?.rowCount;
+
+      if (numOfRows != null)
+      {
+        dynamic addedRow = _tableKey.currentState?.rows![numOfRows];
+        _onAddRow!(addedRow, numOfRows);
+      }
     }
   }
 
@@ -248,7 +271,7 @@ class EditableTableState extends State<EditableTable>
 
       // Rows
       trHeight: _trHeight,
-      columnRatio: 0.14,
+      columnRatio: _columnRatio,
     );
   }
 }
