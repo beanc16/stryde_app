@@ -1,3 +1,4 @@
+import 'package:Stryde/components/toggleableWidget/EmptyWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -151,6 +152,7 @@ class ListViewCardState extends State<ListViewCard>
   Function()? onDeleteListViewCard;
   Function(BuildContext, dynamic)? onTap;
   dynamic data;
+  MaterialColor _splashColor = StrydeColors.lightBlueMat;
 
   ListViewCardState(this.shouldLeftIndent, this.isReorderable, 
                     this.onDeleteListViewCard, this.onTap, this.data);
@@ -199,9 +201,9 @@ class ListViewCardState extends State<ListViewCard>
       ),
       color: Colors.white,
       child: InkWell(
-        splashColor: this._getSplashColor(),
+        splashColor: _splashColor,
 
-        onTap: () => this.onTap!(context, data),
+        onTap: () => (){},
 
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -243,6 +245,7 @@ class ListViewCardState extends State<ListViewCard>
             ),
 
             //reorderIcon,
+            _getEditIcon(context)
           ],
         ),
       ),
@@ -315,14 +318,38 @@ class ListViewCardState extends State<ListViewCard>
     );
   }
 
-  MaterialColor? _getSplashColor()
+  Widget _getEditIcon(BuildContext context)
   {
-    if (this.isReorderable)
+    if (!isReorderable)
     {
-      // TODO: Update this to return a StrydeColor, but make it a MaterialColor
-      return Colors.blue;
+      return Container(
+        child: Padding(
+          padding: EdgeInsets.zero,
+          child: MaterialButton(
+            color: StrydeColors.purpleMat[500],
+            onPressed: () => this.onTap!(context, this.data),
+            child: Icon(
+              Icons.edit,
+              color: Colors.white,
+              size: 14.0,
+            ),
+            shape: CircleBorder(),
+            //padding: EdgeInsets.all(12),
+          ),
+        )
+      );
     }
 
-    return null;
+    else
+    {
+      return EmptyWidget();
+    }
+  }
+
+  Padding _getNoReorderIcon()
+  {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+    );
   }
 }

@@ -16,6 +16,7 @@ class MultiTagDisplay extends StatefulWidget
   late final MultiTagDisplayAs _displayAsEnum;
   late Function(int, String)? _onDeleteTag;
   late MultiTagDisplayState state;
+  late bool _canDeleteTags;
 
   MultiTagDisplay({
     required List<String> displayText,
@@ -27,6 +28,7 @@ class MultiTagDisplay extends StatefulWidget
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
     MultiTagDisplayAs multiTagDisplayAs = MultiTagDisplayAs.Row,
     Function(int, String)? onDeleteTag,
+    bool canDeleteTags = true,
   })
   {
     this._displayText = displayText;
@@ -38,6 +40,7 @@ class MultiTagDisplay extends StatefulWidget
     this._crossAxisAlignment = crossAxisAlignment;
     this._displayAsEnum = multiTagDisplayAs;
     this._onDeleteTag = onDeleteTag;
+    this._canDeleteTags = canDeleteTags;
   }
 
 
@@ -59,7 +62,8 @@ class MultiTagDisplay extends StatefulWidget
       this._displayText, this._tagColor, this._textColor,
       this._deleteIconColor, this._spaceBetweenTags,
       this._mainAxisAlignment, this._crossAxisAlignment,
-      this._displayAsEnum, this._onDeleteTag
+      this._displayAsEnum, this._onDeleteTag,
+      this._canDeleteTags,
     );
 
     return this.state;
@@ -80,24 +84,32 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
   CrossAxisAlignment _crossAxisAlignment;
   MultiTagDisplayAs _displayAsEnum;
   Function(int, String)? _onDeleteTagCallback;
+  bool _canDeleteTags;
 
   MultiTagDisplayState(this._displayText, this._tagColor,
                        this._textColor, this._deleteIconColor,
                        this._spaceBetweenTags, this._mainAxisAlignment,
                        this._crossAxisAlignment, this._displayAsEnum,
-                       this._onDeleteTagCallback);
+                       this._onDeleteTagCallback, this._canDeleteTags);
 
   @override
   void initState()
   {
     super.initState();
 
+    Function(Key)? tempOnDeleteTag;
+
+    if (_canDeleteTags)
+    {
+      tempOnDeleteTag = _onDeleteTag;
+    }
+
     _tags = Tag.generateList(
       displayText: _displayText,
       tagColor: _tagColor,
       textColor: _textColor,
       spaceBetweenTags: _spaceBetweenTags,
-      onDeleted: _onDeleteTag,
+      onDeleted: tempOnDeleteTag,
       deleteIconColor: _deleteIconColor,
       displayedAs: _displayAsEnum,
     );
@@ -113,7 +125,7 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
         return tag.keyEquals(uniqueKey);
       }
 
-    return false;
+      return false;
     });
 
     // Need the duplicate list, or it throws errors

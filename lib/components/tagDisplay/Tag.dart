@@ -73,6 +73,32 @@ class Tag extends StatelessWidget
       }
 
       UniqueKey key = UniqueKey();
+      Tag tag;
+      if (onDeleted != null)
+      {
+        tag = Tag(
+          displayText: displayText[i],
+          tagColor: tagColor,
+          textColor: textColor,
+          deleteIconColor: deleteIconColor,
+          onDeleted: () => onDeleted(key),
+          padding: _getEdgeInsets(displayedAs, spaceBetweenTags),
+          key: key,
+        );
+      }
+      else
+      {
+        tag = Tag(
+          displayText: displayText[i],
+          tagColor: tagColor,
+          textColor: textColor,
+          deleteIconColor: deleteIconColor,
+          padding: _getEdgeInsets(displayedAs, spaceBetweenTags),
+          key: key,
+        );
+      }
+      tags.add(tag);
+      /*
       tags.add(Tag(
         displayText: displayText[i],
         tagColor: tagColor,
@@ -82,6 +108,7 @@ class Tag extends StatelessWidget
         padding: _getEdgeInsets(displayedAs, spaceBetweenTags),
         key: key,
       ));
+      */
     }
 
     return tags;

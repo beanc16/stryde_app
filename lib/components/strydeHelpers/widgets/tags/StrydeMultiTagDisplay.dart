@@ -9,6 +9,7 @@ class StrydeMultiTagDisplay extends MultiTagDisplay
   StrydeMultiTagDisplay({
     required List<String> displayText,
     Function(int, String)? onDeleteTag,
+    bool canDeleteTags = true,
   }) :
       super(
         displayText: displayText,
@@ -18,5 +19,6 @@ class StrydeMultiTagDisplay extends MultiTagDisplay
         mainAxisAlignment: MainAxisAlignment.start,
         onDeleteTag: onDeleteTag,
         spaceBetweenTags: 15,
+        canDeleteTags: canDeleteTags,
       );
 }

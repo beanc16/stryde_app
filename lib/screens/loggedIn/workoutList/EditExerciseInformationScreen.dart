@@ -1,3 +1,5 @@
+import 'package:Stryde/components/formHelpers/elements/text/TextInputElement.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -7,6 +9,10 @@ import 'package:Stryde/components/tables/EditableTableController.dart';
 import 'package:Stryde/models/Exercise.dart';
 import 'package:Stryde/utilities/TextHelpers.dart';
 import 'package:Stryde/utilities/UiHelpers.dart';
+import '../../../models/enums/ExerciseMovementTypeEnum.dart';
+import '../../../models/enums/ExerciseMuscleTypeEnum.dart';
+import '../../../models/enums/ExerciseWeightTypeEnum.dart';
+import '../../../models/enums/MuscleGroupEnum.dart';
 
 
 class EditExerciseInformationScreen extends StatelessWidget
@@ -45,12 +51,35 @@ class EditExerciseInformationScreen extends StatelessWidget
   }
    */
 
+  List<String> _getExerciseTypeTagText()
+  {
+    // Get the muscle groups
+    List<String> result = [];
+    if (_exercise.muscleGroups != null)
+    {
+      result = (_exercise.muscleGroups)!.map(
+      (mg)
+      {
+        return mg.value.toStringShort();
+      }).toList();
+    }
+
+    // Add the exercise types
+    result.addAll([
+      _exercise.exerciseWeightType?.value.toStringShort() ?? "",
+      _exercise.exerciseMuscleType?.value.toStringShort() ?? "",
+      _exercise.exerciseMovementType?.value.toStringShort() ?? "",
+    ]);
+
+    return result;
+  }
+
 
 
   Widget _getButtonIcons()
   {
     return Padding(
-      padding: EdgeInsets.only(left: 25, right: 25),
+      padding: EdgeInsets.only(left: 25, right: 25, top: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -87,11 +116,7 @@ class EditExerciseInformationScreen extends StatelessWidget
   {
     /* 
 	 * TODO: Add the following items:
-	 *       - TextArea for editing description
 	 *       - Tags for:
-	 *         - Weight Type (body weight / free weight / machine)
-	 *         - Muscle Type (compound / isolation)
-	 *         - Movement Type (push / pull / quad dominant / etc.)
 	 *         - Muscle Group (quads / hams / etc.)
 	 *         - Muscle Group Type (big / small)
 	 *       - Settings to hide & reorder fields for different exercises
@@ -101,7 +126,7 @@ class EditExerciseInformationScreen extends StatelessWidget
     Color dGray = StrydeColors.darkGray;
 
     return Scaffold(
-      appBar: StrydeAppBar(titleStr: "View Workout"),
+      appBar: StrydeAppBar(titleStr: "Edit Exercise"),
       key: _tableKey,
       body: Padding(
         padding: EdgeInsets.only(left: 15, right: 15, top: 15),
@@ -116,8 +141,17 @@ class EditExerciseInformationScreen extends StatelessWidget
                 color: StrydeColors.darkGray,
               ),
 
+              Padding(
+                padding: EdgeInsets.only(top: 10),
+                child: TextInputElement.textArea(
+                  placeholderText: "Enter description",
+                  maxInputLength: 2000,
+                  initialText: _exercise.description ?? "",
+                  maxLines: 5,
+                )
+              ),
+
               _getButtonIcons(),
-              getDefaultPadding(),
 
               Flexible(
                 child: EditableTable(
@@ -202,6 +236,14 @@ class EditExerciseInformationScreen extends StatelessWidget
                   ],
                 ),
               ),
+
+              Padding(
+                padding: EdgeInsets.only(top: 5, bottom: 15),
+                child: StrydeMultiTagDisplay(
+                  displayText: _getExerciseTypeTagText(),
+                  canDeleteTags: false,
+                ),
+              )
             ],
           ),
         )

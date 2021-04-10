@@ -23,6 +23,7 @@ class InputFormElement extends StatefulWidget
   late Color borderColor;
   late double borderWidth;
   late bool showBorder;
+  late final _maxLines;
 
   int get inputTextSize => _inputTextSize;
   int get placeholderTextSize => _placeholderTextSize;
@@ -44,6 +45,7 @@ class InputFormElement extends StatefulWidget
     int? maxInputLength,
     Color borderColor = Colors.red,
     double borderWidth = 0,
+    int maxLines = 1,
   })
   {
     _placeholderText = placeholderText;
@@ -55,6 +57,7 @@ class InputFormElement extends StatefulWidget
     _maxInputLength = maxInputLength;
     this.borderColor = borderColor;
     this.borderWidth = borderWidth;
+    _maxLines = maxLines;
 
     if (textEditingController == null)
     {
@@ -119,6 +122,7 @@ class InputFormElement extends StatefulWidget
     int? maxInputLength,
     Color borderColor = Colors.red,
     double borderWidth = 0,
+    int maxLines = 1,
   })
   : this(
       placeholderText: placeholderText,
@@ -132,6 +136,7 @@ class InputFormElement extends StatefulWidget
       maxInputLength: maxInputLength,
       borderColor: borderColor,
       borderWidth: borderWidth,
+      maxLines: maxLines,
     );
 
 
@@ -211,7 +216,8 @@ class InputFormElement extends StatefulWidget
                                   maxInputLength: _maxInputLength,
                                   borderColor: this.borderColor,
                                   borderWidth: this.borderWidth,
-                                  showBorder: this.showBorder);
+                                  showBorder: this.showBorder,
+                                  maxLines: this._maxLines);
   }
 }
 
@@ -231,6 +237,7 @@ class _InputFormElementState extends State<InputFormElement>
   final Color borderColor;
   final double borderWidth;
   bool showBorder;
+  int? maxLines;
 
   // Constructors
   _InputFormElementState(this._placeholderText, this._inputType,
@@ -238,12 +245,12 @@ class _InputFormElementState extends State<InputFormElement>
                         {this.inputTextSize = FormSettings.defaultInputTextSize,
                          this.placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
                          this.maxInputLength, this.borderColor = Colors.red,
-                         this.borderWidth = 0, this.showBorder = false})
+                         this.borderWidth = 0, this.showBorder = false,
+                         this.maxLines = 1})
   {
-    int? maxLines = 1;
-    if (this._inputType == TextInputType.multiline)
+    if (this._inputType == TextInputType.multiline && this.maxLines! <= 1)
     {
-      maxLines = null;
+      this.maxLines = null;
     }
 
     inputElement = TextField(
@@ -262,6 +269,7 @@ class _InputFormElementState extends State<InputFormElement>
       ),
       obscureText: _obscureText,
 
+      minLines: 1,
       maxLines: maxLines,
       maxLength: maxInputLength,
       maxLengthEnforcement: MaxLengthEnforcement.truncateAfterCompositionEnds,

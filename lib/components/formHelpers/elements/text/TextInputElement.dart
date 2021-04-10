@@ -72,6 +72,7 @@ class TextInputElement extends InputFormElement
     int? maxInputLength,
     Color borderColor = Colors.red,
     double borderWidth = 0,
+    int maxLines = 1,
   }) :
     super.textArea(
       placeholderText: placeholderText,
@@ -84,5 +85,6 @@ class TextInputElement extends InputFormElement
       maxInputLength: maxInputLength,
       borderColor: borderColor,
       borderWidth: borderWidth,
+      maxLines: maxLines,
     );
 }
