@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../FormSettings.dart';
 import '../basic/LabeledInputFormElement.dart';
 
@@ -16,6 +17,8 @@ class LabeledTextInputElement extends LabeledInputFormElement
     int minInputLength = 0,
     int? maxInputLength,
     CrossAxisAlignment labelAlignment = CrossAxisAlignment.start,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   : super(
       labelText: labelText,
@@ -29,7 +32,9 @@ class LabeledTextInputElement extends LabeledInputFormElement
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
       labelTextSize: labelTextSize,
-      labelAlignment: labelAlignment
+      labelAlignment: labelAlignment,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -42,6 +47,8 @@ class LabeledTextInputElement extends LabeledInputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   : super.password(
       labelText: labelText,
@@ -53,6 +60,8 @@ class LabeledTextInputElement extends LabeledInputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -66,6 +75,8 @@ class LabeledTextInputElement extends LabeledInputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   : super.textArea(
       labelText: labelText,
@@ -77,5 +88,7 @@ class LabeledTextInputElement extends LabeledInputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 }

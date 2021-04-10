@@ -1,6 +1,7 @@
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../FormSettings.dart';
 import 'InputFormElement.dart';
 import 'LabelText.dart';
@@ -18,6 +19,9 @@ class LabeledInputFormElement extends StatelessWidget
   late String _labelText;
   late int _labelTextSize;
   late CrossAxisAlignment _labelAlignment;
+  late final Color _borderColor;
+  late final double _borderWidth;
+  late InputFormElement _inputElement;
 
   int get inputTextSize => _inputTextSize;
   int get placeholderTextSize => _placeholderTextSize;
@@ -26,6 +30,12 @@ class LabeledInputFormElement extends StatelessWidget
   int get inputLength => this._controller.text.length;
   String get inputText => this._controller.text;
   set inputText(String str) => this._controller.text = str;
+  bool get showBorder => _inputElement.showBorder;
+  set showBorder(bool value) => _inputElement.showBorder = value;
+  Color get borderColor => _inputElement.borderColor;
+  set borderColor(Color value) => _inputElement.borderColor = borderColor;
+  double get borderWidth => _inputElement.borderWidth;
+  set borderWidth(double value) => _inputElement.borderWidth = value;
 
 
   LabeledInputFormElement({
@@ -41,6 +51,8 @@ class LabeledInputFormElement extends StatelessWidget
     int minInputLength = 0,
     int? maxInputLength,
     CrossAxisAlignment labelAlignment = CrossAxisAlignment.start,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   {
     _placeholderText = placeholderText;
@@ -53,12 +65,14 @@ class LabeledInputFormElement extends StatelessWidget
     _labelText = labelText;
     _labelTextSize = labelTextSize;
     _labelAlignment = labelAlignment;
+    _borderColor = borderColor;
+    _borderWidth = borderWidth;
 
     if (textEditingController == null)
     {
       this._controller = TextEditingController(
-          text: initialText
-          );
+        text: initialText
+      );
     }
     else
     {
@@ -69,6 +83,19 @@ class LabeledInputFormElement extends StatelessWidget
         this._controller.text = initialText;
       }
     }
+
+    this._inputElement = InputFormElement(
+      placeholderText: _placeholderText,
+      textInputType: _inputType,
+      textEditingController: _controller,
+      isPasswordField: _obscureText,
+      inputTextSize: _inputTextSize,
+      placeholderTextSize: _placeholderTextSize,
+      minInputLength: _minInputLength,
+      maxInputLength: _maxInputLength,
+      borderColor: _borderColor,
+      borderWidth: _borderWidth,
+    );
   }
 
   LabeledInputFormElement.password({
@@ -81,6 +108,8 @@ class LabeledInputFormElement extends StatelessWidget
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   : this(
       labelText: labelText,
@@ -93,6 +122,8 @@ class LabeledInputFormElement extends StatelessWidget
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
   LabeledInputFormElement.textArea({
@@ -105,6 +136,8 @@ class LabeledInputFormElement extends StatelessWidget
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   : this(
       labelText: labelText,
@@ -117,6 +150,8 @@ class LabeledInputFormElement extends StatelessWidget
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -143,7 +178,6 @@ class LabeledInputFormElement extends StatelessWidget
     {
       return true;
     }
-
 
     return (this.inputLength <= this._maxInputLength!);
   }
@@ -179,16 +213,7 @@ class LabeledInputFormElement extends StatelessWidget
           labelTextSize: _labelTextSize
         ),
 
-        InputFormElement(
-          placeholderText: _placeholderText,
-          textInputType: _inputType,
-          textEditingController: _controller,
-          isPasswordField: _obscureText,
-          inputTextSize: _inputTextSize,
-          placeholderTextSize: _placeholderTextSize,
-          minInputLength: _minInputLength,
-          maxInputLength: _maxInputLength,
-        ),
+        _inputElement,
       ],
     );
   }

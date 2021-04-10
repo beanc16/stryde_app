@@ -1,5 +1,7 @@
+import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../FormSettings.dart';
 import '../../exceptions/InputTooLongException.dart';
 import '../../exceptions/InputTooShortException.dart';
@@ -18,14 +20,17 @@ class InputFormElement extends StatefulWidget
   late final int _placeholderTextSize;
   late final int _minInputLength;
   late final int? _maxInputLength;
+  late Color borderColor;
+  late double borderWidth;
+  late bool showBorder;
 
   int get inputTextSize => _inputTextSize;
   int get placeholderTextSize => _placeholderTextSize;
   int get minInputLength => _minInputLength;
   int? get maxInputLength => _maxInputLength;
-  int get inputLength => this.controller.text.length;
-  String get inputText => this.controller.text;
-  set inputText(String str) => this.controller.text = str;
+  int get inputLength => controller.text.length;
+  String get inputText => controller.text;
+  set inputText(String value) => controller.text = value;
 
   InputFormElement({
     required String placeholderText,
@@ -37,6 +42,8 @@ class InputFormElement extends StatefulWidget
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   {
     _placeholderText = placeholderText;
@@ -46,6 +53,8 @@ class InputFormElement extends StatefulWidget
     _placeholderTextSize = placeholderTextSize;
     _minInputLength = minInputLength;
     _maxInputLength = maxInputLength;
+    this.borderColor = borderColor;
+    this.borderWidth = borderWidth;
 
     if (textEditingController == null)
     {
@@ -62,6 +71,15 @@ class InputFormElement extends StatefulWidget
         this.controller.text = initialText;
       }
     }
+
+    if (this.borderWidth <= 0)
+    {
+      showBorder = false;
+    }
+    else
+    {
+      showBorder = true;
+    }
   }
 
   InputFormElement.password({
@@ -73,6 +91,8 @@ class InputFormElement extends StatefulWidget
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   : this(
       placeholderText: placeholderText,
@@ -84,6 +104,8 @@ class InputFormElement extends StatefulWidget
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
   InputFormElement.textArea({
@@ -95,6 +117,8 @@ class InputFormElement extends StatefulWidget
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   })
   : this(
       placeholderText: placeholderText,
@@ -106,6 +130,8 @@ class InputFormElement extends StatefulWidget
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -129,9 +155,9 @@ class InputFormElement extends StatefulWidget
   bool _isUnderMaxInput()
   {
     if (_maxInputLength == null)
-	{
-	  return true;
-	}
+    {
+      return true;
+    }
 
 
     return (this.inputLength <= this._maxInputLength!);
@@ -157,13 +183,35 @@ class InputFormElement extends StatefulWidget
 
 
 
+  void toggleBorder(bool showBorder, {double? borderWidth,
+                                      Color? borderColor})
+  {
+    if (borderWidth != null)
+    {
+      this.borderWidth = borderWidth;
+    }
+
+    if (borderColor != null)
+    {
+      this.borderColor = borderColor;
+    }
+
+    this.showBorder = showBorder;
+  }
+
+
+
   @override
   State<StatefulWidget> createState()
   {
     return _InputFormElementState(this._placeholderText, this._inputType,
                                   this.controller, this._obscureText,
                                   inputTextSize: this.inputTextSize,
-                                  placeholderTextSize: this.placeholderTextSize);
+                                  placeholderTextSize: this.placeholderTextSize,
+                                  maxInputLength: _maxInputLength,
+                                  borderColor: this.borderColor,
+                                  borderWidth: this.borderWidth,
+                                  showBorder: this.showBorder);
   }
 }
 
@@ -179,12 +227,18 @@ class _InputFormElementState extends State<InputFormElement>
   late TextField inputElement;
   final int inputTextSize;
   final int placeholderTextSize;
+  int? maxInputLength;
+  final Color borderColor;
+  final double borderWidth;
+  bool showBorder;
 
   // Constructors
   _InputFormElementState(this._placeholderText, this._inputType,
                         this.textEditingController, this._obscureText,
                         {this.inputTextSize = FormSettings.defaultInputTextSize,
-                         this.placeholderTextSize = FormSettings.defaultPlaceholderTextSize})
+                         this.placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
+                         this.maxInputLength, this.borderColor = Colors.red,
+                         this.borderWidth = 0, this.showBorder = false})
   {
     int? maxLines = 1;
     if (this._inputType == TextInputType.multiline)
@@ -200,7 +254,7 @@ class _InputFormElementState extends State<InputFormElement>
         hintText: this._placeholderText,
         hintStyle: TextStyle(
           fontSize: this.placeholderTextSize.toDouble(),
-        )
+        ),
       ),
 
       style: TextStyle(
@@ -209,6 +263,8 @@ class _InputFormElementState extends State<InputFormElement>
       obscureText: _obscureText,
 
       maxLines: maxLines,
+      maxLength: maxInputLength,
+      maxLengthEnforcement: MaxLengthEnforcement.truncateAfterCompositionEnds,
     );
   }
 
@@ -228,9 +284,31 @@ class _InputFormElementState extends State<InputFormElement>
 
 
 
+  BoxDecoration? _getBorder()
+  {
+    if (showBorder)
+    {
+      return BoxDecoration(
+        border: Border.all(
+          //color: (StrydeColors.darkRedErrorMat[600])!,
+          color: borderColor,
+          //width: 1.25,
+          width: borderWidth,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+      );
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context)
   {
-    return inputElement;
+    return Container(
+      decoration: _getBorder(),
+      child: inputElement,
+    );
+    //return inputElement;
   }
 }

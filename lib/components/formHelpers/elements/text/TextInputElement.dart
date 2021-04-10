@@ -17,6 +17,8 @@ class TextInputElement extends InputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   }) :
     super(
       placeholderText: placeholderText,
@@ -28,6 +30,8 @@ class TextInputElement extends InputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -40,6 +44,8 @@ class TextInputElement extends InputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   }) :
     super.password(
       placeholderText: placeholderText,
@@ -50,6 +56,8 @@ class TextInputElement extends InputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -62,6 +70,8 @@ class TextInputElement extends InputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   }) :
     super.textArea(
       placeholderText: placeholderText,
@@ -72,5 +82,7 @@ class TextInputElement extends InputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 }

@@ -1,5 +1,9 @@
 import 'dart:async';
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
+import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
+import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeSuccessToggleableWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -28,11 +32,12 @@ class UserProfileScreen extends StatelessWidget
 
   UserProfileScreen()
   {
-  _user = StrydeUserStorage.userExperience;
-  _goalInput = LabeledTextInputElement.textArea(
-    labelText: "Goal",
-    placeholderText: "Enter goal",
-  );
+    _user = StrydeUserStorage.userExperience;
+    _goalInput = LabeledTextInputElement.textArea(
+      labelText: "Goal",
+      placeholderText: "Enter goal",
+      maxInputLength: 45,
+    );
 
     if (_user != null)
     {
@@ -44,69 +49,87 @@ class UserProfileScreen extends StatelessWidget
     }
 
     _toggleableWidgets = ToggleableWidgetMap({
-      "successMsg": _getGoalSuccessMessage(),
-      "queryErrorMsg": _getGoalQueryErrorMessage(),
-      "validationErrorMsg": _getGoalValidationErrorMessage(),
+      "successMsg": StrydeSuccessToggleableWidget(
+        showLoadingIndicatorOnLoading: true,
+        successMsg: "Goal Successfully Saved",
+      ),
+      "queryErrorMsg": StrydeErrorToggleableWidget(
+        errorMsg: "Goal Failed to Save",
+      ),
+      "validationErrorMsg": StrydeErrorToggleableWidget(
+        errorMsg: "Must change goal before saving",
+      ),
+      "inputTooShortError": StrydeErrorToggleableWidget(
+        errorMsg: "Goal is too short",
+      ),
+      "inputTooLongError": StrydeErrorToggleableWidget(
+        errorMsg: "Goal is too long",
+      ),
     });
   }
 
-
-
-  ToggleableWidget _getGoalSuccessMessage()
+  bool _isInputValid()
   {
-    return ToggleableWidget(
-      hideOnStartup: true,
+    bool result = true;
 
-      loadingIndicator: Column(
-        children: [
-          StrydeProgressIndicator(),
-          getDefaultPadding(),
-        ],
-      ),
+    if (_goalInput.isValidInput() && _goalHasBeenChanged())
+    {
+      _goalInput.showBorder = false;
+    }
+    else
+    {
+      _goalInput.showBorder = true;
+      result = false;
+    }
 
-      child: Column(
-        children: [
-          StrydeSuccessText(displayText: "Goal Successfully Saved"),
-          getDefaultPadding(),
-        ],
-      ),
-    );
+    return result;
   }
 
-  ToggleableWidget _getGoalQueryErrorMessage()
+  void _tryThrowExceptions()
   {
-    return ToggleableWidget(
-      hideOnStartup: true,
-      showLoadingIndicatorOnLoading: false,
+    try
+    {
+      if (!_goalHasBeenChanged())
+      {
+        _toggleableWidgets.hideAllExcept("inputTooLongError");
+        _toggleableWidgets.showChildFor(
+          "validationErrorMsg", Duration(seconds: 3,)
+        );
+        return;
+      }
+      _goalInput.tryThrowExceptionMessage();
+    }
 
-      child: Column(
-        children: [
-          StrydeErrorText(displayText: "Goal Failed to Save"),
-          getDefaultPadding(),
-        ],
-      ),
-    );
+    on InputTooLongException catch (ex)
+    {
+      _toggleableWidgets.hideAllExcept("inputTooLongError");
+      _toggleableWidgets.showChildFor(
+        "inputTooLongError", Duration(seconds: 3,)
+      );
+    }
+
+    on InputTooShortException catch (ex)
+    {
+      _toggleableWidgets.hideAllExcept("inputTooShortError");
+      _toggleableWidgets.showChildFor(
+        "inputTooShortError", Duration(seconds: 3,)
+      );
+    }
+
+    on Exception catch (ex)
+    {
+      _toggleableWidgets.hideAllExcept("queryErrorMsg");
+      _toggleableWidgets.showChildFor(
+        "queryErrorMsg", Duration(seconds: 3,)
+      );
+    }
   }
 
-  ToggleableWidget _getGoalValidationErrorMessage()
-  {
-    return ToggleableWidget(
-      hideOnStartup: true,
-      showLoadingIndicatorOnLoading: false,
 
-      child: Column(
-        children: [
-          StrydeErrorText(displayText: "Must change goal before " +
-                                       "saving"),
-          getDefaultPadding(),
-        ],
-      ),
-    );
-  }
 
   bool _goalHasBeenChanged()
   {
-    return (_curSavedGoal != _goalInput.inputText);
+    return (_curSavedGoal != _goalInput.inputText.trim());
   }
 
 
@@ -202,18 +225,28 @@ class UserProfileScreen extends StatelessWidget
           ),
           getDefaultPadding(),
 
-          _goalInput,
-          getDefaultPadding(),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: _goalInput,
+          ),
 
-          // successMsg, queryErrorMsg, validationErrorMsg
-          _toggleableWidgets.get("successMsg")!,
-          _toggleableWidgets.get("queryErrorMsg")!,
-          _toggleableWidgets.get("validationErrorMsg")!,
+          // Error messages
+          _toggleableWidgets,
 
           StrydeButton(
             displayText: "Save Goal",
             textSize: 20,
-            onTap: () => _saveGoal(),
+            onTap: ()
+            {
+              if (_isInputValid())
+              {
+                _saveGoal();
+              }
+              else
+              {
+                _tryThrowExceptions();
+              }
+            },
           ),
           getDefaultPadding(),
 

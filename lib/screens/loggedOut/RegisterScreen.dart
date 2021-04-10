@@ -1,4 +1,7 @@
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
+import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
+import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -25,62 +28,88 @@ class RegisterScreen extends StatelessWidget
   {
     _usernameInput = LabeledTextInputElement(
       labelText: "Username",
-      placeholderText: "Enter Username",
+      placeholderText: "Enter username",
+      minInputLength: 1,
+      maxInputLength: 45,
     );
     _passwordInput = LabeledTextInputElement.password(
       labelText: "Password",
       placeholderText: "Enter password",
+      minInputLength: 1,
+      maxInputLength: 120,
     );
     _toggleableWidgets = ToggleableWidgetMap({
-      "queryError": _getQueryErrorMessage(),
-      "inputValidationError": _getValidationErrorMessage(),
+      "queryError": StrydeErrorToggleableWidget(
+        errorMsg: "Registration failed (username may be taken)",
+        showLoadingIndicatorOnLoading: true,
+      ),
+      "inputTooShortError": StrydeErrorToggleableWidget(
+        errorMsg: "Username or password is too short",
+      ),
+      "inputTooLongError": StrydeErrorToggleableWidget(
+        errorMsg: "Username or password is too long",
+      ),
     });
   }
 
-  ToggleableWidget _getQueryErrorMessage()
+  bool _isInputValid()
   {
-    return ToggleableWidget(
-      hideOnStartup: true,
-      showLoadingIndicatorOnLoading: false,
+    bool result = true;
 
-      child: Column(
-        children: [
-          StrydeErrorText(displayText: "Register failed (username " +
-                                       "may be taken)"),
-          getDefaultPadding(),
-        ],
-      ),
-    );
+    if (_usernameInput.isValidInput())
+    {
+      _usernameInput.showBorder = false;
+    }
+    else
+    {
+      _usernameInput.showBorder = true;
+      result = false;
+    }
+
+    if (_passwordInput.isValidInput())
+    {
+      _passwordInput.showBorder = false;
+    }
+    else
+    {
+      _passwordInput.showBorder = true;
+      result = false;
+    }
+
+    return result;
   }
 
-  ToggleableWidget _getValidationErrorMessage()
+  void _tryThrowExceptions()
   {
-    return ToggleableWidget(
-      hideOnStartup: true,
-      loadingIndicator: Column(
-        children: [
-          Padding(
-            child: StrydeProgressIndicator(),
-            padding: EdgeInsets.only(left: 5),
-          ),
-          getDefaultPadding(),
-        ],
-      ),
+    try
+    {
+      _usernameInput.tryThrowExceptionMessage();
+      _passwordInput.tryThrowExceptionMessage();
+    }
 
-      child: Column(
-        children: [
-          StrydeErrorText(displayText: "Please enter a username " +
-                                       "& password"),
-          getDefaultPadding(),
-        ],
-      ),
-    );
-  }
+    on InputTooLongException catch (ex)
+    {
+      _toggleableWidgets.hideAllExcept("inputTooLongError");
+      _toggleableWidgets.showChildFor(
+        "inputTooLongError", Duration(seconds: 3,)
+      );
+    }
 
-  bool _usernameAndPasswordAreTyped()
-  {
-    return (_usernameInput.inputText.length > 0 &&
-            _passwordInput.inputText.length > 0);
+    on InputTooShortException catch (ex)
+    {
+      _toggleableWidgets.hideAllExcept("inputTooShortError");
+      _toggleableWidgets.showChildFor(
+        "inputTooShortError", Duration(seconds: 3,)
+      );
+    }
+
+    on Exception catch (ex)
+    {
+      _toggleableWidgets.hideAllExcept("inputQueryError");
+      _toggleableWidgets.showChildFor(
+        "inputQueryError", Duration(seconds: 3,)
+      );
+    }
   }
 
 
@@ -94,30 +123,30 @@ class RegisterScreen extends StatelessWidget
       getDefaultPadding(),
 
       this._usernameInput,
-      getDefaultPadding(),
 
-      this._passwordInput,
-      getDefaultPadding(),
+      Padding(
+        padding: EdgeInsets.only(bottom: 10),
+        child: this._passwordInput,
+      ),
 
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _toggleableWidgets.get("queryError")!
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          _toggleableWidgets.get("inputValidationError")!
-        ],
-      ),
+      this._toggleableWidgets,
 
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           StrydeButton(
             displayText: "Register", textSize: 20,
-            onTap: () => _tryRegister(context),
+            onTap: ()
+            {
+              if (_isInputValid())
+              {
+                _tryRegister(context);
+              }
+              else
+              {
+                _tryThrowExceptions();
+              }
+            },
           ),
         ],
       ),
@@ -134,38 +163,19 @@ class RegisterScreen extends StatelessWidget
       "password": this._passwordInput.inputText,
     };
 
-
-    if (!_usernameAndPasswordAreTyped())
-    {
-      _onUsernameAndPasswordValidationFailed();
-    }
-
-    else
-    {
-      await HttpQueryHelper.post(
-        "/register",
-        postData,
-        onBeforeQuery: () => _onBeforeRegister(),
-        onSuccess: (jsonResult) => _onRegisterSuccess(context, jsonResult),
-        onFailure: (response) => _onRegisterFail(response)
-      );
-    }
-  }
-
-  void _onUsernameAndPasswordValidationFailed()
-  {
-    _toggleableWidgets.hideChildAndLoadingIcon("queryError");
-    _toggleableWidgets.hideLoadingIcon("inputValidationError");
-
-    _toggleableWidgets.showChildFor(
-      "inputValidationError", const Duration(seconds: 3)
+    await HttpQueryHelper.post(
+      "/register",
+      postData,
+      onBeforeQuery: () => _onBeforeRegister(),
+      onSuccess: (jsonResult) => _onRegisterSuccess(context, jsonResult),
+      onFailure: (response) => _onRegisterFail(response)
     );
   }
 
   void _onBeforeRegister()
   {
-    _toggleableWidgets.hideChildAndLoadingIcon("queryError");
-    _toggleableWidgets.showLoadingIcon("inputValidationError");
+    _toggleableWidgets.hideAllExcept("queryError");
+    _toggleableWidgets.showLoadingIcon("queryError");
   }
 
   void _onRegisterSuccess(BuildContext context, dynamic response)
@@ -176,7 +186,7 @@ class RegisterScreen extends StatelessWidget
       Map<String, dynamic> userInfo = response["_results"];
       NavigateTo.screenWithoutBack(context, () => HomeScreen(userInfo));
 
-      _toggleableWidgets.hideChildAndLoadingIcon("inputValidationError");
+      _toggleableWidgets.hideAll();
     }
 
     // Fail
@@ -188,8 +198,15 @@ class RegisterScreen extends StatelessWidget
 
   void _onRegisterFail(dynamic response)
   {
-    _toggleableWidgets.showChildOrLoadingIcon("queryError");
-    _toggleableWidgets.hideChildAndLoadingIcon("inputValidationError");
+    print("");
+    print("");
+    print("");
+    print(response);
+    print("");
+    print("");
+    print("");
+    _toggleableWidgets.hideAllExcept("queryError");
+    _toggleableWidgets.showChild("queryError");
 
     _toggleableWidgets.hideChildAndLoadingIconAfter(
       "queryError", const Duration(seconds: 3)

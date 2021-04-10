@@ -1,11 +1,22 @@
+import 'package:flutter/cupertino.dart';
+
 import 'ToggleableWidget.dart';
 
 
-class ToggleableWidgetMap<K>
+class ToggleableWidgetMap<K> extends StatelessWidget
 {
   Map<K, ToggleableWidget> map;
+  late MainAxisAlignment _mainAxisAlignment;
+  late CrossAxisAlignment _crossAxisAlignment;
 
-  ToggleableWidgetMap(this.map);
+  ToggleableWidgetMap(this.map, {
+    MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
+    CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
+  })
+  {
+    _mainAxisAlignment = mainAxisAlignment;
+    _crossAxisAlignment = crossAxisAlignment;
+  }
 
 
 
@@ -132,6 +143,25 @@ class ToggleableWidgetMap<K>
     map[key]?.hideChildAndLoadingIcon();
   }
 
+  void hideAll()
+  {
+    map.forEach((key, value)
+    {
+      map[key]?.hideChild();
+    });
+  }
+
+  void hideAllExcept(String dontHide)
+  {
+    map.forEach((key, value)
+    {
+      if (key != dontHide)
+      {
+        map[key]?.hideChild();
+      }
+    });
+  }
+
 
 
   bool childIsVisible(K key)
@@ -209,8 +239,18 @@ class ToggleableWidgetMap<K>
 
 
   @override
-  String toString()
+  String toString({DiagnosticLevel? minLevel})
   {
     return map.toString();
+  }
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return Row(
+      mainAxisAlignment: _mainAxisAlignment,
+      crossAxisAlignment: _crossAxisAlignment,
+      children: map.values.toList(),
+    );
   }
 }

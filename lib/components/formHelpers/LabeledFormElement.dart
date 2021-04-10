@@ -2,17 +2,18 @@ import 'package:Stryde/components/formHelpers/exceptions/RequiredInputNotEntered
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'elements/basic/InputFormElement.dart';
+import 'elements/basic/LabeledInputFormElement.dart';
 
 
-class FormElement extends StatelessWidget
+class LabeledFormElement extends StatelessWidget
 {
-  late final InputFormElement _child;
+  late final LabeledInputFormElement _child;
   late final bool _isRequired;
 
   bool get showBorder => _child.showBorder;
-  
-  FormElement({
-    required InputFormElement child,
+
+  LabeledFormElement({
+    required LabeledInputFormElement child,
     required bool isRequired,
   })
   {

@@ -18,6 +18,8 @@ class NumberInputElement extends InputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   }) :
     super(
       placeholderText: placeholderText,
@@ -29,6 +31,8 @@ class NumberInputElement extends InputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -41,6 +45,8 @@ class NumberInputElement extends InputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   }) :
     super.password(
       placeholderText: placeholderText,
@@ -51,5 +57,7 @@ class NumberInputElement extends InputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 }

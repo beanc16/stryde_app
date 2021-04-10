@@ -1,5 +1,6 @@
 import 'package:Stryde/components/formHelpers/elements/basic/LabeledInputFormElement.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../FormSettings.dart';
 
 class LabeledNumberInputElement extends LabeledInputFormElement
@@ -16,6 +17,8 @@ class LabeledNumberInputElement extends LabeledInputFormElement
     int minInputLength = 0,
     int? maxInputLength,
     CrossAxisAlignment labelAlignment = CrossAxisAlignment.start,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   }) :
     super(
       labelText: labelText,
@@ -29,7 +32,9 @@ class LabeledNumberInputElement extends LabeledInputFormElement
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
       labelTextSize: labelTextSize,
-      labelAlignment: labelAlignment
+      labelAlignment: labelAlignment,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 
 
@@ -42,6 +47,8 @@ class LabeledNumberInputElement extends LabeledInputFormElement
     int placeholderTextSize = FormSettings.defaultPlaceholderTextSize,
     int minInputLength = 0,
     int? maxInputLength,
+    Color borderColor = Colors.red,
+    double borderWidth = 0,
   }) :
     super.password(
       labelText: labelText,
@@ -53,5 +60,7 @@ class LabeledNumberInputElement extends LabeledInputFormElement
       placeholderTextSize: placeholderTextSize,
       minInputLength: minInputLength,
       maxInputLength: maxInputLength,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
     );
 }
