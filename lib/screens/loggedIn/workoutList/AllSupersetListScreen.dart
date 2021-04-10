@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:Stryde/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
+import 'file:///C:/Users/cbean/Documents/Homework/MSJ/20-21%20(Fall)/Senior%20Research/Bean%20Senior%20Project%20-%20App/workout_buddy_web/lib/components/strydeHelpers/widgets/listView/StrydeExerciseSearchableListView.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
@@ -224,7 +224,7 @@ class AllSupersetListScreenState extends State<AllSupersetListScreen>
       {
         return Container(
           margin: EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: LabelText("No exercises..."),
+          child: LabelText("No supersets..."),
         );
       }
     }

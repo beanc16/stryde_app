@@ -1,3 +1,5 @@
+import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
@@ -9,6 +11,7 @@ import 'AllSupersetListScreen.dart';
 class AllExerciseAndSupersetListScreen extends StatelessWidget
 {
   late List<Widget> _screens;
+  late StrydeMultiTagDisplay _tagDisplay;
 
   AllExerciseAndSupersetListScreen()
   {
@@ -16,6 +19,14 @@ class AllExerciseAndSupersetListScreen extends StatelessWidget
       AllExerciseListScreen(),
       AllSupersetListScreen(),
     ];
+
+    /*
+    _tagDisplay = StrydeMultiTagDisplay(
+      displayText: [],
+      onDeleteTag: (int index, String displayStr) =>
+          _onDeselectExerciseTag(index, displayStr),
+    );
+    */
   }
 
 
@@ -25,7 +36,33 @@ class AllExerciseAndSupersetListScreen extends StatelessWidget
   {
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "Select Exercise / Superset"),
-      body: StrydeExerciseAndSupersetTabMenu(screens: _screens),
+      //body: StrydeExerciseAndSupersetTabMenu(screens: _screens),
+      body: Column(
+        children: [
+          Expanded(
+            child: StrydeExerciseAndSupersetTabMenu(screens: _screens),
+          ),
+          /*
+          Container(
+            margin: EdgeInsets.only(bottom: 15),
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                LabelText(
+                  "Selected Exercises",
+                  labelTextSize: 14,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 5),
+                  child: _selectExercisesTagDisplay,
+                ),
+              ],
+            ),
+          ),
+           */
+        ],
+      )
     );
     //return StrydeExerciseAndSupersetTabMenu(screens: _screens);
   }

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
-import 'package:Stryde/components/strydeHelpers/widgets/StrydeExerciseSearchableListView.dart';
+import 'file:///C:/Users/cbean/Documents/Homework/MSJ/20-21%20(Fall)/Senior%20Research/Bean%20Senior%20Project%20-%20App/workout_buddy_web/lib/components/strydeHelpers/widgets/listView/StrydeExerciseSearchableListView.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
@@ -32,12 +32,6 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   late ToggleableWidget _loadingErrorMsg;
   late List<Exercise> _selectedExercises;
   late StrydeMultiTagDisplay _selectExercisesTagDisplay;
-
-  /* TODO: Put this in a parent StatelessWidget screen. Make it have
-           an "Exercise" (this screen) and "Superset" tab at the top.
-           Make it be a tab menu like WorkoutAndSupersetListScreen, but
-           for selecting exercises and supersets.
-  */
 
   @override
   void initState()

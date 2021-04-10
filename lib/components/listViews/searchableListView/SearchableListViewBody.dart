@@ -13,6 +13,7 @@ class SearchableListViewBody extends StatefulWidget
   final Color _borderColor;
   final double _spaceBetweenTiles;
   late SearchableListViewBodyState state;
+  late String _noResultsStr;
 
   SearchableListViewBody(this._listTileDisplayText,
                          this._textSize,
@@ -21,7 +22,8 @@ class SearchableListViewBody extends StatefulWidget
                          this._onTapColor,
                          this._borderWidth,
                          this._borderColor,
-                         this._spaceBetweenTiles);
+                         this._spaceBetweenTiles,
+                         this._noResultsStr);
 
 
 
@@ -39,7 +41,7 @@ class SearchableListViewBody extends StatefulWidget
     this.state = SearchableListViewBodyState(
       this._listTileDisplayText, this._textSize, this._textColor,
       this._onTapListTile, this._onTapColor, this._borderWidth,
-      this._borderColor, this._spaceBetweenTiles,
+      this._borderColor, this._spaceBetweenTiles, this._noResultsStr
     );
 
     return this.state;
@@ -58,6 +60,7 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
   double _borderWidth;
   Color _borderColor;
   double _spaceBetweenTiles;
+  String _noResultsStr;
 
   SearchableListViewBodyState(this._listTileDisplayText,
                               this._textSize,
@@ -66,7 +69,8 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
                               this._onTapColor,
                               this._borderWidth,
                               this._borderColor,
-                              this._spaceBetweenTiles);
+                              this._spaceBetweenTiles,
+                              this._noResultsStr);
 
 
 
@@ -82,14 +86,9 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
 
   Widget _tryGetListView()
   {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 15,
-        right: 15,
-        bottom: 15,
-      ),
-
-      child: ListView.separated(
+    if (_listTileDisplayText.length > 0)
+    {
+      return ListView.separated(
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
         separatorBuilder: (BuildContext context, int index)
@@ -108,8 +107,34 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
             _borderColor,
           );
         },
-      )
-    );
+      );
+    }
+
+    else
+    {
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: ClampingScrollPhysics(),
+
+        itemCount: 1,
+        itemBuilder: (BuildContext context, int index)
+        {
+          return Container(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: Text(
+                _noResultsStr,
+                style: TextStyle(
+                  color: _textColor,
+                  fontSize: _textSize,
+                  ),
+              )
+            ),
+          );
+        },
+      );
+    }
   }
 
 
@@ -122,7 +147,14 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
       children: [
         Expanded(
           flex: 1,
-          child: _tryGetListView(),
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 15,
+              right: 15,
+              bottom: 15,
+            ),
+            child: _tryGetListView(),
+          )
         ),
       ],
     );

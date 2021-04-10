@@ -15,6 +15,7 @@ class SearchableListView extends StatefulWidget
   late final double _borderWidth;
   late final Color _borderColor;
   late final double _spaceBetweenTiles;
+  late final String _noResultsStr;
 
   SearchableListView(this._listTileDisplayText, {
     String searchBarPlaceholderText = "Search Here...",
@@ -24,7 +25,8 @@ class SearchableListView extends StatefulWidget
     Color onTapColor = Colors.lightBlue,
     double borderWidth = 0,
     Color borderColor = Colors.black,
-    double spaceBetweenTiles = 5
+    double spaceBetweenTiles = 5,
+    String noResultsStr = "No Results...",
   })
   {
     this._searchBarPlaceholderText = searchBarPlaceholderText;
@@ -35,6 +37,7 @@ class SearchableListView extends StatefulWidget
     this._borderWidth = borderWidth;
     this._borderColor = borderColor;
     this._spaceBetweenTiles = spaceBetweenTiles;
+    this._noResultsStr = noResultsStr;
 
     if (onTapListTile == null)
     {
@@ -60,7 +63,8 @@ class SearchableListView extends StatefulWidget
                                    _onTapColor,
                                    _borderWidth,
                                    _borderColor,
-                                   _spaceBetweenTiles);
+                                   _spaceBetweenTiles,
+                                   _noResultsStr);
   }
 }
 
@@ -80,6 +84,7 @@ class SearchableListViewState extends State<SearchableListView>
   Color _borderColor;
   double _spaceBetweenTiles;
   late SearchableListViewBody _searchableListViewBody;
+  String _noResultsStr;
 
   SearchableListViewState(this._listTileAllText,
                           this._searchBarPlaceholderText,
@@ -89,7 +94,8 @@ class SearchableListViewState extends State<SearchableListView>
                           this._onTapColor,
                           this._borderWidth,
                           this._borderColor,
-                          this._spaceBetweenTiles)
+                          this._spaceBetweenTiles,
+                          this._noResultsStr)
   {
     this._listTileDisplayText = this._listTileAllText.toList();
     this._prevSearchLength = 0;
@@ -97,7 +103,7 @@ class SearchableListViewState extends State<SearchableListView>
     this._searchableListViewBody = SearchableListViewBody(
       this._listTileDisplayText, this._textSize, this._textColor,
       this._onTapListTile, this._onTapColor, this._borderWidth,
-      this._borderColor, this._spaceBetweenTiles,
+      this._borderColor, this._spaceBetweenTiles, this._noResultsStr
     );
   }
 

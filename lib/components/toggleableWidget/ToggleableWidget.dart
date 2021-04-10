@@ -2,7 +2,6 @@ import 'package:Stryde/components/toggleableWidget/ToggleableWidgetBody.dart';
 import 'package:Stryde/components/toggleableWidget/ToggleableWidgetController.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'EmptyWidget.dart';
 
 
 class ToggleableWidget extends StatefulWidget

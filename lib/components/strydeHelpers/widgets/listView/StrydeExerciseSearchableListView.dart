@@ -15,6 +15,7 @@ class StrydeExerciseSearchableListView extends SearchableListView
         textColor: StrydeColors.darkGray,
         textSize: 20,
         searchBarPlaceholderText: "Search exercises...",
+        noResultsStr: "No Exercises...",
 
         // Border
         borderColor: StrydeColors.darkBlue,

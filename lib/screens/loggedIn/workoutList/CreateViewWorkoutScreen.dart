@@ -1,5 +1,7 @@
 import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
+import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
+import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -59,10 +61,13 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     _titleInput = LabeledTextInputElement(
       labelText: "Title",
       placeholderText: "Enter title",
+      minInputLength: 1,
+      maxInputLength: 45,
     );
     _descriptionInput = LabeledTextInputElement.textArea(
       labelText: "Description",
       placeholderText: "Enter description",
+      maxInputLength: 1000,
     );
   }
 
@@ -78,16 +83,70 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
 
 
+  bool _isInputValid()
+  {
+    bool result = true;
+
+    if (_titleInput.isValidInput())
+    {
+      _titleInput.showBorder = false;
+    }
+    else
+    {
+      _titleInput.showBorder = true;
+      result = false;
+    }
+
+    if (_descriptionInput.isValidInput())
+    {
+      _descriptionInput.showBorder = false;
+    }
+    else
+    {
+      _descriptionInput.showBorder = true;
+      result = false;
+    }
+
+    return result;
+  }
+
+  void _tryThrowExceptions()
+  {
+    try
+    {
+      _titleInput.tryThrowExceptionMessage();
+      _descriptionInput.tryThrowExceptionMessage();
+    }
+
+    on InputTooLongException catch (ex)
+    {
+      // TODO: Do someone on too long error
+    }
+
+    on InputTooShortException catch (ex)
+    {
+      // TODO: Do someone on too short error
+    }
+
+    on Exception catch (ex)
+    {
+      // TODO: Do someone on general error
+    }
+  }
+
+
+
   List<Widget> getChildren()
   {
     List<Widget> children = [
       getPadding(10),
 
       this._titleInput,
-      getPadding(15),
 
-      this._descriptionInput,
-      getPadding(15),
+      Padding(
+        padding: EdgeInsets.only(bottom: 15),
+        child: this._descriptionInput,
+      ),
 
       // Exercise & Superset widget
       this._getListViewHeader(),
@@ -256,6 +315,19 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
 
 
+  String _getAppBarTitle()
+  {
+    if (workout != null)
+    {
+      return "Edit Workout";
+    }
+
+    else
+    {
+      return "Create Workout";
+    }
+  }
+
   Future<dynamic> _onSave(BuildContext context)
   {
     return showDialog(
@@ -306,7 +378,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     return WillPopScopeSaveDontSave(
       onSave: (BuildContext context) => _onSave(context),
       child: Scaffold(
-        appBar: StrydeAppBar(titleStr: "View Workout"),
+        appBar: StrydeAppBar(titleStr: _getAppBarTitle()),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(left: 15, right: 15),
