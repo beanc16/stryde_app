@@ -78,111 +78,93 @@ class ToggleableWidgetMap<K> extends StatelessWidget
 
 
 
-  Future showChildAfter(K key, Duration duration) async
+  void showChildAfter(K key, Duration duration)
   {
-    await map[key]?.showChildAfter(duration);
-    return Future;
+    map[key]?.showChildAfter(duration);
   }
 
-  Future showChildFor(K key, Duration duration) async
+  void showChildFor(K key, Duration duration)
   {
-    await map[key]?.showChildFor(duration);
-    return Future;
+    map[key]?.showChildFor(duration);
   }
 
-  Future showChild(K key) async
+  void showChild(K key)
   {
-    await map[key]?.showChild();
-    return Future;
+    map[key]?.showChild();
   }
 
-  Future hideChildAfter(K key, Duration duration) async
+  void hideChildAfter(K key, Duration duration)
   {
-    await map[key]?.hideChildAfter(duration);
-    return Future;
+    map[key]?.hideChildAfter(duration);
   }
 
-  Future hideChild(K key) async
+  void hideChild(K key) async
   {
-    await map[key]?.hideChild();
-    return Future;
+    map[key]?.hideChild();
   }
 
-  Future showLoadingIconAfter(K key, Duration duration) async
+  void showLoadingIconAfter(K key, Duration duration)
   {
-    await map[key]?.showLoadingIconAfter(duration);
-    return Future;
+    map[key]?.showLoadingIconAfter(duration);
   }
 
-  Future showLoadingIconFor(K key, Duration duration) async
+  void showLoadingIconFor(K key, Duration duration)
   {
-    await map[key]?.showLoadingIconFor(duration);
-    return Future;
+    map[key]?.showLoadingIconFor(duration);
   }
 
-  Future showLoadingIcon(K key) async
+  void showLoadingIcon(K key)
   {
-    await map[key]?.showLoadingIcon();
-    return Future;
+    map[key]?.showLoadingIcon();
   }
 
-  Future hideLoadingIconAfter(K key, Duration duration) async
+  void hideLoadingIconAfter(K key, Duration duration)
   {
-    await map[key]?.hideLoadingIconAfter(duration);
-    return Future;
+    map[key]?.hideLoadingIconAfter(duration);
   }
 
-  Future hideLoadingIcon(K key) async
+  void hideLoadingIcon(K key)
   {
-    await map[key]?.hideLoadingIcon();
-    return Future;
+    map[key]?.hideLoadingIcon();
   }
 
-  Future showChildOrLoadingIconAfter(K key, Duration duration) async
+  void showChildOrLoadingIconAfter(K key, Duration duration)
   {
-    await map[key]?.showChildOrLoadingIconAfter(duration);
-    return Future;
+    map[key]?.showChildOrLoadingIconAfter(duration);
   }
 
-  Future showChildOrLoadingIcon(K key) async
+  void showChildOrLoadingIcon(K key)
   {
-    await map[key]?.showChildOrLoadingIcon();
-    return Future;
+    map[key]?.showChildOrLoadingIcon();
   }
 
-  Future hideChildAndLoadingIconAfter(K key, Duration duration) async
+  void hideChildAndLoadingIconAfter(K key, Duration duration)
   {
-    await map[key]?.hideChildAndLoadingIconAfter(duration);
-    return Future;
+    map[key]?.hideChildAndLoadingIconAfter(duration);
   }
 
-  Future hideChildAndLoadingIcon(K key) async
+  void hideChildAndLoadingIcon(K key)
   {
-    await map[key]?.hideChildAndLoadingIcon();
-    return Future;
+    map[key]?.hideChildAndLoadingIcon();
   }
 
-  Future hideAll() async
+  void hideAll()
   {
-    map.forEach((key, value) async
+    Future.forEach(map.entries, (MapEntry entry)
     {
-      await map[key]?.hideChild();
+      map[key]?.hideChild();
     });
-
-    return Future;
   }
 
-  Future hideAllExcept(String dontHide) async
+  void hideAllExcept(String dontHide)
   {
-    map.forEach((key, value) async
+    map.forEach((key, value)
     {
       if (key != dontHide)
       {
-        await map[key]?.hideChild();
+        map[key]?.hideChild();
       }
     });
-
-    return Future;
   }
 
 

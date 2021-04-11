@@ -21,15 +21,17 @@ class ToggleableWidgetController extends ChangeNotifier
 
 
 
-  void setIsLoading(bool isLoading)
+  Future setIsLoading(bool isLoading) async
   {
     _isLoading = isLoading;
     notifyListeners();
+    return Future;
   }
 
-  void setHideAllChildren(bool shouldHideAllChildren)
+  Future setHideAllChildren(bool shouldHideAllChildren) async
   {
     _hideAllChildren = shouldHideAllChildren;
     notifyListeners();
+    return Future;
   }
 }

@@ -33,7 +33,11 @@ class EditableTableController extends ChangeNotifier
   void setIsTableBuilt(bool tableIsBuilt)
   {
     tableIsBuilt = tableIsBuilt;
-    onTableBuilt(tableIsBuilt);
+
+    if (onTableBuilt != null)
+    {
+      onTableBuilt(tableIsBuilt);
+    }
   }
 
   void editingIsComplete()

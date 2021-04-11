@@ -138,7 +138,7 @@ class EditableTableState extends State<EditableTable>
     this._tableKey = GlobalKey<EditableState>();
     _initializeListeners();
     _controller.getEditedRows = _getEditedRowsForParent();
-    _controller.setIsTableBuilt(true);
+    //_controller.setIsTableBuilt(true);
   }
 
   void _initializeListeners()

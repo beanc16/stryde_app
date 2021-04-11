@@ -86,10 +86,9 @@ class EditExerciseInformationButtonRowState extends State<EditExerciseInformatio
     //_isTableSaveable = isTableBuilt;
   }
 
-  void _onSave()
+  void _onSave() async
   {
-    _showLoadingIcon();
-
+    _toggleableWidgets.hideAllExcept("successMsg");
     List<dynamic>? editedRows = _getEditedRows!();
 
     if (editedRows != null && editedRows.length > 0)
@@ -113,6 +112,9 @@ class EditExerciseInformationButtonRowState extends State<EditExerciseInformatio
           duration: editedRows[i]["duration"],
           resistance: editedRows[i]["resistance"],
         );
+
+        _toggleableWidgets..hideChildAndLoadingIcon("successMsg")
+        ..showChildFor("successMsg", Duration(seconds: 3));
       }
 
       print(editedRows.toString());
@@ -120,26 +122,20 @@ class EditExerciseInformationButtonRowState extends State<EditExerciseInformatio
 
     else if (editedRows != null && editedRows.length == 0)
     {
-      _toggleableWidgets.hideAllExcept("nothingToSaveError")
-      .then((value) => _toggleableWidgets.showChildFor(
+      _toggleableWidgets..hideChildAndLoadingIcon("successMsg")
+      ..showChildFor(
         "nothingToSaveError", const Duration(seconds: 3),
-      ));
+      );
     }
 
     // Null
     else
     {
-      _toggleableWidgets.hideAllExcept("unknownError")
-      .then((value) => _toggleableWidgets.showChildFor(
+      _toggleableWidgets..hideChildAndLoadingIcon("successMsg")
+      ..showChildFor(
         "unknownError", const Duration(seconds: 3),
-      ));
+      );
     }
-  }
-
-  void _showLoadingIcon()
-  {
-    _toggleableWidgets.hideAllExcept("successMsg")
-    .then((value) => _toggleableWidgets.showLoadingIcon("successMsg"));
   }
 
 
@@ -153,7 +149,10 @@ class EditExerciseInformationButtonRowState extends State<EditExerciseInformatio
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           // Error & Success messages
-          _toggleableWidgets,
+          Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: _toggleableWidgets,
+          ),
 
           // Add Button
           MaterialButton(
