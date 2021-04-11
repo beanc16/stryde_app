@@ -17,7 +17,8 @@ class StrydeAppBar extends AppBar
             Padding(
               // SVG Logo
               child: SvgPicture.asset(
-                "images/strydeLogoClean.svg",
+                //"images/strydeLogoClean.svg",       // This works on website
+                "assets/images/strydeLogoClean.svg",  // This works on android
                 semanticsLabel: "Stryde Logo",
 
                 fit: BoxFit.contain,

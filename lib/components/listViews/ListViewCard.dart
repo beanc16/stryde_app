@@ -300,7 +300,7 @@ class ListViewCardState extends State<ListViewCard>
               Icons.cancel_rounded,
               size: 24,
             ),
-            color: Colors.red[900],
+            color: Colors.red[600],
             onPressed: ()
             {
               this.onDeleteListViewCard!();

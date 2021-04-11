@@ -46,112 +46,96 @@ class ToggleableWidget extends StatefulWidget
 
 
 
-  Future setIsLoading(bool isLoading) async
+  void setIsLoading(bool isLoading)
   {
-    await _controller.setIsLoading(isLoading);
-    return Future;
+    _controller.setIsLoading(isLoading);
   }
 
-  Future setHideAllChildren(bool shouldHideAllChildren) async
+  void setHideAllChildren(bool shouldHideAllChildren)
   {
-    await _controller.setHideAllChildren(shouldHideAllChildren);
-    return Future;
+    _controller.setHideAllChildren(shouldHideAllChildren);
   }
 
-  Future showChildAfter(Duration duration) async
+  void showChildAfter(Duration duration) async
   {
     await Future.delayed(duration);
-    await showChild();
-    return Future;
+    showChild();
   }
 
-  Future showChildFor(Duration duration) async
+  void showChildFor(Duration duration) async
   {
-    await showChild();
+    showChild();
     await Future.delayed(duration);
-    await hideChildAndLoadingIcon();
-    return Future;
+    hideChildAndLoadingIcon();
   }
 
-  Future showChild() async
+  void showChild()
   {
-    await this.setIsLoading(false);
-    await this.showChildOrLoadingIcon();
-    return Future;
+    this.setIsLoading(false);
+    this.showChildOrLoadingIcon();
   }
 
-  Future hideChildAfter(Duration duration) async
+  void hideChildAfter(Duration duration) async
   {
     await Future.delayed(duration);
-    await hideChild();
-    return Future;
+    hideChild();
   }
 
-  Future hideChild() async
+  void hideChild()
   {
-    await this.setIsLoading(true);
-    return Future;
+    this.setIsLoading(true);
   }
 
-  Future showLoadingIconAfter(Duration duration) async
+  void showLoadingIconAfter(Duration duration) async
   {
     await Future.delayed(duration);
-    await showLoadingIcon();
-    return Future;
+    showLoadingIcon();
   }
 
   Future showLoadingIconFor(Duration duration) async
   {
-    await showLoadingIcon();
+    showLoadingIcon();
     await Future.delayed(duration);
-    await hideChildAndLoadingIcon();
-    return Future;
+    hideChildAndLoadingIcon();
   }
 
-  Future showLoadingIcon() async
+  void showLoadingIcon()
   {
-    await this.setIsLoading(true);
-    await this.showChildOrLoadingIcon();
-    return Future;
+    this.setIsLoading(true);
+    this.showChildOrLoadingIcon();
   }
 
-  Future hideLoadingIconAfter(Duration duration) async
+  void hideLoadingIconAfter(Duration duration) async
   {
     await Future.delayed(duration);
-    await hideLoadingIcon();
-    return Future;
+    hideLoadingIcon();
   }
 
-  Future hideLoadingIcon() async
+  void hideLoadingIcon()
   {
-    await this.setIsLoading(false);
-    return Future;
+    this.setIsLoading(false);
   }
 
-  Future showChildOrLoadingIconAfter(Duration duration) async
+  void showChildOrLoadingIconAfter(Duration duration) async
   {
     await Future.delayed(duration);
-    await showChildOrLoadingIcon();
-    return Future;
+    showChildOrLoadingIcon();
   }
 
-  Future showChildOrLoadingIcon() async
+  void showChildOrLoadingIcon()
   {
-    await this.setHideAllChildren(false);
-    return Future;
+    this.setHideAllChildren(false);
   }
 
-  Future hideChildAndLoadingIconAfter(Duration duration) async
+  void hideChildAndLoadingIconAfter(Duration duration) async
   {
     await Future.delayed(duration);
-    await hideChildAndLoadingIcon();
-    return Future;
+    hideChildAndLoadingIcon();
   }
 
-  Future hideChildAndLoadingIcon() async
+  void hideChildAndLoadingIcon()
   {
-    await this.setHideAllChildren(true);
-    return Future;
+    this.setHideAllChildren(true);
   }
 
 

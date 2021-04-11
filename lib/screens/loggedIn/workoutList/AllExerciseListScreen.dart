@@ -79,6 +79,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
       });
 
       // Hide loading icon & error msg
+      //_loadingErrorMsg.hideChildAndLoadingIconAfter(Duration(microseconds: 0));
       _loadingErrorMsg.hideChildAndLoadingIcon();
     }
 
