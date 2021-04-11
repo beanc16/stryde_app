@@ -1,5 +1,10 @@
 import 'package:Stryde/components/formHelpers/elements/text/TextInputElement.dart';
+import 'package:Stryde/components/strydeHelpers/classes/ExerciseInformationRow.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/EditExerciseInformationButtonRow.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
+import 'package:Stryde/components/willPopScope/WillPopScopeSaveDontSave.dart';
+import 'package:Stryde/models/ExerciseInformation.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -19,11 +24,30 @@ class EditExerciseInformationScreen extends StatelessWidget
   Exercise _exercise;
   late final GlobalKey<EditableTableState> _tableKey;
   late final EditableTableController _controller;
+  late List<ExerciseInformationRow> _infoRows;
 
   EditExerciseInformationScreen(this._exercise)
   {
     _tableKey = GlobalKey<EditableTableState>();
     _controller = EditableTableController();
+    _infoRows = [];
+
+    for (int i = 0; i < _exercise.information.length; i++)
+    {
+      _infoRows.add(ExerciseInformationRow(
+        setNum: i + 1,
+        info: _exercise.information[i],
+      ));
+    }
+
+    // Create an empty set if none exist
+    if (_infoRows.length == 0)
+    {
+      _infoRows.add(ExerciseInformationRow(
+        setNum: 1,
+        info: ExerciseInformation(),
+      ));
+    }
   }
 
 
@@ -43,40 +67,49 @@ class EditExerciseInformationScreen extends StatelessWidget
     //_controller.deleteRow();
   }
 
-  /*
-  List<dynamic> _getEditedRows()
-  {
-    //return _controller.getEditedRows();
-  }
-   */
-
   void _onAddRow(dynamic addedRow, int addRowIndex)
   {
     Map<dynamic, dynamic> newAddedRow = addedRow;
     newAddedRow["setNum"] = addRowIndex + 1;
   }
 
-  List<String> _getExerciseTypeTagText()
+  List<String> _getMuscleGroupTagText()
   {
     // Get the muscle groups
     List<String> result = [];
     if (_exercise.muscleGroups != null)
     {
       result = (_exercise.muscleGroups)!.map(
-      (mg)
-      {
-        return mg.value.toStringShort();
-      }).toList();
+              (mg)
+          {
+            return mg.value.toStringShort();
+          }).toList();
     }
 
-    // Add the exercise types
-    result.addAll([
-      _exercise.exerciseWeightType?.value.toStringShort() ?? "",
-      _exercise.exerciseMuscleType?.value.toStringShort() ?? "",
-      _exercise.exerciseMovementType?.value.toStringShort() ?? "",
-    ]);
-
     return result;
+  }
+
+  List<String> _getExerciseTypeTagText()
+  {
+    List<String> results = [];
+
+    // Get the muscle groups
+    if (_exercise.exerciseWeightType != null)
+    {
+      results.add(_exercise.exerciseWeightType?.value.toStringShort() ?? "");
+    }
+
+    if (_exercise.exerciseMuscleType != null)
+    {
+      results.add(_exercise.exerciseMuscleType?.value.toStringShort() ?? "");
+    }
+
+    if (_exercise.exerciseMovementType != null)
+    {
+      results.add(_exercise.exerciseMovementType?.value.toStringShort() ?? "");
+    }
+
+    return results;
   }
 
 
@@ -86,66 +119,22 @@ class EditExerciseInformationScreen extends StatelessWidget
     return _controller.getEditedRows!();
   }
 
-
-
-  Widget _getButtonIcons()
+  void _onEditingComplete()
   {
-    return Padding(
-      padding: EdgeInsets.only(left: 25, right: 25, top: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          // Add Button
-          MaterialButton(
-            color: StrydeColors.purple,
-            shape: CircleBorder(),
-            padding: EdgeInsets.all(12),
-            child: Icon(
-              Icons.add, color: Colors.white
-            ),
-            onPressed: _addNewRow,
-          ),
-
-          // Delete Button
-          MaterialButton(
-            color: StrydeColors.purple,
-            shape: CircleBorder(),
-            padding: EdgeInsets.all(12),
-            child: Icon(
-              Icons.remove, color: Colors.white
-            ),
-            onPressed: _deleteLastRow,
-          ),
-        ],
-      )
-    );
+    print("Edit complete");
+    //_controller.onChanged();
   }
+
+
 
   List<dynamic> _getInitialTableRows()
   {
-    return [
+    return _infoRows.map(
+      (row)
       {
-        "setNum": 1,
-        "reps": 20,
-        "weight": 10,
-        "duration": "",
-        "resistance": "",
-      },
-      {
-        "setNum": 2,
-        "reps": 10,
-        "weight": 20,
-        "duration": "",
-        "resistance": "",
-      },
-      {
-        "setNum": 3,
-        "reps": 5,
-        "weight": 25,
-        "duration": "",
-        "resistance": "",
-      },
-    ];
+        return row.toJson();
+      }
+    ).toList();
   }
 
   List<dynamic> _getInitialTableColumns()
@@ -186,6 +175,25 @@ class EditExerciseInformationScreen extends StatelessWidget
 
 
 
+  Future<bool> _onBackButtonPressed(BuildContext context) async
+  {
+    _controller.saveExerciseInfo();
+    NavigateTo.previousScreen(context);
+    return true;
+  }
+
+  bool _showPopupMenuIf()
+  {
+    if (this._getEditedRows() != null)
+    {
+      return (this._getEditedRows())!.isNotEmpty;
+    }
+
+    return true;
+  }
+
+
+
   @override
   Widget build(BuildContext context)
   {
@@ -197,54 +205,81 @@ class EditExerciseInformationScreen extends StatelessWidget
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "Edit Exercise"),
       key: _tableKey,
-      body: Padding(
-        padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-        child: Container(
-          alignment: Alignment.topCenter,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TextHeader1(
-                displayText: _exercise.name,
-                color: StrydeColors.darkGray,
-              ),
+      body: WillPopScopeSaveDontSave(
+        buttonTextColor: StrydeColors.lightBlue,
+        onSave: (BuildContext context) => _onBackButtonPressed(context),
+        showPopupMenuIf: _showPopupMenuIf,
 
-              Padding(
-                padding: EdgeInsets.only(top: 10),
-                child: TextInputElement.textArea(
-                  placeholderText: "Enter description",
-                  maxInputLength: 2000,
-                  initialText: _exercise.description ?? "",
-                  maxLines: 5,
-                )
-              ),
-
-              _getButtonIcons(),
-
-              Flexible(
-                child: EditableTable(
-                  controller: _controller,
-                  columns: _getInitialTableColumns(),
-                  rows: _getInitialTableRows(),
-
-                  stripeColor1: (StrydeColors.lightGrayMat[100])!,
-                  stripeColor2: (StrydeColors.darkGrayMat[200])!,
-                  columnRatio: 0.175,
-
-                  onAddRow: _onAddRow,
+        child: Padding(
+          padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+          child: Container(
+            alignment: Alignment.topCenter,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TextHeader1(
+                  displayText: _exercise.name,
+                  color: StrydeColors.darkGray,
                 ),
-              ),
 
-              Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 15),
-                child: StrydeMultiTagDisplay(
-                  displayText: _getExerciseTypeTagText(),
-                  canDeleteTags: false,
+                Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: TextInputElement.textArea(
+                    placeholderText: "Enter description",
+                    maxInputLength: 2000,
+                    initialText: _exercise.description ?? "",
+                    maxLines: 4,
+                  )
                 ),
-              )
-            ],
-          ),
+
+                EditExerciseInformationButtonRow(
+                  addNewRow: _addNewRow,
+                  deleteLastRow: _deleteLastRow,
+                  getEditedRows: _getEditedRows,
+                  tableController: _controller,
+                  exercise: _exercise,
+                ),
+
+                Expanded(
+                  child: EditableTable(
+                    controller: _controller,
+                    columns: _getInitialTableColumns(),
+                    rows: _getInitialTableRows(),
+
+                    stripeColor1: (StrydeColors.lightGrayMat[100])!,
+                    stripeColor2: (StrydeColors.darkGrayMat[200])!,
+                    columnRatio: 0.175,
+
+                    onAddRow: _onAddRow,
+                    onEditingComplete: _onEditingComplete,
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(top: 5),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: StrydeMultiTagDisplay(
+                      displayText: _getMuscleGroupTagText(),
+                      canDeleteTags: false,
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: StrydeMultiTagDisplay(
+                      displayText: _getExerciseTypeTagText(),
+                      canDeleteTags: false,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         )
       )
     );

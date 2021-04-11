@@ -207,7 +207,6 @@ class MultiTagDisplayState extends State<MultiTagDisplay>
   @override
   Widget build(BuildContext context)
   {
-    print("build _tags: " + _tags.toString());
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: _getTagDisplay(),

@@ -88,7 +88,7 @@ class NavigateTo
 
   static void previousScreen(BuildContext context)
   {
-    Navigator.pop(context);
+    Navigator.of(context).pop(true);
   }
 
   static void previousScreenWithData(BuildContext context,

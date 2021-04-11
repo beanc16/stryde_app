@@ -1,3 +1,4 @@
+import 'package:Stryde/models/ExerciseInformation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
 import 'package:Stryde/models/ExerciseMuscleType.dart';
@@ -6,9 +7,6 @@ import 'package:Stryde/screens/loggedIn/workoutList/EditExerciseInformationScree
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'ExerciseMovementType.dart';
 import 'ExerciseWeightType.dart';
-import './enums/ExerciseWeightTypeEnum.dart';
-import './enums/ExerciseMuscleTypeEnum.dart';
-import './enums/ExerciseMovementTypeEnum.dart';
 
 
 
@@ -22,6 +20,7 @@ class Exercise
   ExerciseMovementType? exerciseMovementType;
   List<MuscleGroup>? muscleGroups;
   late ExerciseListViewCard exerciseListViewCard;
+  late List<ExerciseInformation> information;
 
   Exercise(this.name, this.description, 
            Function() onDeleteListViewCard,
@@ -40,6 +39,8 @@ class Exercise
       onDeleteListViewCard,
       onTap: onTap,
     );
+
+    this.information = [];
   }
 
   Exercise.notReorderable(this.name, this.description, 
@@ -57,12 +58,20 @@ class Exercise
       false,
       onTap: onTap,
     );
+
+    this.information = [];
   }
 
   Exercise.model(this.id, this.name, this.description,
                  String exerciseWeightType, String exerciseMuscleType,
                  String exerciseMovementType,
-                 this.muscleGroups, {Function(BuildContext, dynamic)? onTap})
+                 this.muscleGroups, {Function(BuildContext, dynamic)? onTap,
+                   /*
+                   int? userExerciseId, String? ueiDescription,
+                   int? sets, int? reps, int? weight, String? duration,
+                   String? distance, String? resistance,
+                   */
+                 })
   {
     this.exerciseWeightType = ExerciseWeightType(exerciseWeightType);
     this.exerciseMuscleType = ExerciseMuscleType(exerciseMuscleType);
@@ -80,6 +89,20 @@ class Exercise
       false,
       onTap: onTap,
     );
+
+    this.information = [];
+    /*
+    this.information = ExerciseInformation(
+      userExerciseId: (userExerciseId)!,
+      description: ueiDescription,
+      sets: sets,
+      reps: reps,
+      weight: weight,
+      duration: duration,
+      distance: distance,
+      resistance: resistance,
+    );
+    */
   }
 
   Exercise.duplicate(Exercise exercise,
@@ -99,6 +122,7 @@ class Exercise
       false,
       onTap: onTap,
     );
+    this.information = exercise.information;
   }
 
   void _onTapDefault(BuildContext context, dynamic data)
@@ -112,6 +136,32 @@ class Exercise
   Exercise duplicate()
   {
     return Exercise.duplicate(this, this.exerciseListViewCard.onTap);
+  }
+
+  void updateInformation(int index, {
+    int? userExerciseId,
+    String? description,
+    int? sets,
+    int? reps,
+    int? weight,
+    String? duration,
+    String? resistance,
+  })
+  {
+    while(index >= this.information.length)
+    {
+      this.information.add(ExerciseInformation());
+    }
+
+    this.information[index].update(
+      userExerciseId: userExerciseId,
+      description: description,
+      sets: sets,
+      reps: reps,
+      weight: weight,
+      duration: duration,
+      resistance: resistance,
+    );
   }
 
 
@@ -132,7 +182,8 @@ class Exercise
            'exerciseMuscleType: $exerciseMuscleType, '
            'exerciseMovementType: $exerciseMovementType, '
            'muscleGroups: $muscleGroups, '
-           'exerciseListViewCard: $exerciseListViewCard}';
+           'exerciseListViewCard: $exerciseListViewCard '
+           'information: $information}';
   }
 }
 

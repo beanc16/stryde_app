@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
+typedef bool ValidationFunction();
+
+
 class WillPopScopeSaveDontSave extends StatelessWidget
 {
   late final Widget _child;
@@ -9,6 +12,7 @@ class WillPopScopeSaveDontSave extends StatelessWidget
   late final Function(BuildContext)? _onDontSave;
   late final Function(BuildContext)? _onKeepEditing;
   late final Color _buttonTextColor;
+  ValidationFunction? _showPopupMenuIf;
 
   WillPopScopeSaveDontSave({
     required Widget child,
@@ -16,10 +20,12 @@ class WillPopScopeSaveDontSave extends StatelessWidget
     Function(BuildContext)? onSave,
     Function(BuildContext)? onDontSave,
     Function(BuildContext)? onKeepEditing,
+    ValidationFunction? showPopupMenuIf,
   })
   {
     this._child = child;
     this._buttonTextColor = buttonTextColor;
+    this._showPopupMenuIf = showPopupMenuIf;
 
     if (onSave == null)
     {
@@ -68,22 +74,30 @@ class WillPopScopeSaveDontSave extends StatelessWidget
 
   Future<bool> _onBackButtonPressed(BuildContext context) async
   {
-    return (
-      await showDialog(
-        context: context,
-        builder: (BuildContext context)
-        {
-          return AlertDialog(
-            content: Text("Would you like to save your changes?"),
-            actions: <Widget>[
-              _getTextButton("Keep Editing", _onKeepEditing, context),
-              _getTextButton("Don't Save", _onDontSave, context),
-              _getTextButton("Save", _onSave, context),
-            ],
-          );
-        }
-      )
-    ) ?? false;
+    if (_showPopupMenuIf == null || _showPopupMenuIf!())
+    {
+      return (
+        await showDialog(
+          context: context,
+          builder: (BuildContext context)
+          {
+            return AlertDialog(
+              content: Text("Would you like to save your changes?"),
+              actions: <Widget>[
+                _getTextButton("Keep Editing", _onKeepEditing, context),
+                _getTextButton("Don't Save", _onDontSave, context),
+                _getTextButton("Save", _onSave, context),
+              ],
+            );
+          }
+        )
+      ) ?? false;
+    }
+
+    else
+    {
+      return true;
+    }
   }
 
   TextButton _getTextButton(String displayText,

@@ -27,6 +27,7 @@ class EditableTable extends StatefulWidget
   late final TextStyle _thTextStyle;
   late Function(dynamic)? _onRowSaved;
   late Function(String)? _onSubmitted;
+  late Function()? _onEditingComplete;
   late double _columnRatio;
 
   EditableTable({
@@ -56,6 +57,7 @@ class EditableTable extends StatefulWidget
     ),
     Function(dynamic)? onRowSaved,
     Function(String)? onSubmitted,
+    Function()? onEditingComplete,
     double columnRatio = 0.2
   })
   {
@@ -76,6 +78,7 @@ class EditableTable extends StatefulWidget
     this._thTextStyle = thTextStyle;
     this._onRowSaved = onRowSaved;
     this._onSubmitted = onSubmitted;
+    this._onEditingComplete = onEditingComplete;
     this._columnRatio = columnRatio;
   }
 
@@ -92,7 +95,8 @@ class EditableTable extends StatefulWidget
                               this._trHeight, this._tdTextAlign,
                               this._thTextAlign, this._tdTextStyle,
                               this._thTextStyle, this._onRowSaved,
-                              this._onSubmitted, this._columnRatio);
+                              this._onSubmitted, this._columnRatio,
+                              this._onEditingComplete);
   }
 }
 
@@ -118,6 +122,7 @@ class EditableTableState extends State<EditableTable>
   final TextStyle _thTextStyle;
   final Function(dynamic)? _onRowSaved;
   final Function(String)? _onSubmitted;
+  late Function()? _onChanged;
   final double _columnRatio;
 
   EditableTableState(this._columns, this._rows, this._controller,
@@ -128,11 +133,12 @@ class EditableTableState extends State<EditableTable>
                      this._tdTextAlign, this._thTextAlign,
                      this._tdTextStyle, this._thTextStyle,
                      this._onRowSaved, this._onSubmitted,
-                     this._columnRatio)
+                     this._columnRatio, this._onChanged)
   {
     this._tableKey = GlobalKey<EditableState>();
     _initializeListeners();
     _controller.getEditedRows = _getEditedRowsForParent();
+    _controller.setIsTableBuilt(true);
   }
 
   void _initializeListeners()
@@ -234,22 +240,12 @@ class EditableTableState extends State<EditableTable>
       stripeColor1: _stripeColor1,
       stripeColor2: _stripeColor2,
 
-      // Create Button
-      /*
-      showCreateButton: false,
-      createButtonAlign: CrossAxisAlignment.start,
-      createButtonShape: BoxShape.circle,
-      createButtonColor: StrydeColors.purple,
-      createButtonIcon: Icon(Icons.add, color: Colors.white),
-      */
-
-      // Save Button
-      showSaveIcon: true,
-      saveIconColor: Colors.black,
-
       // Callbacks
       onRowSaved: _onRowSaved,
       onSubmitted: _onSubmitted,
+      onChanged: _onChanged,
+
+      // TODO: Make save icon for each row actually be a delete icon
 
       // Headers
       thAlignment: _thTextAlign,

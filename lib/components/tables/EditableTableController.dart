@@ -6,9 +6,13 @@ typedef List<dynamic>? DynamicListCallback();
 
 class EditableTableController extends ChangeNotifier
 {
-  late bool shouldAddNewRow = false;
-  late bool shouldDeleteLastRow = false;
+  bool shouldAddNewRow = false;
+  bool shouldDeleteLastRow = false;
   DynamicListCallback? getEditedRows;
+  bool tableIsBuilt = false;
+  late ValueChanged<bool> onTableBuilt;
+  late Function() onChanged;
+  late Function() saveExerciseInfo;
 
   EditableTableController();
 
@@ -24,5 +28,16 @@ class EditableTableController extends ChangeNotifier
   {
     shouldDeleteLastRow = true;
     notifyListeners();
+  }
+
+  void setIsTableBuilt(bool tableIsBuilt)
+  {
+    tableIsBuilt = tableIsBuilt;
+    onTableBuilt(tableIsBuilt);
+  }
+
+  void editingIsComplete()
+  {
+    onChanged();
   }
 }
