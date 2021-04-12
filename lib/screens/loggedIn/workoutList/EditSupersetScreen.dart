@@ -163,7 +163,7 @@ class EditSupersetState extends State<EditSupersetScreen>
     return new WillPopScope(
       onWillPop: _onBackButtonPressed,
       child: Scaffold(
-        appBar: StrydeAppBar(titleStr: "Edit Superset"),
+        appBar: StrydeAppBar(titleStr: "Edit Superset", context: context),
         body: ReorderableListView(
         children: listViewWidgets,
 

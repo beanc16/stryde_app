@@ -53,8 +53,7 @@ class NavigateTo
 
 
   // Go to a screen w/o a back button
-  static void screenWithoutBack(BuildContext context,
-                                Function() route)
+  static void screenWithoutBack(BuildContext context, Function() route)
   {
     Navigator.pushReplacement(
       context,
@@ -65,6 +64,12 @@ class NavigateTo
         }
       )
     );
+  }
+
+  static void screenRemoveAllBacks(BuildContext context, Function() route)
+  {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    NavigateTo.screenWithoutBack(context, route);
   }
 
   // Go to a screen w/o a back button & run callback

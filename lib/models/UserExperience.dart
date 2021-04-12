@@ -18,4 +18,26 @@ class UserExperience
                           'password: $password, goal: $goal, '
                           'experienceName: $experienceName}';
   }
+
+  @override
+  bool operator ==(Object other)
+  =>
+      identical(this, other) ||
+          other is UserExperience &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              username == other.username &&
+              password == other.password &&
+              goal == other.goal &&
+              experienceName == other.experienceName;
+
+  @override
+  int get hashCode
+  =>
+      id.hashCode ^
+      username.hashCode ^
+      password.hashCode ^
+      goal.hashCode ^
+      experienceName.hashCode;
+
 }

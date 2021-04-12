@@ -90,4 +90,32 @@ class ExerciseInformation
               'weight: $weight, duration: $duration, '
               'distance: $distance, resistance: $resistance}';
   }
+
+  @override
+  bool operator ==(Object other)
+  =>
+      identical(this, other) ||
+          other is ExerciseInformation &&
+              runtimeType == other.runtimeType &&
+              userExerciseId == other.userExerciseId &&
+              description == other.description &&
+              sets == other.sets &&
+              reps == other.reps &&
+              weight == other.weight &&
+              duration == other.duration &&
+              distance == other.distance &&
+              resistance == other.resistance;
+
+  @override
+  int get hashCode
+  =>
+      userExerciseId.hashCode ^
+      description.hashCode ^
+      sets.hashCode ^
+      reps.hashCode ^
+      weight.hashCode ^
+      duration.hashCode ^
+      distance.hashCode ^
+      resistance.hashCode;
+
 }

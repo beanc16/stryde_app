@@ -317,7 +317,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
   String _getAppBarTitle()
   {
-    if (workout != null)
+    if (workout.name.length > 0)
     {
       return "Edit Workout";
     }
@@ -378,7 +378,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     return WillPopScopeSaveDontSave(
       onSave: (BuildContext context) => _onSave(context),
       child: Scaffold(
-        appBar: StrydeAppBar(titleStr: _getAppBarTitle()),
+        appBar: StrydeAppBar(titleStr: _getAppBarTitle(), context: context),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(left: 15, right: 15),

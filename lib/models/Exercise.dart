@@ -41,6 +41,7 @@ class Exercise
     );
 
     this.information = [];
+    this.muscleGroups = [];
   }
 
   Exercise.notReorderable(this.name, this.description, 
@@ -60,6 +61,7 @@ class Exercise
     );
 
     this.information = [];
+    this.muscleGroups = [];
   }
 
   Exercise.model(this.id, this.name, this.description,
@@ -138,6 +140,20 @@ class Exercise
     return Exercise.duplicate(this, this.exerciseListViewCard.onTap);
   }
 
+  void addMuscleGroup(String muscleGroupName)
+  {
+    MuscleGroup mg = MuscleGroup(muscleGroupName);
+    this.muscleGroups?.add(mg);
+  }
+
+  void addMuscleGroups(List<MuscleGroup>? muscleGroups)
+  {
+    if (muscleGroups != null && muscleGroups.length > 0)
+    {
+      this.muscleGroups?.addAll(muscleGroups);
+    }
+  }
+
   void updateInformation(int index, {
     int? userExerciseId,
     String? description,
@@ -174,6 +190,8 @@ class Exercise
     }
   }
 
+
+
   @override
   String toString()
   {
@@ -185,6 +203,36 @@ class Exercise
            'exerciseListViewCard: $exerciseListViewCard '
            'information: $information}';
   }
+
+  @override
+  bool operator ==(Object other)
+  =>
+      identical(this, other) ||
+          other is Exercise &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              name == other.name &&
+              description == other.description &&
+              exerciseWeightType == other.exerciseWeightType &&
+              exerciseMuscleType == other.exerciseMuscleType &&
+              exerciseMovementType == other.exerciseMovementType &&
+              muscleGroups == other.muscleGroups &&
+              exerciseListViewCard == other.exerciseListViewCard &&
+              information == other.information;
+
+  @override
+  int get hashCode
+  =>
+      id.hashCode ^
+      name.hashCode ^
+      description.hashCode ^
+      exerciseWeightType.hashCode ^
+      exerciseMuscleType.hashCode ^
+      exerciseMovementType.hashCode ^
+      muscleGroups.hashCode ^
+      exerciseListViewCard.hashCode ^
+      information.hashCode;
+
 }
 
 

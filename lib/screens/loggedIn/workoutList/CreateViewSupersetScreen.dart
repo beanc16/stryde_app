@@ -171,7 +171,7 @@ class CreateViewSupersetState extends State<CreateViewSupersetScreen>
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: StrydeAppBar(titleStr: "View Superset"),
+      appBar: StrydeAppBar(titleStr: "View Superset", context: context),
       body: SinglePageScrollingWidget(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

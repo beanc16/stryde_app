@@ -57,6 +57,7 @@ class StartupScreenState extends State
       bottomNavigationBarItems: _getNavbarItems(),
       navBarSelectedItemColor: StrydeColors.lightBlue,
       navBarUnselectedItemColor: StrydeColors.darkGray,
+      showLogoutButton: false,
     );
   }
 }

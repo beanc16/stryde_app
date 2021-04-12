@@ -43,6 +43,12 @@ class Workout
     this.description = description;
   }
 
+  Workout.duplicate(Workout workout) :
+    this.notReorderable(workout.name, workout.exercisesAndSupersets,
+                        workoutId: workout.workoutId,
+                        userId: workout.userId,
+                        description: workout.description);
+
 
 
   void addExerciseOrSuperset(Object obj)
@@ -67,6 +73,27 @@ class Workout
     {
       this.addExerciseOrSuperset(objs[i]);
     }
+  }
+
+  void insertExerciseOrSuperset(Object obj, int index)
+  {
+    if (obj is Exercise || obj is Superset)
+    {
+      this.exercisesAndSupersets.insert(index, obj);
+    }
+
+    else
+    {
+      String objTypeStr = obj.runtimeType.toString();
+      print("\nWARNING: Tried to insert an object of type " + objTypeStr +
+            " to a workout. But, only Exercises and Supersets can" +
+            " be added.");
+    }
+  }
+
+  Workout duplicate()
+  {
+    return Workout.duplicate(this);
   }
 
 
@@ -317,7 +344,28 @@ class Workout
   }
 
 
+  @override
+  bool operator ==(Object other)
+  =>
+      identical(this, other) ||
+          other is Workout &&
+              runtimeType == other.runtimeType &&
+              workoutId == other.workoutId &&
+              userId == other.userId &&
+              name == other.name &&
+              description == other.description &&
+              exercisesAndSupersets == other.exercisesAndSupersets &&
+              isReorderable == other.isReorderable;
 
+  @override
+  int get hashCode
+  =>
+      workoutId.hashCode ^
+      userId.hashCode ^
+      name.hashCode ^
+      description.hashCode ^
+      exercisesAndSupersets.hashCode ^
+      isReorderable.hashCode;
 
   static Workout getDemoWorkout(Function() onDeleteListViewCard)
   {

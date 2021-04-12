@@ -11,13 +11,15 @@ class MultiPageScrollingWidget extends StatefulWidget
   late final Color _navBarSelectedItemColor;
   late Color? _navBarUnselectedItemColor;
   late final double _marginAroundScreens;
+  late final _showLogoutButton;
 
   MultiPageScrollingWidget({
     required List<Widget> screens,
     required List<BottomNavigationBarItem> bottomNavigationBarItems,
     required Color navBarSelectedItemColor,
     Color? navBarUnselectedItemColor,
-    double marginAroundScreens = 20
+    double marginAroundScreens = 20,
+    bool showLogoutButton = true,
   })
   {
     this._screens = screens;
@@ -25,6 +27,7 @@ class MultiPageScrollingWidget extends StatefulWidget
     this._navBarSelectedItemColor = navBarSelectedItemColor;
     this._navBarUnselectedItemColor = navBarUnselectedItemColor;
     this._marginAroundScreens = marginAroundScreens;
+    this._showLogoutButton = showLogoutButton;
   }
 
 
@@ -36,7 +39,8 @@ class MultiPageScrollingWidget extends StatefulWidget
                                          this._bottomNavigationBarItems,
                                          this._navBarSelectedItemColor,
                                          this._navBarUnselectedItemColor,
-                                         this._marginAroundScreens);
+                                         this._marginAroundScreens,
+                                         this._showLogoutButton);
   }
 }
 
@@ -53,6 +57,7 @@ class MultiPageScrollingWidgetState extends State
   late final Color _navBarSelectedItemColor;
   late final Color? _navBarUnselectedItemColor;
   late final double _marginAroundScreens;
+  late final _showLogoutButton;
 
   // Constructor
   MultiPageScrollingWidgetState(
@@ -60,7 +65,8 @@ class MultiPageScrollingWidgetState extends State
     List<BottomNavigationBarItem> bottomNavigationBarItems,
     Color navBarSelectedItemColor,
     Color? navBarUnselectedItemColor,
-    double marginAroundScreens
+    double marginAroundScreens,
+    this._showLogoutButton
   )
   {
     this.screens = screens;
@@ -123,7 +129,10 @@ class MultiPageScrollingWidgetState extends State
                                 _onPageChanged);
 
     return Scaffold(
-      appBar: StrydeAppBar(titleStr: "Stryde"),
+      appBar: StrydeAppBar(
+        titleStr: "Stryde",
+        context: (_showLogoutButton ? context : null),
+      ),
       body: Container(
         margin: EdgeInsets.all(_marginAroundScreens),
         child: pageView,

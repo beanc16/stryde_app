@@ -1,7 +1,7 @@
 enum ExerciseMuscleTypeEnum
 {
   COMPOUND,
-  ISOLATION
+  ISOLATION,
 }
 
 

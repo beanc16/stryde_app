@@ -31,13 +31,22 @@ class EditExerciseInformationScreen extends StatelessWidget
     _tableKey = GlobalKey<EditableTableState>();
     _controller = EditableTableController();
     _infoRows = [];
+    int setNum = 1;
 
     for (int i = 0; i < _exercise.information.length; i++)
     {
-      _infoRows.add(ExerciseInformationRow(
-        setNum: i + 1,
-        info: _exercise.information[i],
-      ));
+      int? numOfSets = _exercise.information[i].sets;
+      if (numOfSets != null && numOfSets > 0)
+      {
+        for (int j = 0; j < numOfSets; j++)
+        {
+          _infoRows.add(ExerciseInformationRow(
+            setNum: setNum,
+            info: _exercise.information[i],
+          ));
+          setNum++;
+        }
+      }
     }
 
     // Create an empty set if none exist
@@ -203,7 +212,7 @@ class EditExerciseInformationScreen extends StatelessWidget
 	 */
 
     return Scaffold(
-      appBar: StrydeAppBar(titleStr: "Edit Exercise"),
+      appBar: StrydeAppBar(titleStr: "Edit Exercise", context: context),
       key: _tableKey,
       body: WillPopScopeSaveDontSave(
         buttonTextColor: StrydeColors.lightBlue,

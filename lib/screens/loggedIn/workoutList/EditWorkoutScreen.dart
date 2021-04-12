@@ -363,7 +363,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     return WillPopScope(
       onWillPop: () => _onBackButtonPressed(context),
       child: Scaffold(
-        appBar: StrydeAppBar(titleStr: "Add Exercise"),
+        appBar: StrydeAppBar(titleStr: "Add Exercise", context: context),
         body: ReorderableListView(
           children: listViewWidgets,
           scrollDirection: Axis.vertical,

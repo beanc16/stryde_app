@@ -3,7 +3,7 @@
     <!-- TODO: usersClearTraffic allows HTTP requests instead of HTTPS.
                Make the server do HTTPS requests instead of HTTP. -->
    <application
-        android:label="workout_buddy"
+        android:label="Stryde"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true" >
         <activity

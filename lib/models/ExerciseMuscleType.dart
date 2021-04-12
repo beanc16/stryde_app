@@ -18,4 +18,20 @@ class ExerciseMuscleType
   {
     return 'ExerciseMuscleType{id: $id, value: ' + value.toStringShort() + '}';
   }
+
+  @override
+  bool operator ==(Object other)
+  =>
+      identical(this, other) ||
+          other is ExerciseMuscleType &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              value == other.value;
+
+  @override
+  int get hashCode
+  =>
+      id.hashCode ^
+      value.hashCode;
+
 }

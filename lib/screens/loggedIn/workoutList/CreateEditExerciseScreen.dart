@@ -141,7 +141,7 @@ class CreateEditExerciseScreenState extends State<CreateEditExerciseScreen>
     );
 
     return Scaffold(
-      appBar: StrydeAppBar(titleStr: "Stryde"),
+      appBar: StrydeAppBar(titleStr: "Stryde", context: context),
       body: Container(
         margin: getDefaultMargin(),
         child: child,

@@ -1,4 +1,7 @@
 import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
+import 'package:Stryde/controllers/WorkoutController.dart';
+import 'package:Stryde/models/Exercise.dart';
+import 'package:Stryde/models/MuscleGroup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -68,6 +71,12 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
 
     else
     {
+      WorkoutController.setAll(
+        onQuerySuccess: _onGetWorkoutsSuccess,
+        onQueryFailureCallback: _onGetWorkoutsFail
+      );
+
+      /*
       // Get all workouts created by the current user
       String? id = StrydeUserStorage.userExperience?.id.toString();
       HttpQueryHelper.get(
@@ -75,21 +84,13 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
         onSuccess: (response) => _onGetWorkoutsSuccess(response["_results"]),
         onFailure: (response) => _onGetWorkoutsFail(response)
       );
+     */
     }
   }
 
-  void _onGetWorkoutsSuccess(Map<String, dynamic> workoutsJson)
+  void _onGetWorkoutsSuccess(List<Workout> workouts)
   {
-    // TODO: Convert workouts to model
-    print("workoutsJson:\n" + workoutsJson.toString());
-    _convertWorkoutResults(
-      workoutsJson["nonEmptyWorkoutResults"]["_results"],
-      workoutsJson["emptyWorkoutResults"]["_results"]
-    );
-
-    // TODO: Set StrydeUserStorage.workouts
-    print("\n\n" + this._workouts.toString());
-    StrydeUserStorage.workouts = this._workouts;
+    this._workouts = workouts;
 
     // Send models to listview
     _setListView();
@@ -104,28 +105,8 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
     _loadingErrorMsg.hideLoadingIcon();
     _loadingErrorMsg.showChild();
 
-    print("_onGetWorkoutsFail:\n" + results.toString());
-  }
-
-  void _convertWorkoutResults(List<dynamic> nonEmptyWorkouts,
-                              List<dynamic> emptyWorkouts)
-  {
-    // TODO: Convert nonEmptyWorkouts
-    // ^ do here
-
-    // Convert emptyWorkouts
-    for (int i = 0; i < emptyWorkouts.length; i++)
-    {
-      Map<String, dynamic> workout = emptyWorkouts[i];
-
-      setState(()
-      {
-        this._workouts.add(Workout(
-          workout["name"], [], description: workout["description"],
-          userId: workout["userId"], workoutId: workout["workoutId"]
-        ));
-      });
-    }
+    //print("_onGetWorkoutsFail:\n" + results.toString());
+    print(results);
   }
 
 
@@ -144,8 +125,16 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
   {
     setState(()
     {
-      _listView = ListView.builder(
+      _listView = ListView.separated(
         shrinkWrap: true,
+        //physics: ClampingScrollPhysics(),
+        separatorBuilder: (BuildContext context, int index)
+        {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 15),
+            );
+        },
+
         itemCount: _workouts.length,
         itemBuilder: (BuildContext context, int index)
         {

@@ -7,7 +7,8 @@ import 'package:Stryde/models/Exercise.dart';
 
 class Superset
 {
-  late final String name;
+  late int id;
+  late String name;
   late List<Exercise> exercises;
   late SupersetListViewHeader listViewHeader;
   late bool isReorderable = true;
@@ -17,7 +18,7 @@ class Superset
   {
     this.listViewHeader = SupersetListViewHeader(
       this.name,
-      Key("${this.name}"),
+      UniqueKey(),
       true,
       onDeleteListViewHeader
     );
@@ -27,15 +28,63 @@ class Superset
   {
     this.listViewHeader = SupersetListViewHeader.notDeletable(
       this.name,
-      Key("${this.name}")
+      UniqueKey(),
     );
 
     this.isReorderable = false;
   }
 
+  Superset.model({
+    required this.id,
+    required this.name,
+    List<Exercise>? exercises,
+    SupersetListViewHeader? listViewHeader,
+    bool isReorderable = false,
+  })
+  {
+    if (exercises != null)
+    {
+      this.exercises = exercises;
+    }
+    else
+    {
+      this.exercises = [];
+    }
+
+    if (listViewHeader != null)
+    {
+      this.listViewHeader = listViewHeader;
+    }
+    else
+    {
+      this.listViewHeader = SupersetListViewHeader.notDeletable(
+        this.name,
+        UniqueKey(),
+      );
+    }
+  }
+
+  Superset duplicate()
+  {
+    return Superset.model(
+      id: this.id,
+      name: this.name,
+      exercises: this.exercises,
+      isReorderable: this.isReorderable,
+      listViewHeader: this.listViewHeader,
+    );
+  }
+
+
+
   void addExercise(Exercise exercise)
   {
     this.exercises.add(exercise);
+  }
+
+  void insertExercise(Exercise exercise, int index)
+  {
+    this.exercises.insert(index, exercise);
   }
 
   @override
@@ -140,6 +189,26 @@ class Superset
       ),
     ], onDeleteListViewHeader);
   }
+
+  @override
+  bool operator ==(Object other)
+  =>
+      identical(this, other) ||
+          other is Superset &&
+              runtimeType == other.runtimeType &&
+              id == other.id &&
+              name == other.name &&
+              exercises == other.exercises &&
+              isReorderable == other.isReorderable;
+
+  @override
+  int get hashCode
+  =>
+      id.hashCode ^
+      name.hashCode ^
+      exercises.hashCode ^
+      isReorderable.hashCode;
+
 }
 
 
