@@ -6,6 +6,7 @@ import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElem
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/RequiredInputNotEnteredException.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButtonWithIcon.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

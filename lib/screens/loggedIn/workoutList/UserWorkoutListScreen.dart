@@ -184,7 +184,9 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         StrydeButton(
-          displayText: "Add", textSize: 20, onTap: ()
+          displayText: "Add",
+          textSize: 20,
+          onTap: ()
           {
             NavigateTo.screen(context, () => CreateViewWorkoutScreen());
           },

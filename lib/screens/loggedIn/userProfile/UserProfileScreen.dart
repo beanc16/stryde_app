@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButtonWithIcon.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeSuccessToggleableWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -246,10 +247,11 @@ class UserProfileScreen extends StatelessWidget
           ),
           getDefaultPadding(),
 
-          StrydeButton(
+          StrydeButtonWithIcon(
             displayText: "Logout",
             textSize: 20,
-            onTap: () => _logOut(context),
+            onTap: (BuildContext context) => _logOut(context),
+            iconData: Icons.logout,
           ),
           getDefaultPadding(),
         ],
