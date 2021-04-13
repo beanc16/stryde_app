@@ -39,9 +39,10 @@ class Superset
     required this.name,
     List<Exercise>? exercises,
     SupersetListViewHeader? listViewHeader,
-    bool isReorderable = false,
   })
   {
+    this.isReorderable = false;
+
     if (exercises != null)
     {
       this.exercises = exercises;
@@ -70,7 +71,6 @@ class Superset
       id: this.id,
       name: this.name,
       exercises: this.exercises,
-      isReorderable: this.isReorderable,
       listViewHeader: this.listViewHeader,
     );
   }

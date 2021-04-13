@@ -39,6 +39,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     super.initState();
 
     listViewWidgets = workout.getAsWidgets();
+    print(listViewWidgets.toString());
 
     int index = 0;
     for (Widget widget in listViewWidgets)
@@ -52,6 +53,10 @@ class EditWorkoutState extends State<EditWorkoutScreen>
           for (int i = index + 1; listViewWidgets[i] is ListViewCard; i++)
           {
             listViewCards.add(listViewWidgets[i]);
+            if (i + 1 >= listViewWidgets.length)
+            {
+              break;
+            }
           }
         }
         workout.updateDeleteListViewCardFunc(
@@ -369,7 +374,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
           scrollDirection: Axis.vertical,
 
           onReorder: (int oldIndex, int newIndex) =>
-              _onReorder(oldIndex, newIndex)
+                            _onReorder(oldIndex, newIndex)
         )
       ),
     );

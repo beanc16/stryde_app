@@ -79,3 +79,13 @@ PageView getPageView(PageController pageController,
     },
   );
 }
+
+
+
+void runAfterBuild(Function(Duration) callback)
+{
+  // Get exercises after build method is called
+  WidgetsBinding.instance?.addPostFrameCallback(
+    (Duration timestamp) => callback(timestamp)
+  );
+}

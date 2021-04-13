@@ -75,6 +75,12 @@ class NonEmptyWorkoutMap
 
 
 
+  bool workoutIsInMap(Workout workout)
+  {
+    int workoutId = workout.workoutId;
+    return (exercisesAndSupersetsInWorkouts[workoutId] != null);
+  }
+
   List<Workout> toList()
   {
     exercisesAndSupersetsInWorkouts.forEach((int workoutId, Workout workout)
@@ -99,12 +105,6 @@ class NonEmptyWorkoutMap
     });
 
     return exercisesAndSupersetsInWorkouts.values.toList();
-  }
-
-  bool workoutIsInMap(Workout workout)
-  {
-    int workoutId = workout.workoutId;
-    return (exercisesAndSupersetsInWorkouts[workoutId] != null);
   }
 
   @override

@@ -38,7 +38,7 @@ class ListViewHeader extends StatefulWidget
   {
     this.isDeleteable = isDeleteable;
 
-    if (state != null)
+    //if (state != null)
     {
       /*
       state.setState(()

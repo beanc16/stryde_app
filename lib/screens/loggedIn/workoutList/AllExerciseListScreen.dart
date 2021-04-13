@@ -1,5 +1,6 @@
 import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/listView/StrydeExerciseSearchableListView.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -259,13 +260,11 @@ class AllExerciseListState extends State<AllExerciseListScreen>
   {
     return WillPopScope(
       onWillPop: () => _onBackButtonPressed(context),
-      child: _getWidgetToDisplay(),
-      /*
+      //child: _getWidgetToDisplay(), // TODO: AllExerciseSupersetListScreen
       child: Scaffold(
         appBar: StrydeAppBar(titleStr: "Add Exercise"),
         body: _getWidgetToDisplay()
       ),
-       */
     );
   }
 }

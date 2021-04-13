@@ -98,7 +98,7 @@ class ListViewCard extends StatefulWidget
   {
     this.shouldLeftIndent = true;
 
-    if (state != null)
+    //if (state != null)
     {
       /*
       state.setState(()

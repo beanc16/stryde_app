@@ -2,6 +2,7 @@ import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
+import 'package:Stryde/components/listViews/ListViewCard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -14,6 +15,7 @@ import 'package:Stryde/utilities/NavigateTo.dart';
 import 'package:Stryde/utilities/UiHelpers.dart';
 import 'package:Stryde/screens/loggedIn/workoutList/EditWorkoutScreen.dart';
 import 'AllExerciseAndSupersetListScreen.dart';
+import 'AllExerciseListScreen.dart';
 
 
 class CreateViewWorkoutScreen extends StatefulWidget
@@ -48,6 +50,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   late final LabeledTextInputElement _titleInput;
   late final LabeledTextInputElement _descriptionInput;
   late List<dynamic> _listViewElements;
+  late bool _hasChanged;
 
 
   CreateViewWorkoutState() :
@@ -57,6 +60,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   {
     this.workout = workout;
     _listViewElements = workout.getAsWidgets();
+    _hasChanged = false;
 
     _titleInput = LabeledTextInputElement(
       labelText: "Title",
@@ -151,14 +155,10 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       // Exercise & Superset widget
       this._getListViewHeader(),
     ];
-
-    if (workout != null)
-    {
-      workout.isReorderable = false;
-    }
+    workout.isReorderable = false;
 
     // Workout exists and has an exercises(s) and/or a superset(s)
-    if (workout != null && !workout.hasNoExercisesOrSupersets())
+    if (!workout.hasNoExercisesOrSupersets())
     {
       children.addAll([
         Flexible(
@@ -168,6 +168,12 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
             physics: NeverScrollableScrollPhysics(),  // Lets parent handle scrolling
             itemBuilder: (BuildContext context, int index)
             {
+              dynamic curElement = _listViewElements[index];
+              if (curElement is ListViewCard)
+              {
+                curElement.isReorderable = false;
+              }
+
               return _listViewElements[index];
             }
           ),
@@ -275,17 +281,17 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   void _onTapAddButton() async
   {
     List<Object> exercisesToAdd = await NavigateTo.screenReturnsData(
-      //context, () => AllExerciseListScreen()
-      context, () => AllExerciseAndSupersetListScreen()
+      context, () => AllExerciseListScreen()
+      //context, () => AllExerciseAndSupersetListScreen()
     );
 
     if (exercisesToAdd.length > 0)
     {
+      _hasChanged = true;
+
       setState(()
       {
         workout.addExercisesOrSupersets(exercisesToAdd);
-        // TODO: Delete one line of code below
-        //_listViewElements.addAll(workout.getAsWidgets());
         _listViewElements = workout.getAsWidgets();
       });
     }
@@ -294,12 +300,14 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   void _onTapEditButton() async
   {
     workout.isReorderable = true;
-    //NavigateTo.screen(context, () => EditWorkoutScreen(workout));
-
     Workout newWorkout = await NavigateTo.screenReturnsData(
       context, () => EditWorkoutScreen(workout)
     );
-    print("newWorkout:\n" + newWorkout.toString());
+
+    if (workout.exercisesAndSupersets != newWorkout.exercisesAndSupersets)
+    {
+      _hasChanged = true;
+    }
 
     workout = newWorkout;
     _updateListView();
@@ -309,6 +317,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   {
     setState(()
     {
+      workout.isReorderable = false;
       _listViewElements = workout.getAsWidgets();
     });
   }
@@ -377,6 +386,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
     return WillPopScopeSaveDontSave(
       onSave: (BuildContext context) => _onSave(context),
+      showPopupMenuIf: () => _hasChanged,
       child: Scaffold(
         appBar: StrydeAppBar(titleStr: _getAppBarTitle(), context: context),
         body: SingleChildScrollView(

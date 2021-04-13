@@ -121,7 +121,8 @@ class Workout
         {
           inSuperset = false;
           children.add(Divider(
-            key: Key("Divider ${numOfDividers++}"),
+            //key: Key("Divider ${numOfDividers++}"),
+            key: UniqueKey(),
             thickness: 3,
             color: Colors.black38
           ));
@@ -139,7 +140,8 @@ class Workout
         if (i != 0)
         {
           children.add(Divider(
-            key: Key("Divider ${numOfDividers++}"),
+            //key: Key("Divider ${numOfDividers++}"),
+            key: UniqueKey(),
             thickness: 3,
             color: Colors.black38
           ));
@@ -160,7 +162,8 @@ class Workout
         // Enable this to get room for exercises between supersets
         /*
         children.add(Divider(
-          key: Key("Divider ${numOfDividers++}"),
+          //key: Key("Divider ${numOfDividers++}"),
+          key: UniqueKey(),
           thickness: 3,
           color: Colors.black38
         ));

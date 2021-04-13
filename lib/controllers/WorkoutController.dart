@@ -66,9 +66,9 @@ class WorkoutController
     {
       /*
         TODO: Test this with the following versions:
-              - exerciseInWorkout
+              (success) exerciseInWorkout
               - supersetInWorkout
-              - exerciseInSuperset && supersetInWorkout
+              (test w/ > 1 superset) exerciseInSuperset && supersetInWorkout
               - exerciseInWorkout && supersetInWorkout
               - exerciseInWorkout && exerciseInSuperset && supersetInWorkout
        */
@@ -153,13 +153,13 @@ class WorkoutController
         }
 
         if (newExercise != null &&
-            curSuperset != null && newSuperset != null &&
+            curSuperset != null && /*newSuperset != null &&*/
             newExercise != curExercise)
         {
           map.addNewExerciseInSuperset(newExercise,
-                                       curInfo["orderInWorkout"],
+                                       curInfo["orderInSuperset"],
                                        curSuperset);
-          curSuperset = newSuperset.duplicate();
+          curSuperset = newSuperset?.duplicate();
           curExercise = newExercise.duplicate();
         }
       }
@@ -167,6 +167,11 @@ class WorkoutController
 
     if (curWorkout != null)
     {
+      if (curSuperset != null)
+      {
+        curWorkout.addExerciseOrSuperset(curSuperset);
+      }
+
       map.tryAddWorkout(curWorkout);
     }
 
@@ -216,7 +221,7 @@ extension wcHelpers on WorkoutController
       curInfo["workoutName"], [],
       workoutId: curInfo["workoutId"],
       userId: curInfo["userId"],
-      description: curInfo["exerciseDescription"] ?? "",
+      description: curInfo["workoutDescription"] ?? "",
     );
   }
 

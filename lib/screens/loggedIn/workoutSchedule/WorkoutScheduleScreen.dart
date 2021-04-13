@@ -1,3 +1,7 @@
+import 'package:Stryde/screens/ComingSoonWidget.dart';
+import 'package:Stryde/screens/loggedIn/ComingSoonOverlay.dart';
+import 'package:Stryde/utilities/NavigateTo.dart';
+import 'package:Stryde/utilities/UiHelpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:Stryde/components/calendarHelpers/CalendarEvent.dart';
@@ -24,20 +28,20 @@ class WorkoutScheduleScreenState extends State<WorkoutScheduleScreen>
   {
     DateTime today = DateTime.now();
     DateTime startTime = DateTime(
-      today.year,   // Year
-      today.month,  // Month
-      2,            // Day
-      15,           // Hour
-      0,            // Minute
-      0             // Second
+      today.year,       // Year
+      today.month,      // Month
+      today.day,        // Day
+      today.hour + 1,   // Hour
+      0,                // Minute
+      0                 // Second
     );
 
     _calendarEventDataSource = CalendarEventDataSource.events([
-      CalendarEvent.lasts("Test Event", startTime, Duration(hours: 1)),
+      CalendarEvent.lasts("My First Workout", startTime, Duration(hours: 1)),
     ]);
 
     _calendarEventDataSource.addEvent(
-      "Test Event 2",
+      "My Second Workout",
       startTime.add(Duration(days: 1)),
       startTime.add(Duration(days: 1, hours: 1)),
       backgroundColor: StrydeColors.purple
@@ -49,14 +53,19 @@ class WorkoutScheduleScreenState extends State<WorkoutScheduleScreen>
   @override
   Widget build(BuildContext context)
   {
-    return SfCalendar(
-      view: CalendarView.week,
-      dataSource: _calendarEventDataSource,
+    return Stack(
+      children: [
+        SfCalendar(
+          view: CalendarView.week,
+          dataSource: _calendarEventDataSource,
 
-      initialSelectedDate: DateTime.now(),
-      showNavigationArrow: true,
+          initialSelectedDate: DateTime.now(),
+          showNavigationArrow: true,
 
-      todayHighlightColor: StrydeColors.lightBlue,
+          todayHighlightColor: StrydeColors.lightBlue,
+        ),
+        ComingSoonWidget(),
+      ]
     );
   }
 }
