@@ -98,6 +98,25 @@ class Workout
 
 
 
+  List<Exercise> getUpdatedExercises()
+  {
+    List<Exercise> results = [];
+
+    for (int i = 0; i < exercisesAndSupersets.length; i++)
+    {
+      Object curExerciseOrSuperset = exercisesAndSupersets[i];
+
+      if (curExerciseOrSuperset is Exercise)
+      {
+        results.add(curExerciseOrSuperset);
+      }
+    }
+
+    return results;
+  }
+
+
+
   bool hasNoExercisesOrSupersets()
   {
     return exercisesAndSupersets.length == 0;
@@ -208,6 +227,38 @@ class Workout
       shrinkWrap: true,
     );
      */
+  }
+
+  Map<String, dynamic> getAsJson()
+  {
+    // Used to update database
+    Map<String, dynamic> output = {
+      "workoutId": this.workoutId,
+      "workoutName": this.name,
+      "workoutDescription": this.description,
+    };
+
+    List<Map<String, dynamic>> exerciseInfoToUpdate = [];
+    for (int i = 0; i < this.exercisesAndSupersets.length; i++)
+    {
+      dynamic curExerciseOrSuperset = this.exercisesAndSupersets[i];
+
+      if (curExerciseOrSuperset is Exercise)
+      {
+        List<Map<String, dynamic>> curExerciseInfo =
+          curExerciseOrSuperset.getAsUpdatedJson();
+
+        if (curExerciseInfo.isNotEmpty)
+        {
+          exerciseInfoToUpdate.addAll(curExerciseInfo);
+        }
+      }
+    }
+
+    output.addAll({
+      "userExerciseInfoAndOrderArray": exerciseInfoToUpdate,
+    });
+    return output;
   }
 
 

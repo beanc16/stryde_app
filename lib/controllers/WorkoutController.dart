@@ -68,7 +68,7 @@ class WorkoutController
         TODO: Test this with the following versions:
               (success) exerciseInWorkout
               - supersetInWorkout
-              (test w/ > 1 superset) exerciseInSuperset && supersetInWorkout
+              - exerciseInSuperset && supersetInWorkout
               - exerciseInWorkout && supersetInWorkout
               - exerciseInWorkout && exerciseInSuperset && supersetInWorkout
        */
@@ -175,7 +175,6 @@ class WorkoutController
       map.tryAddWorkout(curWorkout);
     }
 
-    print(map.toString());
     return map.toList();
   }
 

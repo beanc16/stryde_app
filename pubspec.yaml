@@ -30,6 +30,8 @@ dependencies:
   multi_select_flutter: ^4.0.0  # Multi select dropdown menus
   syncfusion_flutter_calendar: ^19.1.55   # For calendar
   editable: ^2.0.0              # For editable spreadsheet-like tables
+  #get_it: ^1.0.3+2              # For easy static singletons
+  #url_launcher: ^5.0.3          # For launching URLs in-app
 
 
   # The following adds the Cupertino Icons font to your application.

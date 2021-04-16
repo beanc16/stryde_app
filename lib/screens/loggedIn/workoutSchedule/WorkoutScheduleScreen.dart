@@ -1,7 +1,4 @@
 import 'package:Stryde/screens/ComingSoonWidget.dart';
-import 'package:Stryde/screens/loggedIn/ComingSoonOverlay.dart';
-import 'package:Stryde/utilities/NavigateTo.dart';
-import 'package:Stryde/utilities/UiHelpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:Stryde/components/calendarHelpers/CalendarEvent.dart';
@@ -42,8 +39,8 @@ class WorkoutScheduleScreenState extends State<WorkoutScheduleScreen>
 
     _calendarEventDataSource.addEvent(
       "My Second Workout",
-      startTime.add(Duration(days: 1)),
-      startTime.add(Duration(days: 1, hours: 1)),
+      startTime.add(Duration(days: 2)),
+      startTime.add(Duration(days: 2, hours: 1)),
       backgroundColor: StrydeColors.purple
     );
   }

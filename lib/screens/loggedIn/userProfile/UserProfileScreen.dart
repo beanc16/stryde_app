@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUrls.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButtonWithIcon.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeSuccessToggleableWidget.dart';
+import 'package:Stryde/utilities/UrlService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -18,6 +20,7 @@ import 'package:Stryde/utilities/HttpQueryHelper.dart';
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'package:Stryde/utilities/TextHelpers.dart';
 import 'package:Stryde/utilities/UiHelpers.dart';
+import 'CreditsAcknowledgementsScreen.dart';
 
 
 class UserProfileScreen extends StatelessWidget
@@ -254,6 +257,20 @@ class UserProfileScreen extends StatelessWidget
             iconData: Icons.logout,
           ),
           getDefaultPadding(),
+
+          Container(
+            alignment: Alignment.bottomLeft,
+            child: StrydeButton(
+              displayText: "Credits",
+              textSize: 20,
+              onTap: ()
+              {
+                NavigateTo.screen(
+                  context, () => CreditsAcknowledgementsScreen(),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

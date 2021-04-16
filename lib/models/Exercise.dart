@@ -1,4 +1,6 @@
+import 'dart:core';
 import 'package:Stryde/models/ExerciseInformation.dart';
+import 'package:Stryde/models/databaseActions/DatabaseActionType.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
 import 'package:Stryde/models/ExerciseMuscleType.dart';
@@ -164,7 +166,7 @@ class Exercise
     String? resistance,
   })
   {
-    while(index >= this.information.length)
+    while (index >= this.information.length)
     {
       this.information.add(ExerciseInformation());
     }
@@ -178,6 +180,33 @@ class Exercise
       duration: duration,
       resistance: resistance,
     );
+  }
+
+
+
+  List<dynamic> getUpdatedInformation()
+  {
+    return this.information.map((ExerciseInformation info) =>
+      info.databaseActionType == DatabaseActionType.Update
+    ).toList();
+  }
+
+  List<Map<String, dynamic>> getAsUpdatedJson()
+  {
+    // Used to update database
+    List<Map<String, dynamic>> output = [];
+
+    for (int i = 0; i < this.information.length; i++)
+    {
+      Map<String, dynamic>? curInfo = this.information[i].getAsUpdateJson(i);
+
+      if (curInfo != null)
+      {
+        output.add(curInfo);
+      }
+    }
+
+    return output;
   }
 
 

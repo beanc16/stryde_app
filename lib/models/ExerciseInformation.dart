@@ -1,3 +1,7 @@
+import 'databaseActions/DatabaseAction.dart';
+import 'databaseActions/DatabaseActionType.dart';
+
+
 class ExerciseInformation
 {
   int userExerciseId;
@@ -8,6 +12,8 @@ class ExerciseInformation
   String? duration;
   String? distance;
   String? resistance;
+  //late DatabaseAction databaseAction;
+  late DatabaseActionType databaseActionType;
 
   ExerciseInformation({
     this.userExerciseId = -1,
@@ -18,7 +24,17 @@ class ExerciseInformation
     this.duration,
     this.distance,
     this.resistance,
-  });
+    DatabaseActionType? databaseActionType,
+  })
+  {
+    this.databaseActionType = databaseActionType ?? DatabaseActionType.None;
+    /*
+    this.databaseAction = DatabaseAction(
+      oldInfo: this.duplicate(),
+      actionType: databaseAction ?? DatabaseActionType.None,
+    );
+    */
+  }
 
   ExerciseInformation.copy(ExerciseInformation info) :
     this(
@@ -34,6 +50,27 @@ class ExerciseInformation
 
 
 
+  ExerciseInformation duplicate({
+    int? userExerciseId,
+    String? description,
+    int? sets,
+    int? reps,
+    int? weight,
+    String? duration,
+    String? resistance,
+  })
+  {
+    return ExerciseInformation(
+      userExerciseId: userExerciseId ?? this.userExerciseId,
+      description: description ?? this.description,
+      sets: sets ?? this.sets,
+      reps: reps ?? this.reps,
+      weight: weight ?? this.weight,
+      duration: duration ?? this.duration,
+      resistance: resistance ?? this.resistance,
+    );
+  }
+
   void update({
     int? userExerciseId,
     String? description,
@@ -44,40 +81,90 @@ class ExerciseInformation
     String? resistance,
   })
   {
+    bool wasChanged = false;
+
     if (userExerciseId != null)
     {
       this.userExerciseId = userExerciseId;
+      wasChanged = true;
     }
 
     if (description != null)
     {
       this.description = description;
+      wasChanged = true;
     }
 
     if (sets != null)
     {
       this.sets = sets;
+      wasChanged = true;
     }
 
     if (reps != null)
     {
       this.reps = reps;
+      wasChanged = true;
     }
 
     if (weight != null)
     {
       this.weight = weight;
+      wasChanged = true;
     }
 
     if (duration != null)
     {
       this.duration = duration;
+      wasChanged = true;
     }
 
     if (resistance != null)
     {
       this.resistance = resistance;
+      wasChanged = true;
     }
+
+    if (wasChanged)
+    {
+      /*
+      this.databaseAction.update(
+        newInfo: this,
+      );
+      */
+    }
+  }
+
+  Map<String, dynamic>? getAsUpdateJson(int orderInWorkout)
+  {
+    // This information hasn't been changed
+    //if (!this.databaseAction.hasChanged)
+    if (this.databaseActionType == DatabaseActionType.None)
+    {
+      return null;
+    }
+
+    // Used to update info in database
+    Map<String, dynamic> output = {
+      "userExerciseId": this.userExerciseId,
+      "orderInWorkout": orderInWorkout,
+      "ueiDescription": this.description,
+      "ueiSets": this.sets,
+      "ueiReps": this.reps,
+      "ueiWeight": this.weight,
+      "ueiDuration": this.duration,
+      "ueiResistance": this.resistance,
+    };
+
+    //if (this.databaseAction.actionType == DatabaseActionType.Delete)
+    if (this.databaseActionType == DatabaseActionType.Delete)
+    {
+      output.addAll({
+        "shouldDelete": true,
+      });
+    }
+
+    return output;
   }
 
 

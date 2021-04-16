@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
+import 'package:Stryde/utilities/HttpQueryHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
@@ -51,16 +54,19 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   late final LabeledTextInputElement _descriptionInput;
   late List<dynamic> _listViewElements;
   late bool _hasChanged;
+  late bool _isNewWorkout;
 
 
   CreateViewWorkoutState() :
-    this.workout(Workout.notReorderable("", []));
+    this.workout(Workout.notReorderable("", []), isNewWorkout: true);
 
-  CreateViewWorkoutState.workout(Workout workout)
+  CreateViewWorkoutState.workout(Workout workout, 
+                                 {bool isNewWorkout = false})
   {
     this.workout = workout;
     _listViewElements = workout.getAsWidgets();
     _hasChanged = false;
+    this._isNewWorkout = isNewWorkout;
 
     _titleInput = LabeledTextInputElement(
       labelText: "Title",
@@ -337,8 +343,46 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     }
   }
 
+  void _saveWorkout(BuildContext context)
+  {
+    Map<String, dynamic> postData = workout.getAsJson();
+    
+    String route = "/user";
+    if (!_isNewWorkout)
+    {
+      route += "/update";
+    }
+    else
+    {
+      route += "/create";
+    }
+    route += "/workout";
+
+    print("postData: " + postData.toString());
+    print("route: " + route.toString());
+    
+
+    HttpQueryHelper.post(
+      route,
+      postData,
+      shouldEncodeBody: true,
+      //onBeforeQuery: () => _onBeforeLogin(),
+      onSuccess: (jsonResult)
+      {
+        print("Success: " + jsonResult.toString());
+        //NavigateTo.previousScreen(context);
+      },
+      onFailure: (response)
+      {
+        print("Fail: " + response.toString());
+      },
+    );
+  }
+
   Future<dynamic> _onSave(BuildContext context)
   {
+    _saveWorkout(context);
+
     return showDialog(
       context: context,
       barrierDismissible: false,

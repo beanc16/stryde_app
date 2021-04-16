@@ -59,7 +59,8 @@ class HttpQueryHelper
   static Future<void> post(String route, body,
 													 {Function()? onBeforeQuery,
 														Function(dynamic)? onSuccess,
-														Function(dynamic)? onFailure,})
+														Function(dynamic)? onFailure,
+													  bool shouldEncodeBody = false})
   async
 	{
     try
@@ -71,6 +72,12 @@ class HttpQueryHelper
 			if (onBeforeQuery != null)
 			{
 				onBeforeQuery();
+			}
+
+			// Encode the body if the json data has data other than strings
+			if (shouldEncodeBody)
+			{
+				body = jsonEncode(body);
 			}
 
 			http.post(httpUri, body: body)

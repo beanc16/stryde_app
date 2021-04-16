@@ -105,8 +105,7 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
     _loadingErrorMsg.hideLoadingIcon();
     _loadingErrorMsg.showChild();
 
-    //print("_onGetWorkoutsFail:\n" + results.toString());
-    print(results);
+    print("_onGetWorkoutsFail:\n" + results.toString());
   }
 
 
