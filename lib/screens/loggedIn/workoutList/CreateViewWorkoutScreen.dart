@@ -5,6 +5,7 @@ import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElem
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:Stryde/utilities/HttpQueryHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +25,10 @@ import 'AllExerciseListScreen.dart';
 class CreateViewWorkoutScreen extends StatefulWidget
 {
   Workout? workout;
+  List<Workout> workoutList;
 
-  CreateViewWorkoutScreen();
-  CreateViewWorkoutScreen.workout(this.workout);
+  CreateViewWorkoutScreen(this.workoutList);
+  CreateViewWorkoutScreen.workout(this.workout, this.workoutList);
 
 
 
@@ -35,12 +37,12 @@ class CreateViewWorkoutScreen extends StatefulWidget
   {
     if (this.workout != null)
     {
-      return CreateViewWorkoutState.workout(this.workout!);
+      return CreateViewWorkoutState.workout(this.workout!, this.workoutList);
     }
 
     else
     {
-      return CreateViewWorkoutState();
+      return CreateViewWorkoutState(this.workoutList);
     }
   }
 }
@@ -50,6 +52,7 @@ class CreateViewWorkoutScreen extends StatefulWidget
 class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 {
   late Workout workout;
+  List<Workout> workoutList;
   late final LabeledTextInputElement _titleInput;
   late final LabeledTextInputElement _descriptionInput;
   late List<dynamic> _listViewElements;
@@ -57,13 +60,12 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   late bool _isNewWorkout;
 
 
-  CreateViewWorkoutState() :
-    this.workout(Workout.notReorderable("", []), isNewWorkout: true);
+  CreateViewWorkoutState(List<Workout> workoutList) :
+    this.workout(Workout.notReorderable("", []), workoutList, isNewWorkout: true);
 
-  CreateViewWorkoutState.workout(Workout workout, 
+  CreateViewWorkoutState.workout(this.workout, this.workoutList,
                                  {bool isNewWorkout = false})
   {
-    this.workout = workout;
     _listViewElements = workout.getAsWidgets();
     _hasChanged = false;
     this._isNewWorkout = isNewWorkout;
@@ -357,20 +359,20 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       route += "/create";
     }
     route += "/workout";
-
-    print("postData: " + postData.toString());
-    print("route: " + route.toString());
     
 
     HttpQueryHelper.post(
       route,
       postData,
       shouldEncodeBody: true,
-      //onBeforeQuery: () => _onBeforeLogin(),
       onSuccess: (jsonResult)
       {
-        print("Success: " + jsonResult.toString());
-        //NavigateTo.previousScreen(context);
+        int index = workoutList.indexWhere((w) =>
+                                    w.workoutId == workout.workoutId);
+        workoutList[index] = workout;
+        StrydeUserStorage.workouts = workoutList;
+
+        NavigateTo.previousScreens(context, 2);
       },
       onFailure: (response)
       {
@@ -389,7 +391,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       builder: (BuildContext context)
       {
         return Dialog(
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

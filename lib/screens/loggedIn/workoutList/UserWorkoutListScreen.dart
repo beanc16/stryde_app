@@ -75,16 +75,6 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
         onQuerySuccess: _onGetWorkoutsSuccess,
         onQueryFailureCallback: _onGetWorkoutsFail
       );
-
-      /*
-      // Get all workouts created by the current user
-      String? id = StrydeUserStorage.userExperience?.id.toString();
-      HttpQueryHelper.get(
-        "/user/workouts/" + (id ?? ""),
-        onSuccess: (response) => _onGetWorkoutsSuccess(response["_results"]),
-        onFailure: (response) => _onGetWorkoutsFail(response)
-      );
-     */
     }
   }
 
@@ -170,9 +160,18 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
         )
       ),
 
-      onTap: ()
+      onTap: () async
       {
-        NavigateTo.screen(context, () => CreateViewWorkoutScreen.workout(curWorkout));
+        // Screen doesn't return data, this is just done to await
+        await NavigateTo.screenReturnsData(
+          context, () => CreateViewWorkoutScreen.workout(curWorkout, _workouts),
+        );
+
+        // Update screen (storage is updated after saving
+        setState(()
+        {
+          _workouts = StrydeUserStorage.workouts!;
+        });
       },
     );
   }
@@ -187,7 +186,13 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
           textSize: 20,
           onTap: ()
           {
-            NavigateTo.screen(context, () => CreateViewWorkoutScreen());
+            NavigateTo.screen(
+              context, () => CreateViewWorkoutScreen(_workouts),
+            );
+
+            // Add workout to storage
+            //_workouts.add(newWorkout!);
+            //StrydeUserStorage.workouts = _workouts;
           },
         ),
       ],

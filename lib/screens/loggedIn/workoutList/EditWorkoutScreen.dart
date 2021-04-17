@@ -125,7 +125,12 @@ class EditWorkoutState extends State<EditWorkoutScreen>
       }
     }
 
-    return Workout(workout.name, models);
+    return Workout(
+      workout.name, models,
+      workoutId: workout.workoutId,
+      userId: workout.userId,
+      description: workout.description,
+    );
   }
 
   List<Object> getListViewAsExercisesAndSupersets()
@@ -368,7 +373,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     return WillPopScope(
       onWillPop: () => _onBackButtonPressed(context),
       child: Scaffold(
-        appBar: StrydeAppBar(titleStr: "Add Exercise", context: context),
+        appBar: StrydeAppBar(titleStr: "Edit Workout Order", context: context),
         body: ReorderableListView(
           children: listViewWidgets,
           scrollDirection: Axis.vertical,

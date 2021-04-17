@@ -109,6 +109,30 @@ class NavigateTo
              .then( (value) => callback() );
   }
 
+  static void previousScreens(BuildContext context,
+                              int numOfScreensToPop)
+  {
+    for (int i = 0; i < numOfScreensToPop; i++)
+    {
+      NavigateTo.previousScreen(context);
+    }
+  }
+
+  static void previousScreensWithData(BuildContext context,
+                                      int numOfScreensToPop,
+                                      dynamic data)
+  {
+    if (numOfScreensToPop >= 1)
+    {
+      for (int i = 1; i < numOfScreensToPop; i++)
+      {
+        NavigateTo.previousScreen(context);
+      }
+
+      NavigateTo.previousScreenWithData(context, data);
+    }
+  }
+
 
 
   // Pop the given number of screens, then go to the given route
