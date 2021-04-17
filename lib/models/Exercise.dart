@@ -23,6 +23,9 @@ class Exercise
   List<MuscleGroup>? muscleGroups;
   late ExerciseListViewCard exerciseListViewCard;
   late List<ExerciseInformation> information;
+  bool? _shouldCreate;
+
+  bool get shouldCreate => _shouldCreate ?? false;
 
   Exercise(this.name, this.description, 
            Function() onDeleteListViewCard,
@@ -70,12 +73,7 @@ class Exercise
                  String exerciseWeightType, String exerciseMuscleType,
                  String exerciseMovementType,
                  this.muscleGroups, {Function(BuildContext, dynamic)? onTap,
-                   /*
-                   int? userExerciseId, String? ueiDescription,
-                   int? sets, int? reps, int? weight, String? duration,
-                   String? distance, String? resistance,
-                   */
-                 })
+                                     bool shouldCreate = false})
   {
     this.exerciseWeightType = ExerciseWeightType(exerciseWeightType);
     this.exerciseMuscleType = ExerciseMuscleType(exerciseMuscleType);
@@ -127,7 +125,20 @@ class Exercise
       onTap: onTap,
     );
     this.information = exercise.information;
+    this._shouldCreate = exercise.shouldCreate;
   }
+
+  Exercise.shouldCreate(int? id, String name, String? description,
+    String exerciseWeightType, String exerciseMuscleType,
+    String exerciseMovementType,
+    List<MuscleGroup>? muscleGroups, {Function(BuildContext, dynamic)? onTap,
+  }) : this.model(id, name, description,
+                  exerciseWeightType, exerciseMuscleType,
+                  exerciseMovementType,
+                  muscleGroups, onTap: onTap,
+                  shouldCreate: true);
+
+
 
   void _onTapDefault(BuildContext context, dynamic data)
   {
@@ -191,17 +202,32 @@ class Exercise
     ).toList();
   }
 
-  List<Map<String, dynamic>> getAsUpdatedJson()
+  List<Map<String, dynamic>> getAsUpdatedJson(int orderInWorkout)
   {
     // Used to update database
     List<Map<String, dynamic>> output = [];
 
+    if (this.information.length == 0)
+    {
+      output.add({
+        "exerciseId": this.id,
+        "orderInWorkout": orderInWorkout,
+      });
+    }
+
     for (int i = 0; i < this.information.length; i++)
     {
-      Map<String, dynamic>? curInfo = this.information[i].getAsUpdateJson(i);
+      Map<String, dynamic>? curInfo = this.information[i].getAsUpdateJson(orderInWorkout);
 
       if (curInfo != null)
       {
+        if (shouldCreate &&
+            (curInfo["shouldCreate"] == null ||
+             curInfo["shouldCreate"] == false))
+        {
+          curInfo["shouldCreate"] = true;
+        }
+
         output.add(curInfo);
       }
     }

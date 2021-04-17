@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
@@ -10,18 +12,17 @@ class Workout
 {
   late final int workoutId;
   late final int userId;
-  late final String name;
-  late String description;
+  String name;
+  String description;
   late final List<Object> exercisesAndSupersets;
   late bool isReorderable = true;
 
   Workout(this.name, this.exercisesAndSupersets,
           {int workoutId = -1,
            int userId = -1,
-           String description = ""})
+           this.description = ""})
   {
     this.workoutId = workoutId;
-    this.description = description;
 
     if (userId == -1)
     {
@@ -35,7 +36,7 @@ class Workout
 
   Workout.notReorderable(this.name, this.exercisesAndSupersets,
                          {int workoutId = -1, int userId = -1,
-                          String description = ""})
+                          this.description = ""})
   {
     this.isReorderable = false;
     this.workoutId = workoutId;
@@ -229,13 +230,14 @@ class Workout
      */
   }
 
-  Map<String, dynamic> getAsJson()
+  Map<String, String> getAsJson()
   {
     // Used to update database
-    Map<String, dynamic> output = {
-      "workoutId": this.workoutId,
-      "workoutName": this.name,
-      "workoutDescription": this.description,
+    Map<String, String> output = {
+      "userId": StrydeUserStorage.userExperience?.id.toString() ?? "",
+      "workoutId": this.workoutId.toString(),
+      "workoutName": this.name.toString(),
+      "workoutDescription": this.description.toString(),
     };
 
     List<Map<String, dynamic>> exerciseInfoToUpdate = [];
@@ -246,7 +248,7 @@ class Workout
       if (curExerciseOrSuperset is Exercise)
       {
         List<Map<String, dynamic>> curExerciseInfo =
-          curExerciseOrSuperset.getAsUpdatedJson();
+                    curExerciseOrSuperset.getAsUpdatedJson(i + 1);
 
         if (curExerciseInfo.isNotEmpty)
         {
@@ -256,7 +258,7 @@ class Workout
     }
 
     output.addAll({
-      "userExerciseInfoAndOrderArray": exerciseInfoToUpdate,
+      "userExerciseInfoAndOrderArray": jsonEncode(exerciseInfoToUpdate),
     });
     return output;
   }

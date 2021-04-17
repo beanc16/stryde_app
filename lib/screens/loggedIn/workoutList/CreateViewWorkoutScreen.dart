@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
@@ -312,13 +311,16 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       context, () => EditWorkoutScreen(workout)
     );
 
-    if (workout.exercisesAndSupersets != newWorkout.exercisesAndSupersets)
+    if (workout != newWorkout)
     {
-      _hasChanged = true;
-    }
+      if (workout.exercisesAndSupersets != newWorkout.exercisesAndSupersets)
+      {
+        _hasChanged = true;
+      }
 
-    workout = newWorkout;
-    _updateListView();
+      workout = newWorkout;
+      _updateListView();
+    }
   }
 
   void _updateListView()
@@ -345,9 +347,16 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     }
   }
 
+  void _updateWorkoutNameAndDesc()
+  {
+    workout.name = _titleInput.inputText;
+    workout.description = _descriptionInput.inputText;
+  }
+
   void _saveWorkout(BuildContext context)
   {
-    Map<String, dynamic> postData = workout.getAsJson();
+    _updateWorkoutNameAndDesc();
+    Map<String, String> postData = workout.getAsJson();
     
     String route = "/user";
     if (!_isNewWorkout)
@@ -359,19 +368,30 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       route += "/create";
     }
     route += "/workout";
-    
+
+    print("postData: " + postData.toString());
 
     HttpQueryHelper.post(
       route,
       postData,
-      shouldEncodeBody: true,
       onSuccess: (jsonResult)
       {
-        int index = workoutList.indexWhere((w) =>
-                                    w.workoutId == workout.workoutId);
-        workoutList[index] = workout;
-        StrydeUserStorage.workouts = workoutList;
+        print("jsonResult: " + jsonResult.toString());
 
+        // Updated existing workout
+        if (!_isNewWorkout)
+        {
+          int index = workoutList.indexWhere((w) =>
+                                    w.workoutId == workout.workoutId);
+          workoutList[index] = workout;
+        }
+        // Created new workout
+        else
+        {
+          workoutList.add(workout);
+        }
+
+        StrydeUserStorage.workouts = workoutList;
         NavigateTo.previousScreens(context, 2);
       },
       onFailure: (response)

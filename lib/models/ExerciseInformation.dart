@@ -25,9 +25,15 @@ class ExerciseInformation
     this.distance,
     this.resistance,
     DatabaseActionType? databaseActionType,
+    bool shouldCreate = false,
   })
   {
     this.databaseActionType = databaseActionType ?? DatabaseActionType.None;
+
+    if (shouldCreate)
+    {
+      this.databaseActionType = DatabaseActionType.Insert;
+    }
     /*
     this.databaseAction = DatabaseAction(
       oldInfo: this.duplicate(),
@@ -46,6 +52,7 @@ class ExerciseInformation
       duration: info.duration,
       distance: info.distance,
       resistance: info.resistance,
+      shouldCreate: (info.databaseActionType == DatabaseActionType.Insert) ? true : false
     );
 
 
@@ -58,6 +65,7 @@ class ExerciseInformation
     int? weight,
     String? duration,
     String? resistance,
+    bool? shouldCreate
   })
   {
     return ExerciseInformation(
@@ -68,8 +76,12 @@ class ExerciseInformation
       weight: weight ?? this.weight,
       duration: duration ?? this.duration,
       resistance: resistance ?? this.resistance,
+      shouldCreate: shouldCreate ??
+                    (this.databaseActionType == DatabaseActionType.Insert) ? true : false
     );
   }
+
+
 
   void update({
     int? userExerciseId,
@@ -79,6 +91,7 @@ class ExerciseInformation
     int? weight,
     String? duration,
     String? resistance,
+    bool shouldCreate = false
   })
   {
     bool wasChanged = false;
@@ -127,11 +140,17 @@ class ExerciseInformation
 
     if (wasChanged)
     {
+      this.databaseActionType = DatabaseActionType.Update;
       /*
       this.databaseAction.update(
         newInfo: this,
       );
       */
+    }
+
+    if (shouldCreate)
+    {
+      this.databaseActionType = DatabaseActionType.Insert;
     }
   }
 
@@ -161,6 +180,12 @@ class ExerciseInformation
     {
       output.addAll({
         "shouldDelete": true,
+      });
+    }
+    else if (this.databaseActionType == DatabaseActionType.Insert)
+    {
+      output.addAll({
+        "shouldCreate": true,
       });
     }
 

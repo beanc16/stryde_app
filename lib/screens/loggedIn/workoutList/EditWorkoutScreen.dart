@@ -125,7 +125,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
       }
     }
 
-    return Workout(
+    return Workout.notReorderable(
       workout.name, models,
       workoutId: workout.workoutId,
       userId: workout.userId,
