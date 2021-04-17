@@ -1,13 +1,24 @@
 import 'package:Stryde/components/toggleableWidget/EmptyWidget.dart';
+import 'package:Stryde/models/ExerciseMovementType.dart';
+import 'package:Stryde/models/ExerciseMuscleType.dart';
+import 'package:Stryde/models/ExerciseWeightType.dart';
+import 'package:Stryde/models/MuscleGroup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 
 class ListViewCard extends StatefulWidget
 {
-  late final Key key;
+  late final int? exerciseOrSupersetId;
   late final String title;
   late final String? description;
+  late final ExerciseWeightType? exerciseWeightType;
+  late final ExerciseMuscleType? exerciseMuscleType;
+  late final ExerciseMovementType? exerciseMovementType;
+  late final List<MuscleGroup>? muscleGroups;
+  late final bool shouldCreate;
+
+  late final Key key;
   late bool shouldLeftIndent;
   late bool isReorderable = true;
   late Function()? onDeleteListViewCard;
@@ -15,11 +26,16 @@ class ListViewCard extends StatefulWidget
   late ListViewCardState state;
   late dynamic data;
 
-  ListViewCard(this.title, this.description, this.key,
+  ListViewCard(this.exerciseOrSupersetId, this.title, this.description, this.key,
                this.shouldLeftIndent, this.onDeleteListViewCard,
                {
                  Function(BuildContext, dynamic)? onTap,
-                 dynamic data
+                 dynamic data,
+                 required this.exerciseWeightType,
+                 required this.exerciseMuscleType,
+                 required this.exerciseMovementType,
+                 required this.muscleGroups,
+                 required this.shouldCreate,
                })
   {
     this.data = data;
@@ -37,11 +53,17 @@ class ListViewCard extends StatefulWidget
     }
   }
 
-  ListViewCard.notReorderable(this.title, this.description, this.key, 
+  ListViewCard.notReorderable(this.exerciseOrSupersetId, this.title,
+                              this.description, this.key,
                               this.shouldLeftIndent,
                               {
                                 Function(BuildContext, dynamic)? onTap,
-                                dynamic data
+                                dynamic data,
+                                required this.exerciseWeightType,
+                                required this.exerciseMuscleType,
+                                required this.exerciseMovementType,
+                                required this.muscleGroups,
+                                required this.shouldCreate,
                               })
   {
     this.isReorderable = false;

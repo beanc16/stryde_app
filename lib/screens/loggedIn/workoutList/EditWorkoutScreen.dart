@@ -7,6 +7,9 @@ import 'package:Stryde/models/Exercise.dart';
 import 'package:Stryde/models/Superset.dart';
 import 'package:Stryde/models/Workout.dart';
 import 'package:Stryde/utilities/NavigateTo.dart';
+import 'package:Stryde/models/enums/ExerciseWeightTypeEnum.dart';
+import 'package:Stryde/models/enums/ExerciseMuscleTypeEnum.dart';
+import 'package:Stryde/models/enums/ExerciseMovementTypeEnum.dart';
 
 
 class EditWorkoutScreen extends StatefulWidget
@@ -39,7 +42,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     super.initState();
 
     listViewWidgets = workout.getAsWidgets();
-    print(listViewWidgets.toString());
 
     int index = 0;
     for (Widget widget in listViewWidgets)
@@ -67,8 +69,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
         index++;
       }
     }
-
-    print(listViewWidgets.toString());
   }
 
 
@@ -115,10 +115,16 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
         else if (widget is ListViewCard)
         {
-          Exercise exercise = Exercise(
+          Exercise exercise = Exercise.model(
+            widget.exerciseOrSupersetId,
             widget.title,
             widget.description,
-            () => deleteFromListView(widget)
+            widget.exerciseWeightType?.value.toStringShort() ?? "",
+            widget.exerciseMuscleType?.value.toStringShort() ?? "",
+            widget.exerciseMovementType?.value.toStringShort() ?? "",
+            widget.muscleGroups,
+            onTap: (BuildContext context, dynamic val) => deleteFromListView(widget),
+            shouldCreate: widget.shouldCreate
           );
           models.add(exercise);
         }

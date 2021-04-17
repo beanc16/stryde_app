@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
@@ -80,6 +79,11 @@ class Workout
   {
     if (obj is Exercise || obj is Superset)
     {
+      if (index >= this.exercisesAndSupersets.length)
+      {
+        index = this.exercisesAndSupersets.length;
+      }
+
       this.exercisesAndSupersets.insert(index, obj);
     }
 
@@ -198,12 +202,9 @@ class Workout
   {
     List<Widget> exercisesAndSupersetsListViewCardsAndHeaders =
       this.getAsWidgets();
-    print("exercisesAndSupersetsListViewCardsAndHeaders: " +
-              exercisesAndSupersetsListViewCardsAndHeaders.toString());
 
     if (exercisesAndSupersetsListViewCardsAndHeaders.length == 0)
     {
-      print("length is 0");
       return ListView(
         key: Key(this.name),
         children: [],

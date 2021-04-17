@@ -121,7 +121,7 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
         {
           return Padding(
             padding: EdgeInsets.only(bottom: 15),
-            );
+          );
         },
 
         itemCount: _workouts.length,

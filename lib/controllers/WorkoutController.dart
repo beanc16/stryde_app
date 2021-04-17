@@ -28,8 +28,6 @@ class WorkoutController
   static void _onGetWorkoutsSuccess(Map<String, dynamic> workoutsJson,
                                     Function(List<Workout>) onSuccessCallback)
   {
-    print("workoutsJson:\n" + workoutsJson.toString());
-
     // Convert workouts to model
     List<Workout> workouts = _convertWorkoutResults(
       workoutsJson["nonEmptyWorkoutResults"]["_results"],
@@ -51,7 +49,7 @@ class WorkoutController
 
   static List<Workout> _convertNonEmptyWorkouts(List<dynamic> nonEmptyWorkouts)
   {
-    print("nonEmptyWorkouts: " + nonEmptyWorkouts.toString());
+    //print("nonEmptyWorkouts: " + nonEmptyWorkouts.toString());
 
     // Helper variables
     NonEmptyWorkoutMap map = NonEmptyWorkoutMap();
@@ -83,7 +81,9 @@ class WorkoutController
         newExercise = wcHelpers.tryUpdateExerciseInfo(curInfo, newExercise,
                                                       curExercise);
 
-        if (curWorkout == null && newWorkout != null)
+        if ((curWorkout == null && newWorkout != null) ||
+            (curWorkout != null && newWorkout != null &&
+             curWorkout.workoutId != newWorkout.workoutId))
         {
           curWorkout = newWorkout.duplicate();
         }
@@ -231,7 +231,10 @@ extension wcHelpers on WorkoutController
     Exercise? newExercise;
 
     if (curExercise == null ||
-        curExercise.id != curInfo["exerciseId"])
+        curExercise.id != curInfo["exerciseId"] ||
+        curExercise.information.indexWhere( // No info with the same userExerciseId
+          (exInfo) => exInfo.userExerciseId == curInfo["userExerciseId"]
+        ) == -1)
     {
       // Create exercise w/ exercise information
       newExercise = wcHelpers.getNewExercise(curInfo);

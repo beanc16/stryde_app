@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:Stryde/models/ExerciseInformation.dart';
 import 'package:Stryde/models/databaseActions/DatabaseActionType.dart';
+import 'package:Stryde/models/enums/ExerciseWeightTypeEnum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
 import 'package:Stryde/models/ExerciseMuscleType.dart';
@@ -9,6 +10,8 @@ import 'package:Stryde/screens/loggedIn/workoutList/EditExerciseInformationScree
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'ExerciseMovementType.dart';
 import 'ExerciseWeightType.dart';
+import 'enums/ExerciseMovementTypeEnum.dart';
+import 'enums/ExerciseMuscleTypeEnum.dart';
 
 
 
@@ -37,12 +40,19 @@ class Exercise
     }
 
     this.exerciseListViewCard = ExerciseListViewCard(
+      this.id!,
       this.name,
       this.description,
       UniqueKey(),
       false,
       onDeleteListViewCard,
       onTap: onTap,
+      exerciseWeightType: this.exerciseWeightType,
+      exerciseMuscleType: this.exerciseMuscleType,
+      exerciseMovementType: this.exerciseMovementType,
+      muscleGroups: this.muscleGroups,
+      shouldCreate: this.shouldCreate,
+      exercise: this,
     );
 
     this.information = [];
@@ -58,11 +68,18 @@ class Exercise
     }
 
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
+      this.id!,
       this.name,
       this.description,
       UniqueKey(),
       false,
       onTap: onTap,
+      exerciseWeightType: this.exerciseWeightType,
+      exerciseMuscleType: this.exerciseMuscleType,
+      exerciseMovementType: this.exerciseMovementType,
+      muscleGroups: this.muscleGroups,
+      shouldCreate: this.shouldCreate,
+      exercise: this,
     );
 
     this.information = [];
@@ -85,11 +102,18 @@ class Exercise
     }
 
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
+      this.id!,
       this.name,
       this.description,
       UniqueKey(),
       false,
       onTap: onTap,
+      exerciseWeightType: this.exerciseWeightType,
+      exerciseMuscleType: this.exerciseMuscleType,
+      exerciseMovementType: this.exerciseMovementType,
+      muscleGroups: this.muscleGroups,
+      shouldCreate: this.shouldCreate,
+      exercise: this,
     );
 
     this.information = [];
@@ -118,11 +142,18 @@ class Exercise
     this.exerciseMovementType = exercise.exerciseMovementType;
     this.muscleGroups = exercise.muscleGroups;
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
+      this.id!,
       this.name,
       this.description,
       UniqueKey(),
       false,
       onTap: onTap,
+      exerciseWeightType: exercise.exerciseWeightType,
+      exerciseMuscleType: exercise.exerciseMuscleType,
+      exerciseMovementType: exercise.exerciseMovementType,
+      muscleGroups: exercise.muscleGroups,
+      shouldCreate: exercise.shouldCreate,
+      exercise: exercise,
     );
     this.information = exercise.information;
     this._shouldCreate = exercise.shouldCreate;
@@ -294,35 +325,67 @@ class Exercise
 
 class ExerciseListViewCard extends ListViewCard
 {
-  ExerciseListViewCard(String title, String? description, Key key,
+  ExerciseListViewCard(int exerciseId, String title,
+                       String? description, Key key,
                        bool shouldLeftIndent,
                        Function() onDeleteListViewCard,
                        {
                          Function(BuildContext, dynamic)? onTap,
-                         Exercise? exercise
+                         Exercise? exercise,
+                         required ExerciseWeightType? exerciseWeightType,
+                         required ExerciseMuscleType? exerciseMuscleType,
+                         required ExerciseMovementType? exerciseMovementType,
+                         required List<MuscleGroup>? muscleGroups,
+                         required bool shouldCreate,
                        }) :
-        super(title, description, key, shouldLeftIndent,
-              onDeleteListViewCard, onTap: onTap, data: exercise);
+        super(exerciseId, title, description, key, shouldLeftIndent,
+              onDeleteListViewCard, onTap: onTap, data: exercise,
+              exerciseWeightType: exerciseWeightType,
+              exerciseMuscleType: exerciseMuscleType,
+              exerciseMovementType: exerciseMovementType,
+              muscleGroups: muscleGroups,
+              shouldCreate: shouldCreate, );
 
   ExerciseListViewCard.exercise(Exercise exercise, Key key,
                                 bool shouldLeftIndent,
                                 Function() onDeleteListViewCard,
                                 {
                                   Function(BuildContext, dynamic)? onTap,
+                                  required ExerciseWeightType? exerciseWeightType,
+                                  required ExerciseMuscleType? exerciseMuscleType,
+                                  required ExerciseMovementType? exerciseMovementType,
+                                  required List<MuscleGroup>? muscleGroups,
+                                  required bool shouldCreate,
                                 }) :
-        super(exercise.name, exercise.description, key,
+        super(exercise.id, exercise.name, exercise.description, key,
               shouldLeftIndent, onDeleteListViewCard, onTap: onTap,
-              data: exercise);
+              data: exercise,
+              exerciseWeightType: exerciseWeightType,
+              exerciseMuscleType: exerciseMuscleType,
+              exerciseMovementType: exerciseMovementType,
+              muscleGroups: muscleGroups,
+              shouldCreate: shouldCreate, );
 
-  ExerciseListViewCard.notReorderable(String title, String? description,
+  ExerciseListViewCard.notReorderable(int exerciseId, String title,
+                                      String? description,
                                       Key key, bool shouldLeftIndent,
                                       {
                                         Function(BuildContext, dynamic)? onTap,
-                                        Exercise? exercise
+                                        Exercise? exercise,
+                                        required ExerciseWeightType? exerciseWeightType,
+                                        required ExerciseMuscleType? exerciseMuscleType,
+                                        required ExerciseMovementType? exerciseMovementType,
+                                        required List<MuscleGroup>? muscleGroups,
+                                        required bool shouldCreate,
                                       }) :
-        super.notReorderable(title, description, key,
+        super.notReorderable(exerciseId, title, description, key,
                              shouldLeftIndent, onTap: onTap,
-                             data: exercise);
+                             data: exercise,
+                             exerciseWeightType: exerciseWeightType,
+                             exerciseMuscleType: exerciseMuscleType,
+                             exerciseMovementType: exerciseMovementType,
+                             muscleGroups: muscleGroups,
+                             shouldCreate: shouldCreate, );
 
 
 
