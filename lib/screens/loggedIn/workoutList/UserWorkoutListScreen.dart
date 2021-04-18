@@ -184,11 +184,17 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
         StrydeButton(
           displayText: "Add",
           textSize: 20,
-          onTap: ()
+          onTap: () async
           {
-            NavigateTo.screen(
+            await NavigateTo.screenReturnsData(
               context, () => CreateViewWorkoutScreen(_workouts),
             );
+
+            // Update screen (storage is updated after saving
+            setState(()
+            {
+              _workouts = StrydeUserStorage.workouts!;
+            });
 
             // Add workout to storage
             //_workouts.add(newWorkout!);

@@ -65,6 +65,8 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   CreateViewWorkoutState.workout(this.workout, this.workoutList,
                                  {bool isNewWorkout = false})
   {
+    print("workout.exercisesAndSupersets (constructor): " +
+              workout.exercisesAndSupersets.toString());
     _listViewElements = workout.getAsWidgets();
     _hasChanged = false;
     this._isNewWorkout = isNewWorkout;
@@ -356,6 +358,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   void _saveWorkout(BuildContext context)
   {
     _updateWorkoutNameAndDesc();
+    print("workout.exercisesAndSupersets: " + workout.exercisesAndSupersets.toString());
     Map<String, String> postData = workout.getAsJson();
     
     String route = "/user";
@@ -370,6 +373,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     route += "/workout";
 
     print("postData: " + postData.toString());
+    print("workout.exercisesAndSupersets: " + workout.exercisesAndSupersets.toString());
 
     HttpQueryHelper.post(
       route,

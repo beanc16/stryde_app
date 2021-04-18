@@ -167,25 +167,55 @@ class ExerciseInformation
     Map<String, dynamic> output = {
       "userExerciseId": this.userExerciseId,
       "orderInWorkout": orderInWorkout,
-      "ueiDescription": this.description,
-      "ueiSets": this.sets,
-      "ueiReps": this.reps,
-      "ueiWeight": this.weight,
-      "ueiDuration": this.duration,
-      "ueiResistance": this.resistance,
     };
 
-    //if (this.databaseAction.actionType == DatabaseActionType.Delete)
+    // Add each value only if it's not null
+    if (this.description != null)
+    {
+      output["ueiDescription"] = this.description;
+    }
+    if (this.sets != null)
+    {
+      output["ueiSets"] = this.sets;
+    }
+    if (this.reps != null)
+    {
+      output["ueiReps"] = this.reps;
+    }
+    if (this.weight != null)
+    {
+      output["ueiWeight"] = this.weight;
+    }
+    if (this.duration != null)
+    {
+      output["ueiDuration"] = this.duration;
+    }
+    if (this.resistance != null)
+    {
+      output["ueiResistance"] = this.resistance;
+    }
+
+
     if (this.databaseActionType == DatabaseActionType.Delete)
     {
       output.addAll({
         "shouldDelete": true,
+        "shouldCreate": false,
       });
     }
     else if (this.databaseActionType == DatabaseActionType.Insert)
     {
       output.addAll({
         "shouldCreate": true,
+        "shouldDelete": false,
+      });
+    }
+    else if (this.databaseActionType == DatabaseActionType.Update &&
+             this.databaseActionType == DatabaseActionType.None)
+    {
+      output.addAll({
+        "shouldCreate": false,
+        "shouldDelete": false,
       });
     }
 

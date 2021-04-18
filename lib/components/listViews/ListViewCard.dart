@@ -1,4 +1,5 @@
 import 'package:Stryde/components/toggleableWidget/EmptyWidget.dart';
+import 'package:Stryde/models/ExerciseInformation.dart';
 import 'package:Stryde/models/ExerciseMovementType.dart';
 import 'package:Stryde/models/ExerciseMuscleType.dart';
 import 'package:Stryde/models/ExerciseWeightType.dart';
@@ -17,6 +18,7 @@ class ListViewCard extends StatefulWidget
   late final ExerciseMovementType? exerciseMovementType;
   late final List<MuscleGroup>? muscleGroups;
   late final bool shouldCreate;
+  late final List<ExerciseInformation> information;
 
   late final Key key;
   late bool shouldLeftIndent;
@@ -36,6 +38,7 @@ class ListViewCard extends StatefulWidget
                  required this.exerciseMovementType,
                  required this.muscleGroups,
                  required this.shouldCreate,
+                 required this.information,
                })
   {
     this.data = data;
@@ -64,6 +67,7 @@ class ListViewCard extends StatefulWidget
                                 required this.exerciseMovementType,
                                 required this.muscleGroups,
                                 required this.shouldCreate,
+                                required this.information,
                               })
   {
     this.isReorderable = false;

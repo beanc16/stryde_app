@@ -124,7 +124,8 @@ class EditWorkoutState extends State<EditWorkoutScreen>
             widget.exerciseMovementType?.value.toStringShort() ?? "",
             widget.muscleGroups,
             onTap: (BuildContext context, dynamic val) => deleteFromListView(widget),
-            shouldCreate: widget.shouldCreate
+            shouldCreate: widget.shouldCreate,
+            information: widget.information
           );
           models.add(exercise);
         }
