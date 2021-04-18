@@ -210,8 +210,7 @@ class ExerciseInformation
         "shouldDelete": false,
       });
     }
-    else if (this.databaseActionType == DatabaseActionType.Update &&
-             this.databaseActionType == DatabaseActionType.None)
+    else if (this.databaseActionType == DatabaseActionType.Update)
     {
       output.addAll({
         "shouldCreate": false,

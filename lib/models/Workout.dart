@@ -141,6 +141,11 @@ class Workout
 
       if (exerciseOrSuperset is Exercise)
       {
+        if (exerciseOrSuperset.wasDeleted)
+        {
+          continue;
+        }
+
         if (inSuperset)
         {
           inSuperset = false;

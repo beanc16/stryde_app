@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:Stryde/models/ExerciseInformation.dart';
 import 'package:Stryde/models/databaseActions/DatabaseActionType.dart';
 import 'package:Stryde/models/enums/ExerciseWeightTypeEnum.dart';
@@ -27,6 +28,7 @@ class Exercise
   late ExerciseListViewCard exerciseListViewCard;
   late List<ExerciseInformation> information;
   bool? _shouldCreate;
+  bool wasDeleted = false;
 
   bool get shouldCreate => _shouldCreate ?? false;
 
@@ -98,6 +100,7 @@ class Exercise
     this.exerciseWeightType = ExerciseWeightType(exerciseWeightType);
     this.exerciseMuscleType = ExerciseMuscleType(exerciseMuscleType);
     this.exerciseMovementType = ExerciseMovementType(exerciseMovementType);
+    this._shouldCreate = shouldCreate;
 
     if (onTap == null)
     {
@@ -140,6 +143,8 @@ class Exercise
     this.exerciseMuscleType = exercise.exerciseMuscleType;
     this.exerciseMovementType = exercise.exerciseMovementType;
     this.muscleGroups = exercise.muscleGroups;
+    this.information = exercise.information;
+    this._shouldCreate = exercise.shouldCreate;
     this.exerciseListViewCard = ExerciseListViewCard.notReorderable(
       this.id!,
       this.name,
@@ -155,8 +160,6 @@ class Exercise
       information: exercise.information,
       exercise: exercise,
     );
-    this.information = exercise.information;
-    this._shouldCreate = exercise.shouldCreate;
   }
 
 
@@ -230,28 +233,56 @@ class Exercise
 
     if (this.information.length == 0)
     {
-      output.add({
+      Map<String, dynamic> info = {
         "exerciseId": this.id,
         "orderInWorkout": orderInWorkout,
-        //"userExerciseId": null,
-      });
+        "userId": StrydeUserStorage.userExperience?.id ?? -1,
+      };
+
+      if (shouldCreate)
+      {
+        info["shouldCreate"] = true;
+      }
+      else
+      {
+        info["shouldCreate"] = false;
+      }
+
+      if (wasDeleted)
+      {
+        info["shouldDelete"] = true;
+      }
+      else
+      {
+        info["shouldDelete"] = false;
+      }
+
+      output.add(info);
     }
 
     for (int i = 0; i < this.information.length; i++)
     {
       Map<String, dynamic>? curInfo = this.information[i].getAsUpdateJson(orderInWorkout);
 
-      if (curInfo != null)
+      if (curInfo == null)
       {
-        if (shouldCreate &&
-            (curInfo["shouldCreate"] == null ||
-             curInfo["shouldCreate"] == false))
-        {
-          curInfo["shouldCreate"] = true;
-        }
-
-        output.add(curInfo);
+        curInfo = {};
       }
+
+      if (shouldCreate &&
+          (curInfo["shouldCreate"] == null ||
+           curInfo["shouldCreate"] == false))
+      {
+        curInfo["shouldCreate"] = true;
+      }
+      else if (wasDeleted &&
+          (curInfo["shouldDelete"] == null ||
+           curInfo["shouldDelete"] == false))
+      {
+        curInfo["shouldDelete"] = true;
+      }
+
+      output.add(curInfo);
     }
 
     return output;
@@ -265,6 +296,26 @@ class Exercise
     {
       exerciseListViewCard.indentLeft();
     }
+  }
+
+  void setActionAsInsert()
+  {
+    for (int i = 0; i < this.information.length; i++)
+    {
+      this.information[i].databaseActionType = DatabaseActionType.Insert;
+    }
+
+    this._shouldCreate = true;
+  }
+
+  void setActionAsDelete()
+  {
+    for (int i = 0; i < this.information.length; i++)
+    {
+      this.information[i].databaseActionType = DatabaseActionType.Delete;
+    }
+
+    this.wasDeleted = true;
   }
 
 

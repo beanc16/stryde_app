@@ -1,3 +1,6 @@
+import 'package:Stryde/components/toggleableWidget/EmptyWidgetWithData.dart';
+import 'package:Stryde/models/ExerciseInformation.dart';
+import 'package:Stryde/models/databaseActions/DatabaseActionType.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
@@ -129,6 +132,12 @@ class EditWorkoutState extends State<EditWorkoutScreen>
           );
           models.add(exercise);
         }
+
+        // Deleted widget
+        else if (widget is EmptyWidgetWithData)
+        {
+          models.add(widget.data);
+        }
       }
     }
 
@@ -227,12 +236,10 @@ class EditWorkoutState extends State<EditWorkoutScreen>
          numOfItemsRemoved++)
     {
       Widget item = listViewWidgets.removeAt(oldStartIndex);
-      print(item);
       removedWidgets.add(item);
     }
 
     // Move superset to new location
-    print(removedWidgets);
     listViewWidgets.insertAll(newStartIndex, removedWidgets);
   }
 
@@ -258,19 +265,44 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
   void deleteFromListView(Widget listViewCardOrHeader)
   {
+    int index = listViewWidgets.indexOf(listViewCardOrHeader);
+
     if (listViewCardOrHeader is ListViewCard)
     {
-      setState(()
+      // Mark exercise actiontype as delete
+      Object curExercise = this.workout.exercisesAndSupersets[index];
+      if (curExercise is Exercise)
       {
-        listViewWidgets.remove(listViewCardOrHeader);
-      });
+        curExercise.setActionAsDelete();
+      }
+
+      bool shouldAddWidget = true;
+      for (int i = 0; i < listViewCardOrHeader.information.length; i++)
+      {
+        ExerciseInformation info = listViewCardOrHeader.information[i];
+
+        if (info.databaseActionType == DatabaseActionType.Insert)
+        {
+          shouldAddWidget = false;
+          break;
+        }
+      }
+
+      if (shouldAddWidget)
+      {
+        setState(()
+        {
+          // Save models as deleted
+          listViewWidgets.remove(listViewCardOrHeader);
+          listViewWidgets.insert(index, EmptyWidgetWithData(data: curExercise));
+        });
+      }
     }
 
     // Remove superset header and all exercises within it
     else if (listViewCardOrHeader is ListViewHeader)
     {
       // Remove the header
-      int index = listViewWidgets.indexOf(listViewCardOrHeader);
       setState(()
       {
         listViewWidgets.remove(listViewCardOrHeader);
@@ -363,7 +395,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
   {
     Workout newWorkout = getListViewAsWorkout();
     newWorkout.isReorderable = false;
-    print(newWorkout.toString());
 
     // Send the selected exercises back to the previous screen
     NavigateTo.previousScreenWithData(context, newWorkout);

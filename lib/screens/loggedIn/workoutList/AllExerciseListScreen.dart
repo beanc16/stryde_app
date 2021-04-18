@@ -151,6 +151,7 @@ class AllExerciseListState extends State<AllExerciseListScreen>
         exercise["exerciseMuscleTypeName"],
         exercise["exerciseMovementTypeName"],
         muscleGroups,
+        shouldCreate: true,
       );
 
       setState(()
@@ -226,7 +227,9 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
   void _onTapExerciseListTile(BuildContext context, int index)
   {
-    _selectedExercises.add(_exercises[index].duplicate());
+    Exercise exercise = _exercises[index].duplicate();
+    exercise.setActionAsInsert();
+    _selectedExercises.add(exercise);
 
     setState(()
     {
