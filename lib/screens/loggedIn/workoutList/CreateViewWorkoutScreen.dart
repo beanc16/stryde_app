@@ -5,6 +5,8 @@ import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.d
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
+import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
+import 'package:Stryde/components/toggleableWidget/ToggleableWidgetMap.dart';
 import 'package:Stryde/utilities/HttpQueryHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +57,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   List<Workout> workoutList;
   late final LabeledTextInputElement _titleInput;
   late final LabeledTextInputElement _descriptionInput;
+  late ToggleableWidgetMap<String> _toggleableWidgets;
   late List<dynamic> _listViewElements;
   late bool _hasChanged;
   late bool _isNewWorkout;
@@ -66,7 +69,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   CreateViewWorkoutState.workout(this.workout, this.workoutList,
                                  {bool isNewWorkout = false})
   {
-    print("constructor");
     this.startingWorkout = this.workout.duplicate();
     _listViewElements = workout.getAsWidgets();
     _hasChanged = false;
@@ -83,6 +85,18 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       placeholderText: "Enter description",
       maxInputLength: 1000,
     );
+
+    _toggleableWidgets = ToggleableWidgetMap({
+       "queryErrorMsg": StrydeErrorToggleableWidget(
+         errorMsg: "Failed to Save",
+       ),
+       "inputTooShortError": StrydeErrorToggleableWidget(
+         errorMsg: "Title is too short",
+       ),
+       "inputTooLongError": StrydeErrorToggleableWidget(
+         errorMsg: "Title or description is too long",
+       ),
+     });
   }
 
   @override
@@ -121,31 +135,57 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       result = false;
     }
 
+    // Try to update _hasChanged
+    if (workout.name != _titleInput.inputText ||
+        workout.description != _descriptionInput.inputText)
+    {
+      _hasChanged = true;
+    }
+
     return result;
   }
 
-  void _tryThrowExceptions()
+  bool _tryThrowExceptions()
   {
+    // Prevent the popup from going back if input throws an exception
     try
     {
       _titleInput.tryThrowExceptionMessage();
       _descriptionInput.tryThrowExceptionMessage();
+      return false;
     }
 
     on InputTooLongException catch (ex)
     {
-      // TODO: Do someone on too long error
+      _toggleableWidgets.hideAllExcept("inputTooLongError");
+      _toggleableWidgets.showChildFor(
+        "inputTooLongError", Duration(seconds: 3,)
+      );
+      return true;
     }
 
     on InputTooShortException catch (ex)
     {
-      // TODO: Do someone on too short error
+      _toggleableWidgets.hideAllExcept("inputTooShortError");
+      _toggleableWidgets.showChildFor(
+        "inputTooShortError", Duration(seconds: 3,)
+      );
+      return true;
     }
 
     on Exception catch (ex)
     {
-      // TODO: Do someone on general error
+      _showQueryErrorMessage();
+      return true;
     }
+  }
+
+  void _showQueryErrorMessage()
+  {
+    _toggleableWidgets.hideAllExcept("queryErrorMsg");
+    _toggleableWidgets.showChildFor(
+      "queryErrorMsg", Duration(seconds: 3,)
+    );
   }
 
 
@@ -232,6 +272,8 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
+              _toggleableWidgets,
+
               Padding(
                 padding: EdgeInsets.only(right: 4),
                 child: Row(
@@ -394,12 +436,24 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
           workoutList.add(workout);
         }
 
-        StrydeUserStorage.workouts = workoutList;
-        NavigateTo.previousScreens(context, 2);
+        if (jsonResult["_error"] == null)
+        {
+          StrydeUserStorage.workouts = workoutList;
+          NavigateTo.previousScreens(context, 2);
+        }
+        else
+        {
+          // Remove saving popup and show error message
+          NavigateTo.previousScreen(context);
+          _showQueryErrorMessage();
+        }
       },
       onFailure: (response)
       {
         print("Fail: " + response.toString());
+        // Remove saving popup and show error message
+        NavigateTo.previousScreen(context);
+        _showQueryErrorMessage();
       },
     );
   }
@@ -481,7 +535,8 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     return WillPopScopeSaveDontSave(
       onDontSave: (BuildContext context) => _onDontSave(context),
       onSave: (BuildContext context) => _onSave(context),
-      showPopupMenuIf: () => _hasChanged,
+      showPopupMenuIf: () => (_isInputValid() && _hasChanged),
+      preventBackIf: () => _tryThrowExceptions(),
       child: Scaffold(
         appBar: StrydeAppBar(titleStr: _getAppBarTitle(), context: context),
         body: SingleChildScrollView(

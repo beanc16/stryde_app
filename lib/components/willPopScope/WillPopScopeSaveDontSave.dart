@@ -13,6 +13,7 @@ class WillPopScopeSaveDontSave extends StatelessWidget
   late final Function(BuildContext)? _onKeepEditing;
   late final Color _buttonTextColor;
   ValidationFunction? _showPopupMenuIf;
+  ValidationFunction? _preventBackIf;
 
   WillPopScopeSaveDontSave({
     required Widget child,
@@ -21,11 +22,13 @@ class WillPopScopeSaveDontSave extends StatelessWidget
     Function(BuildContext)? onDontSave,
     Function(BuildContext)? onKeepEditing,
     ValidationFunction? showPopupMenuIf,
+    ValidationFunction? preventBackIf,
   })
   {
     this._child = child;
     this._buttonTextColor = buttonTextColor;
     this._showPopupMenuIf = showPopupMenuIf;
+    this._preventBackIf = preventBackIf;
 
     if (onSave == null)
     {
@@ -74,7 +77,12 @@ class WillPopScopeSaveDontSave extends StatelessWidget
 
   Future<bool> _onBackButtonPressed(BuildContext context) async
   {
-    if (_showPopupMenuIf == null || _showPopupMenuIf!())
+    if (_preventBackIf != null && _preventBackIf!())
+    {
+      return false;
+    }
+
+    else if (_showPopupMenuIf == null || _showPopupMenuIf!())
     {
       return (
         await showDialog(
