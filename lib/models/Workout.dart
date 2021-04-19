@@ -44,12 +44,6 @@ class Workout
     this.description = description;
   }
 
-  Workout.duplicate(Workout workout) :
-    this.notReorderable(workout.name, workout.exercisesAndSupersets,
-                        workoutId: workout.workoutId,
-                        userId: workout.userId,
-                        description: workout.description);
-
 
 
   void addExerciseOrSuperset(Object obj)
@@ -99,7 +93,13 @@ class Workout
 
   Workout duplicate()
   {
-    return Workout.duplicate(this);
+    return Workout.notReorderable(
+      this.name,
+      this.exercisesAndSupersets.toList(),
+      workoutId: this.workoutId,
+      userId: this.userId,
+      description: this.description,
+    );
   }
 
 

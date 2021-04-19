@@ -50,6 +50,7 @@ class CreateViewWorkoutScreen extends StatefulWidget
 
 class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 {
+  late Workout startingWorkout;
   late Workout workout;
   List<Workout> workoutList;
   late final LabeledTextInputElement _titleInput;
@@ -65,8 +66,8 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   CreateViewWorkoutState.workout(this.workout, this.workoutList,
                                  {bool isNewWorkout = false})
   {
-    print("workout.exercisesAndSupersets (constructor): " +
-              workout.exercisesAndSupersets.toString());
+    print("constructor");
+    this.startingWorkout = this.workout.duplicate();
     _listViewElements = workout.getAsWidgets();
     _hasChanged = false;
     this._isNewWorkout = isNewWorkout;
@@ -358,7 +359,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   void _saveWorkout(BuildContext context)
   {
     _updateWorkoutNameAndDesc();
-    print("workout.exercisesAndSupersets: " + workout.exercisesAndSupersets.toString());
     Map<String, String> postData = workout.getAsJson();
     
     String route = "/user";
@@ -373,7 +373,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     route += "/workout";
 
     print("postData: " + postData.toString());
-    print("workout.exercisesAndSupersets: " + workout.exercisesAndSupersets.toString());
 
     HttpQueryHelper.post(
       route,
@@ -403,6 +402,32 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
         print("Fail: " + response.toString());
       },
     );
+  }
+
+  void _onDontSave(BuildContext context)
+  {
+    // Reset variables
+    setState(()
+    {
+      // Remove workout with incorrect exercises
+      int index = (StrydeUserStorage.workouts)!
+                  .indexWhere((w) => w.workoutId == workout.workoutId);
+      (StrydeUserStorage.workouts)!.removeAt(index);
+
+      // ReAdd the workout with the original exercises
+      workout = startingWorkout.duplicate();
+      (StrydeUserStorage.workouts)!.insert(index, workout);
+
+      // Reset the remaining variables
+      workoutList = (StrydeUserStorage.workouts)!;
+      _titleInput.inputText = startingWorkout.name;
+      _descriptionInput.inputText = startingWorkout.description;
+      _hasChanged = false;
+      _listViewElements = startingWorkout.getAsWidgets();
+    });
+
+    // Go to previous screen
+    return Navigator.of(context).pop(true);
   }
 
   Future<dynamic> _onSave(BuildContext context)
@@ -454,6 +479,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     */
 
     return WillPopScopeSaveDontSave(
+      onDontSave: (BuildContext context) => _onDontSave(context),
       onSave: (BuildContext context) => _onSave(context),
       showPopupMenuIf: () => _hasChanged,
       child: Scaffold(

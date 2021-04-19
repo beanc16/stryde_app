@@ -112,12 +112,12 @@ class EditExerciseInformationButtonRowState extends State<EditExerciseInformatio
           duration: editedRows[i]["duration"],
           resistance: editedRows[i]["resistance"],
         );
+        print("Edited rows: " + editedRows.toString());
+        print("Updated info: " + _exercise.information.toString());
 
         _toggleableWidgets..hideChildAndLoadingIcon("successMsg")
         ..showChildFor("successMsg", Duration(seconds: 3));
       }
-
-      print(editedRows.toString());
     }
 
     else if (editedRows != null && editedRows.length == 0)
