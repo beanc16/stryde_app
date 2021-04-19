@@ -45,6 +45,8 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     super.initState();
 
     listViewWidgets = workout.getAsWidgets();
+    // TODO: Delete this
+    print("curWorkout json: " + workout.getAsJson().toString());
 
     int index = 0;
     for (Widget widget in listViewWidgets)
@@ -118,6 +120,9 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
         else if (widget is ListViewCard)
         {
+          // TODO: Delete this
+          print("card's widget.information: " + widget.information.toString());
+
           Exercise exercise = Exercise.model(
             widget.exerciseOrSupersetId,
             widget.title,
@@ -128,6 +133,7 @@ class EditWorkoutState extends State<EditWorkoutScreen>
             widget.muscleGroups,
             onTap: (BuildContext context, dynamic val) => deleteFromListView(widget),
             shouldCreate: widget.shouldCreate,
+            shouldDelete: widget.shouldDelete,
             information: widget.information
           );
           models.add(exercise);
@@ -136,6 +142,10 @@ class EditWorkoutState extends State<EditWorkoutScreen>
         // Deleted widget
         else if (widget is EmptyWidgetWithData)
         {
+          // TODO: Delete this
+          print("empty's data.widget.information: " +
+                    widget.data.information.toString());
+
           models.add(widget.data);
         }
       }
@@ -216,6 +226,12 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     final items = listViewWidgets.removeAt(oldIndex);
     listViewWidgets.insert(newIndex, items);
 
+    // TODO: DELETE THIS
+    if (items is ExerciseListViewCard)
+    {
+      print("item that was moved: " + items.title);
+    }
+
     if (listViewWidgets[newIndex] is ListViewCard)
     {
       updateExerciseIndent(newIndex, listViewWidgets[newIndex]);
@@ -269,12 +285,15 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
     if (listViewCardOrHeader is ListViewCard)
     {
+      listViewCardOrHeader.shouldDelete = true;
+      /*
       // Mark exercise actiontype as delete
       Object curExercise = this.workout.exercisesAndSupersets[index];
       if (curExercise is Exercise)
       {
         curExercise.setActionAsDelete();
       }
+      */
 
       bool shouldAddWidget = true;
       for (int i = 0; i < listViewCardOrHeader.information.length; i++)
@@ -292,9 +311,23 @@ class EditWorkoutState extends State<EditWorkoutScreen>
       {
         setState(()
         {
+          Exercise dataExercise = Exercise.model(
+            listViewCardOrHeader.exerciseOrSupersetId,
+            listViewCardOrHeader.title,
+            listViewCardOrHeader.description,
+            listViewCardOrHeader.exerciseWeightType?.value.toStringShort() ?? "",
+            listViewCardOrHeader.exerciseMuscleType?.value.toStringShort() ?? "",
+            listViewCardOrHeader.exerciseMovementType?.value.toStringShort() ?? "",
+            listViewCardOrHeader.muscleGroups,
+            information: listViewCardOrHeader.information,
+            shouldCreate: listViewCardOrHeader.shouldCreate,
+            shouldDelete: listViewCardOrHeader.shouldDelete,
+            onTap: listViewCardOrHeader.onTap,
+          );
+
           // Save models as deleted
           listViewWidgets.remove(listViewCardOrHeader);
-          listViewWidgets.insert(index, EmptyWidgetWithData(data: curExercise));
+          listViewWidgets.insert(index, EmptyWidgetWithData(data: dataExercise));
         });
       }
     }
@@ -395,6 +428,9 @@ class EditWorkoutState extends State<EditWorkoutScreen>
   {
     Workout newWorkout = getListViewAsWorkout();
     newWorkout.isReorderable = false;
+
+    // TODO: Delete this
+    print("newWorkout json: " + newWorkout.getAsJson().toString());
 
     // Send the selected exercises back to the previous screen
     NavigateTo.previousScreenWithData(context, newWorkout);

@@ -18,6 +18,7 @@ class EmptyWidget extends StatelessWidget
   @override
   Widget build(BuildContext context)
   {
+    //return SizedBox(key: this.key, child: Text("Empty")); // For testing
     return SizedBox.shrink(key: this.key);
   }
 }

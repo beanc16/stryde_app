@@ -18,6 +18,7 @@ class ListViewCard extends StatefulWidget
   late final ExerciseMovementType? exerciseMovementType;
   late final List<MuscleGroup>? muscleGroups;
   late final bool shouldCreate;
+  bool shouldDelete;
   late final List<ExerciseInformation> information;
 
   late final Key key;
@@ -38,6 +39,7 @@ class ListViewCard extends StatefulWidget
                  required this.exerciseMovementType,
                  required this.muscleGroups,
                  required this.shouldCreate,
+                 required this.shouldDelete,
                  required this.information,
                })
   {
@@ -67,6 +69,7 @@ class ListViewCard extends StatefulWidget
                                 required this.exerciseMovementType,
                                 required this.muscleGroups,
                                 required this.shouldCreate,
+                                required this.shouldDelete,
                                 required this.information,
                               })
   {

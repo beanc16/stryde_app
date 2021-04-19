@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:Stryde/components/toggleableWidget/EmptyWidgetWithData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
@@ -143,6 +144,7 @@ class Workout
       {
         if (exerciseOrSuperset.wasDeleted)
         {
+          children.add(EmptyWidgetWithData(data: exerciseOrSuperset));
           continue;
         }
 
@@ -247,6 +249,9 @@ class Workout
     };
 
     List<Map<String, dynamic>> exerciseInfoToUpdate = [];
+    bool exerciseWillBeDeleted = false;
+    int curOrderInWorkoutOfNonDeletedExercises = 1;
+
     for (int i = 0; i < this.exercisesAndSupersets.length; i++)
     {
       dynamic curExerciseOrSuperset = this.exercisesAndSupersets[i];
@@ -254,7 +259,34 @@ class Workout
       if (curExerciseOrSuperset is Exercise)
       {
         List<Map<String, dynamic>> curExerciseInfo =
-                    curExerciseOrSuperset.getAsUpdatedJson(i + 1);
+            //curExerciseOrSuperset.getAsUpdatedJson(i + 1);
+            curExerciseOrSuperset.getAsUpdatedJson(
+                exerciseWillBeDeleted ? // If one or more exercises will be deleted
+                curOrderInWorkoutOfNonDeletedExercises + 1 :  // Use orderInWorkout of non-deleted workouts
+                i + 1                   // Use index + 1 since no exercises were deleted
+            );
+
+        bool curExerciseWasDeleted = true;
+        for (int j = 0; j < curExerciseInfo.length; j++)
+        {
+          // The current exercise WAS NOT deleted
+          if (curExerciseInfo[j]["shouldDelete"] == null ||
+              curExerciseInfo[j]["shouldDelete"] == false)
+          {
+            curExerciseWasDeleted = false;
+            break;
+          }
+        }
+
+        if (curExerciseWasDeleted)
+        {
+          exerciseWillBeDeleted = true;
+          curOrderInWorkoutOfNonDeletedExercises = curExerciseInfo[0]["orderInWorkout"] - 1;
+        }
+        else if (exerciseWillBeDeleted && !curExerciseWasDeleted)
+        {
+          curOrderInWorkoutOfNonDeletedExercises++;
+        }
 
         if (curExerciseInfo.isNotEmpty)
         {
