@@ -6,6 +6,7 @@ import 'package:Stryde/components/strydeHelpers/constants/StrydeUrls.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButtonWithIcon.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeSuccessToggleableWidget.dart';
+import 'package:Stryde/screens/loggedIn/workoutList/CreateEditExerciseScreen.dart';
 import 'package:Stryde/utilities/UrlService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -267,6 +268,21 @@ class UserProfileScreen extends StatelessWidget
               {
                 NavigateTo.screen(
                   context, () => CreditsAcknowledgementsScreen(),
+                );
+              },
+            ),
+          ),
+
+          // TODO: This is temporary, delete this
+          Container(
+            alignment: Alignment.bottomLeft,
+            child: StrydeButton(
+              displayText: "Exercise Creation",
+              textSize: 20,
+              onTap: ()
+              {
+                NavigateTo.screen(
+                  context, () => CreateEditExerciseScreen(),
                 );
               },
             ),

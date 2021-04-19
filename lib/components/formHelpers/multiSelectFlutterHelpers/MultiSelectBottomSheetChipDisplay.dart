@@ -16,6 +16,7 @@ class MultiSelectBottomSheetChipDisplay extends StatefulWidget
   late String _buttonText;
   late String _selectionTitleText;
   late bool _isSearchable;
+  late Function(List<dynamic>)? _onSelectionChanged;
 
   MultiSelectBottomSheetChipDisplay(this._allSelectionItems, {
     List<MultiSelectItem<dynamic>>? chipDisplayItems,
@@ -26,6 +27,7 @@ class MultiSelectBottomSheetChipDisplay extends StatefulWidget
     String buttonText = "",
     String selectionTitleText = "",
     bool isSearchable = true,
+    Function(List<dynamic>)? onSelectionChanged
   })
   {
     _chipDisplayItems = chipDisplayItems;
@@ -36,6 +38,7 @@ class MultiSelectBottomSheetChipDisplay extends StatefulWidget
     _buttonText = buttonText;
     _selectionTitleText = selectionTitleText;
     _isSearchable = isSearchable;
+    _onSelectionChanged = onSelectionChanged;
   }
 
 
@@ -46,7 +49,8 @@ class MultiSelectBottomSheetChipDisplay extends StatefulWidget
       this._allSelectionItems, this._chipDisplayItems,
       this. _chipColor, this._chipTextColor, this._selectedColor,
       this._selectedTextColor, this._buttonText,
-      this._selectionTitleText, this._isSearchable
+      this._selectionTitleText, this._isSearchable,
+      this._onSelectionChanged
     );
   }
 }
@@ -63,6 +67,7 @@ class MultiSelectBottomSheetChipDisplayState extends
   Color? _selectedColor;
   Color? _selectedTextColor;
   bool _isSearchable;
+  late Function(List<dynamic>) _onSelectionChanged;
 
   MultiSelectBottomSheetChipDisplayState(this._allSelectionItems,
     List<MultiSelectItem<dynamic>>? chipDisplayItems,
@@ -72,9 +77,19 @@ class MultiSelectBottomSheetChipDisplayState extends
     this._selectedTextColor,
     String buttonText,
     String selectionTitleText,
-    this._isSearchable
+    this._isSearchable,
+    Function(List<dynamic>)? onSelectionChanged,
   )
   {
+    if (onSelectionChanged == null)
+    {
+      this._onSelectionChanged = _onSelectionChangedDefault;
+    }
+    else
+    {
+      this._onSelectionChanged = onSelectionChanged;
+    }
+
     _buttonText = Text(
       buttonText,
       style: TextStyle(
@@ -106,6 +121,10 @@ class MultiSelectBottomSheetChipDisplayState extends
     );
   }
 
+  void _onSelectionChangedDefault(List<dynamic> selectedValues)
+  {
+  }
+
 
 
   @override
@@ -122,7 +141,9 @@ class MultiSelectBottomSheetChipDisplayState extends
       onConfirm: (values)
       {
         // When tags are confirmed
+        print(values);
       },
+      onSelectionChanged: (values) => _onSelectionChanged(values),
 
       chipDisplay: selectedChipsDisplayList,
 

@@ -16,6 +16,7 @@ class SingleSelectBottomSheetChipDisplay extends StatefulWidget
   late String _buttonText;
   late String _selectionTitleText;
   late bool _isSearchable;
+  late Function(List<dynamic>)? _onSelectionChanged;
 
   SingleSelectBottomSheetChipDisplay(this._allSelectionItems, {
     List<MultiSelectItem<dynamic>>? chipDisplayItems,
@@ -26,6 +27,7 @@ class SingleSelectBottomSheetChipDisplay extends StatefulWidget
     String buttonText = "",
     String selectionTitleText = "",
     bool isSearchable = true,
+    Function(List<dynamic>)? onSelectionChanged
   })
   {
     _chipDisplayItems = chipDisplayItems;
@@ -36,6 +38,7 @@ class SingleSelectBottomSheetChipDisplay extends StatefulWidget
     _buttonText = buttonText;
     _selectionTitleText = selectionTitleText;
     _isSearchable = isSearchable;
+    _onSelectionChanged = onSelectionChanged;
   }
 
 
@@ -46,7 +49,8 @@ class SingleSelectBottomSheetChipDisplay extends StatefulWidget
       this._allSelectionItems, this._chipDisplayItems,
       this. _chipColor, this._chipTextColor, this._selectedColor,
       this._selectedTextColor, this._buttonText,
-      this._selectionTitleText, this._isSearchable
+      this._selectionTitleText, this._isSearchable,
+      this._onSelectionChanged
     );
   }
 }
@@ -64,6 +68,7 @@ class SingleSelectBottomSheetChipDisplayState extends
   Color? _selectedTextColor;
   bool _isSearchable;
   late List<dynamic> _prevSelectedValues;
+  late Function(List<dynamic>) _onSelectionChanged;
 
 
   SingleSelectBottomSheetChipDisplayState(this._allSelectionItems,
@@ -74,9 +79,19 @@ class SingleSelectBottomSheetChipDisplayState extends
     this._selectedTextColor,
     String buttonText,
     String selectionTitleText,
-    this._isSearchable
+    this._isSearchable,
+    Function(List<dynamic>)? onSelectionChanged,
   )
   {
+    if (onSelectionChanged == null)
+    {
+      this._onSelectionChanged = _onSelectionChangedDefault;
+    }
+    else
+    {
+      this._onSelectionChanged = onSelectionChanged;
+    }
+
     _buttonText = Text(
       buttonText,
       style: TextStyle(
@@ -108,7 +123,7 @@ class SingleSelectBottomSheetChipDisplayState extends
     );
   }
 
-  void _onSelectionChanged(List<dynamic> selectedValues)
+  void _onSelectionChangedSingleValue(List<dynamic> selectedValues)
   {
     // Too many values selected
     if (selectedValues.length > 1)
@@ -133,6 +148,13 @@ class SingleSelectBottomSheetChipDisplayState extends
 
     // Just enough or no values selected; Set after removing old values
     _prevSelectedValues = selectedValues;
+
+    // Run callback
+    _onSelectionChanged(selectedValues);
+  }
+
+  void _onSelectionChangedDefault(List<dynamic> selectedValues)
+  {
   }
 
 
@@ -142,7 +164,7 @@ class SingleSelectBottomSheetChipDisplayState extends
   {
     return MultiSelectBottomSheetField(
       //initialValue: _initialMuscleGroups,
-      onConfirm: (List<dynamic> confirmed) => (){},
+      onConfirm: (List<dynamic> confirmed) => (){print(confirmed);},
       items: _allSelectionItems,
       selectedColor: _selectedColor,
       selectedItemsTextStyle: TextStyle(
@@ -150,7 +172,7 @@ class SingleSelectBottomSheetChipDisplayState extends
       ),
 
       onSelectionChanged: (List<dynamic> selectedValues) =>
-          _onSelectionChanged(selectedValues),
+          _onSelectionChangedSingleValue(selectedValues),
 
       chipDisplay: selectedChipsDisplayList,
 
