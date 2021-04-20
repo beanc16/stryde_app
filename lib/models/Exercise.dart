@@ -2,7 +2,6 @@ import 'dart:core';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:Stryde/models/ExerciseInformation.dart';
 import 'package:Stryde/models/databaseActions/DatabaseActionType.dart';
-import 'package:Stryde/models/enums/ExerciseWeightTypeEnum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:Stryde/components/listViews/ListViewCard.dart';
 import 'package:Stryde/models/ExerciseMuscleType.dart';
@@ -11,8 +10,6 @@ import 'package:Stryde/screens/loggedIn/workoutList/EditExerciseInformationScree
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'ExerciseMovementType.dart';
 import 'ExerciseWeightType.dart';
-import 'enums/ExerciseMovementTypeEnum.dart';
-import 'enums/ExerciseMuscleTypeEnum.dart';
 
 
 

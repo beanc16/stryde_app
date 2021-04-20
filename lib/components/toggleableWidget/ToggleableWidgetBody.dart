@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
 import 'EmptyWidget.dart';
 
 class ToggleableWidgetBody extends StatelessWidget

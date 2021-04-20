@@ -1,9 +1,6 @@
-import 'dart:collection';
-
 import 'package:Stryde/components/strydeHelpers/constants/StrydeUserStorage.dart';
 import 'package:Stryde/controllers/NonEmptyWorkoutMap.dart';
 import 'package:Stryde/models/Exercise.dart';
-import 'package:Stryde/models/MuscleGroup.dart';
 import 'package:Stryde/models/Workout.dart';
 import 'package:Stryde/models/Superset.dart';
 import 'package:Stryde/utilities/HttpQueryHelper.dart';

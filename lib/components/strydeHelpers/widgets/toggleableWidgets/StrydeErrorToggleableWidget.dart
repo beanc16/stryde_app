@@ -2,7 +2,6 @@ import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dar
 import 'package:Stryde/components/toggleableWidget/ToggleableWidget.dart';
 import 'package:Stryde/utilities/UiHelpers.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../StrydeProgressIndicator.dart';
 
 

@@ -1,4 +1,3 @@
-import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +12,7 @@ class ComingSoonWidget extends StatelessWidget
       alignment: Alignment.center,
       child: Text(
         "Coming Soon...",
+        textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
           fontSize: 48,

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../FormSettings.dart';
 import '../basic/InputFormElement.dart';
 

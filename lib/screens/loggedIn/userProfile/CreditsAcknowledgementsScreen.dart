@@ -1,7 +1,6 @@
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/nav/StrydeAppBar.dart';
 import 'package:Stryde/components/toggleableWidget/EmptyWidget.dart';
-import 'package:Stryde/utilities/UiHelpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,6 @@
 import 'package:Stryde/components/formHelpers/exceptions/RequiredInputNotEnteredException.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'elements/basic/InputFormElement.dart';
 import 'elements/basic/LabeledInputFormElement.dart';
 
 

@@ -1,15 +1,11 @@
 import 'package:Stryde/components/formHelpers/elements/text/LabeledTextInputElement.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooLongException.dart';
 import 'package:Stryde/components/formHelpers/exceptions/InputTooShortException.dart';
-import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButtonWithIcon.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/toggleableWidgets/StrydeErrorToggleableWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
-import 'package:Stryde/components/strydeHelpers/widgets/StrydeProgressIndicator.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/buttons/StrydeButton.dart';
-import 'package:Stryde/components/strydeHelpers/widgets/text/StrydeErrorText.dart';
-import 'package:Stryde/components/toggleableWidget/ToggleableWidget.dart';
 import 'package:Stryde/components/toggleableWidget/ToggleableWidgetMap.dart';
 import 'package:Stryde/components/uiHelpers/SinglePageScrollingWidget.dart';
 import 'package:Stryde/screens/loggedIn/HomeScreen.dart';

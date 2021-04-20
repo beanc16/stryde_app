@@ -1,4 +1,3 @@
-import 'package:Stryde/components/toggleableWidget/EmptyWidget.dart';
 import 'package:Stryde/screens/ComingSoonWidget.dart';
 import 'package:flutter/cupertino.dart';
 

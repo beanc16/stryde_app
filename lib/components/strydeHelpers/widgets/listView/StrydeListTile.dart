@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:Stryde/components/listViews/searchableListView/SearchableListTile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

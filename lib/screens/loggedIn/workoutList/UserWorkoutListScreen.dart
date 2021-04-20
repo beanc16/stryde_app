@@ -1,7 +1,5 @@
 import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:Stryde/controllers/WorkoutController.dart';
-import 'package:Stryde/models/Exercise.dart';
-import 'package:Stryde/models/MuscleGroup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -15,7 +13,6 @@ import 'package:Stryde/models/Workout.dart';
 import 'package:Stryde/screens/loggedIn/workoutList/CreateViewWorkoutScreen.dart';
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'package:Stryde/utilities/UiHelpers.dart';
-import 'package:Stryde/utilities/HttpQueryHelper.dart';
 
 
 class UserWorkoutListScreen extends StatefulWidget
