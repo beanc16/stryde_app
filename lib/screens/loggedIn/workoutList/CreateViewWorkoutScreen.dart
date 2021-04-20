@@ -77,7 +77,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     _titleInput = LabeledTextInputElement(
       labelText: "Title",
       placeholderText: "Enter title",
-      minInputLength: 1,
       maxInputLength: 45,
     );
     _descriptionInput = LabeledTextInputElement.textArea(
@@ -89,9 +88,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     _toggleableWidgets = ToggleableWidgetMap({
        "queryErrorMsg": StrydeErrorToggleableWidget(
          errorMsg: "Failed to Save",
-       ),
-       "inputTooShortError": StrydeErrorToggleableWidget(
-         errorMsg: "Title is too short",
        ),
        "inputTooLongError": StrydeErrorToggleableWidget(
          errorMsg: "Title or description is too long",
@@ -160,15 +156,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       _toggleableWidgets.hideAllExcept("inputTooLongError");
       _toggleableWidgets.showChildFor(
         "inputTooLongError", Duration(seconds: 3,)
-      );
-      return true;
-    }
-
-    on InputTooShortException catch (ex)
-    {
-      _toggleableWidgets.hideAllExcept("inputTooShortError");
-      _toggleableWidgets.showChildFor(
-        "inputTooShortError", Duration(seconds: 3,)
       );
       return true;
     }
