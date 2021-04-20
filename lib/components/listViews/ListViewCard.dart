@@ -7,6 +7,7 @@ import 'package:Stryde/models/MuscleGroup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Stryde/components/strydeHelpers/constants/StrydeColors.dart';
+import 'package:universal_io/io.dart';
 
 class ListViewCard extends StatefulWidget
 {
@@ -202,7 +203,7 @@ class ListViewCardState extends State<ListViewCard>
   {
     double defaultMargin = 4;
     double leftMargin = defaultMargin;
-    //Padding reorderIcon;
+    Padding reorderIcon;
     Padding deleteIcon;
 
     if (widget.shouldLeftIndent)
@@ -212,12 +213,20 @@ class ListViewCardState extends State<ListViewCard>
 
     if (this.isReorderable)
     {
-      //reorderIcon = _getReorderIcon();
       deleteIcon = _getDeleteIcon();
+
+      if (Platform.isIOS || Platform.isAndroid)
+      {
+        reorderIcon = _getReorderIcon();
+      }
+      else
+      {
+        reorderIcon = _getNoReorderIcon();
+      }
     }
     else
     {
-      //reorderIcon = _getNoReorderIcon();
+      reorderIcon = _getNoReorderIcon();
       deleteIcon = _getNoDeleteIcon();
     }
 
@@ -273,8 +282,7 @@ class ListViewCardState extends State<ListViewCard>
               ),
             ),
 
-            //reorderIcon,
-            _getEditIcon(context)
+            reorderIcon
           ],
         ),
       ),
@@ -288,7 +296,6 @@ class ListViewCardState extends State<ListViewCard>
 
 
 
-  /*
   Padding _getReorderIcon()
   {
     return Padding(
@@ -307,7 +314,6 @@ class ListViewCardState extends State<ListViewCard>
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
     );
   }
-   */
 
   Padding _getDeleteIcon()
   {
@@ -373,12 +379,5 @@ class ListViewCardState extends State<ListViewCard>
     {
       return EmptyWidget();
     }
-  }
-
-  Padding _getNoReorderIcon()
-  {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-    );
   }
 }

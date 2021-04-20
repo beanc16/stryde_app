@@ -4,7 +4,7 @@
                Make the server do HTTPS requests instead of HTTP. -->
    <application
         android:label="Stryde"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/stryde_app_icon"
         android:usesCleartextTraffic="true" >
         <activity
             android:name=".MainActivity"

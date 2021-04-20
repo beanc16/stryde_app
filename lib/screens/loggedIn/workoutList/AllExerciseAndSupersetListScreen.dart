@@ -1,4 +1,3 @@
-import 'package:Stryde/components/formHelpers/elements/basic/LabelText.dart';
 import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
