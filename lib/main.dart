@@ -1,6 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'StartupScreen.dart';
+import 'screens/loggedOut/StartupScreen.dart';
 
 
 void main()
