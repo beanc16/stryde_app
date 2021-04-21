@@ -249,14 +249,6 @@ class UserProfileScreen extends StatelessWidget
           ),
           getDefaultPadding(),
 
-          StrydeButtonWithIcon(
-            displayText: "Logout",
-            textSize: 20,
-            onTap: (BuildContext context) => _logOut(context),
-            iconData: Icons.logout,
-          ),
-          getDefaultPadding(),
-
           Container(
             alignment: Alignment.bottomLeft,
             child: StrydeButton(
@@ -270,6 +262,15 @@ class UserProfileScreen extends StatelessWidget
               },
             ),
           ),
+          getDefaultPadding(),
+
+          StrydeButtonWithIcon(
+            displayText: "Logout",
+            textSize: 20,
+            onTap: (BuildContext context) => _logOut(context),
+            iconData: Icons.logout,
+            ),
+          getDefaultPadding(),
 
           // TODO: This is temporary, delete this
           /*

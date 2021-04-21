@@ -8,6 +8,9 @@ import 'package:Stryde/models/Superset.dart';
 import 'package:Stryde/models/Exercise.dart';
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'CreateViewSupersetScreen.dart';
+import 'package:Stryde/models/enums/ExerciseWeightTypeEnum.dart';
+import 'package:Stryde/models/enums/ExerciseMuscleTypeEnum.dart';
+import 'package:Stryde/models/enums/ExerciseMovementTypeEnum.dart';
 
 
 class EditSupersetScreen extends StatefulWidget
@@ -67,10 +70,18 @@ class EditSupersetState extends State<EditSupersetScreen>
 
       if (widget is ListViewCard)
       {
-        Exercise exercise = Exercise(
+        Exercise exercise = Exercise.model(
+          widget.exerciseOrSupersetId,
           widget.title,
           widget.description,
-          () => deleteFromListView(widget)
+          widget.exerciseWeightType?.value.toStringShort() ?? "",
+          widget.exerciseMuscleType?.value.toStringShort() ?? "",
+          widget.exerciseMovementType?.value.toStringShort() ?? "",
+          widget.muscleGroups,
+          onTap: widget.onTap,
+          shouldDelete: widget.shouldDelete,
+          shouldCreate: widget.shouldCreate,
+          information: widget.information,
         );
         models.add(exercise);
       }

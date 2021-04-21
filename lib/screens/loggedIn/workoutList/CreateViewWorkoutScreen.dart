@@ -174,7 +174,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
 
 
 
-  List<Widget> getChildren()
+  List<Widget> getChildren(BuildContext context)
   {
     List<Widget> children = [
       getPadding(10),
@@ -187,7 +187,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       ),
 
       // Exercise & Superset widget
-      this._getListViewHeader(),
+      this._getListViewHeader(context),
     ];
     workout.isReorderable = false;
 
@@ -237,7 +237,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     return children;
   }
 
-  Row _getListViewHeader()
+  Row _getListViewHeader(BuildContext context)
   {
     return Row(
       children: [
@@ -281,7 +281,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                     ),
                     Flexible(
                       flex: 2,
-                      child: _getEditButton(),
+                      child: _getEditButton(context),
                     ),
                   ],
                 ),
@@ -293,7 +293,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     );
   }
 
-  Widget _getEditButton()
+  Widget _getEditButton(BuildContext context)
   {
     // Disable the button if there IS NO exercises or supersets
     if (workout.hasNoExercisesOrSupersets())
@@ -309,7 +309,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       return StrydeButton(
         displayText: "Edit",
         textSize: 14,
-        onTap: () => _onTapEditButton()
+        onTap: () => _onTapEditButton(context)
       );
     }
   }
@@ -333,7 +333,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     }
   }
 
-  void _onTapEditButton() async
+  void _onTapEditButton(BuildContext context) async
   {
     workout.isReorderable = true;
     Workout newWorkout = await NavigateTo.screenReturnsData(
@@ -348,6 +348,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       }
 
       workout = newWorkout;
+      workout.updateOnTapFunc(context);
       _updateListView();
     }
   }
@@ -506,16 +507,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
   @override
   Widget build(BuildContext context)
   {
-    /*
-    workout.updateOnTapFunc((BuildContext context, dynamic exercise)
-    {
-      NavigateTo.screen(
-        context,
-        () => EditExerciseInformationScreen(exercise)
-      );
-    });
-    */
-
     return WillPopScopeSaveDontSave(
       onDontSave: (BuildContext context) => _onDontSave(context),
       onSave: (BuildContext context) => _onSave(context),
@@ -530,7 +521,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: getChildren(),
+              children: getChildren(context),
             )
           )
         ),

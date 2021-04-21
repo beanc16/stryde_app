@@ -35,7 +35,7 @@ class Exercise
   {
     if (onTap == null)
     {
-      onTap = _onTapDefault;
+      onTap = onTapDefault;
     }
 
     this.information = [];
@@ -65,7 +65,7 @@ class Exercise
   {
     if (onTap == null)
     {
-      onTap = _onTapDefault;
+      onTap = onTapDefault;
     }
 
     this.information = [];
@@ -105,7 +105,7 @@ class Exercise
 
     if (onTap == null)
     {
-      onTap = _onTapDefault;
+      onTap = onTapDefault;
     }
 
     if (information == null)
@@ -138,6 +138,11 @@ class Exercise
   Exercise.duplicate(Exercise exercise,
                      Function(BuildContext, dynamic)? onTap)
   {
+    if (onTap == null)
+    {
+      onTap = onTapDefault;
+    }
+
     this.id = exercise.id;
     this.name = exercise.name;
     this.description = exercise.description;
@@ -168,7 +173,7 @@ class Exercise
 
 
 
-  void _onTapDefault(BuildContext context, dynamic data)
+  void onTapDefault(BuildContext context, dynamic data)
   {
     NavigateTo.screen(
       context,

@@ -45,8 +45,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     super.initState();
 
     listViewWidgets = workout.getAsWidgets();
-    // TODO: Delete this
-    print("curWorkout json: " + workout.getAsJson().toString());
 
     int index = 0;
     for (Widget widget in listViewWidgets)
@@ -105,10 +103,18 @@ class EditWorkoutState extends State<EditWorkoutScreen>
       {
         if (inSuperset && widget is ListViewCard)
         {
-          Exercise exercise = Exercise(
+          Exercise exercise = Exercise.model(
+            widget.exerciseOrSupersetId,
             widget.title,
             widget.description,
-            () => deleteFromListView(widget)
+            widget.exerciseWeightType?.value.toStringShort() ?? "",
+            widget.exerciseMuscleType?.value.toStringShort() ?? "",
+            widget.exerciseMovementType?.value.toStringShort() ?? "",
+            widget.muscleGroups,
+            onTap: widget.onTap,
+            shouldDelete: widget.shouldDelete,
+            shouldCreate: widget.shouldCreate,
+            information: widget.information,
           );
           curSuperset.addExercise(exercise);
 
@@ -120,9 +126,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
         else if (widget is ListViewCard)
         {
-          // TODO: Delete this
-          print("card's widget.information: " + widget.information.toString());
-
           Exercise exercise = Exercise.model(
             widget.exerciseOrSupersetId,
             widget.title,
@@ -186,11 +189,19 @@ class EditWorkoutState extends State<EditWorkoutScreen>
       {
         if (inSuperset && widget is ListViewCard)
         {
-          Exercise exercise = Exercise(
-              widget.title,
-              widget.description,
-                  () => deleteFromListView(widget)
-              );
+          Exercise exercise = Exercise.model(
+            widget.exerciseOrSupersetId,
+            widget.title,
+            widget.description,
+            widget.exerciseWeightType?.value.toStringShort() ?? "",
+            widget.exerciseMuscleType?.value.toStringShort() ?? "",
+            widget.exerciseMovementType?.value.toStringShort() ?? "",
+            widget.muscleGroups,
+            onTap: widget.onTap,
+            shouldDelete: widget.shouldDelete,
+            shouldCreate: widget.shouldCreate,
+            information: widget.information,
+          );
           curSuperset.addExercise(exercise);
 
           if (i + 1 == listViewWidgets.length)
@@ -201,11 +212,19 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
         else if (widget is ListViewCard)
         {
-          Exercise exercise = Exercise(
-              widget.title,
-              widget.description,
-                  () => deleteFromListView(widget)
-              );
+          Exercise exercise = Exercise.model(
+            widget.exerciseOrSupersetId,
+            widget.title,
+            widget.description,
+            widget.exerciseWeightType?.value.toStringShort() ?? "",
+            widget.exerciseMuscleType?.value.toStringShort() ?? "",
+            widget.exerciseMovementType?.value.toStringShort() ?? "",
+            widget.muscleGroups,
+            onTap: widget.onTap,
+            shouldDelete: widget.shouldDelete,
+            shouldCreate: widget.shouldCreate,
+            information: widget.information,
+          );
           models.add(exercise);
         }
       }
@@ -225,12 +244,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
     final items = listViewWidgets.removeAt(oldIndex);
     listViewWidgets.insert(newIndex, items);
-
-    // TODO: DELETE THIS
-    if (items is ExerciseListViewCard)
-    {
-      print("item that was moved: " + items.title);
-    }
 
     if (listViewWidgets[newIndex] is ListViewCard)
     {
@@ -309,22 +322,22 @@ class EditWorkoutState extends State<EditWorkoutScreen>
 
       if (shouldAddWidget)
       {
+        Exercise dataExercise = Exercise.model(
+          listViewCardOrHeader.exerciseOrSupersetId,
+          listViewCardOrHeader.title,
+          listViewCardOrHeader.description,
+          listViewCardOrHeader.exerciseWeightType?.value.toStringShort() ?? "",
+          listViewCardOrHeader.exerciseMuscleType?.value.toStringShort() ?? "",
+          listViewCardOrHeader.exerciseMovementType?.value.toStringShort() ?? "",
+          listViewCardOrHeader.muscleGroups,
+          information: listViewCardOrHeader.information,
+          shouldCreate: listViewCardOrHeader.shouldCreate,
+          shouldDelete: listViewCardOrHeader.shouldDelete,
+          onTap: listViewCardOrHeader.onTap,
+        );
+
         setState(()
         {
-          Exercise dataExercise = Exercise.model(
-            listViewCardOrHeader.exerciseOrSupersetId,
-            listViewCardOrHeader.title,
-            listViewCardOrHeader.description,
-            listViewCardOrHeader.exerciseWeightType?.value.toStringShort() ?? "",
-            listViewCardOrHeader.exerciseMuscleType?.value.toStringShort() ?? "",
-            listViewCardOrHeader.exerciseMovementType?.value.toStringShort() ?? "",
-            listViewCardOrHeader.muscleGroups,
-            information: listViewCardOrHeader.information,
-            shouldCreate: listViewCardOrHeader.shouldCreate,
-            shouldDelete: listViewCardOrHeader.shouldDelete,
-            onTap: listViewCardOrHeader.onTap,
-          );
-
           // Save models as deleted
           listViewWidgets.remove(listViewCardOrHeader);
           listViewWidgets.insert(index, EmptyWidgetWithData(data: dataExercise));

@@ -152,7 +152,6 @@ class Workout
         {
           inSuperset = false;
           children.add(Divider(
-            //key: Key("Divider ${numOfDividers++}"),
             key: UniqueKey(),
             thickness: 3,
             color: Colors.black38
@@ -171,7 +170,6 @@ class Workout
         if (i != 0)
         {
           children.add(Divider(
-            //key: Key("Divider ${numOfDividers++}"),
             key: UniqueKey(),
             thickness: 3,
             color: Colors.black38
@@ -218,7 +216,6 @@ class Workout
         shrinkWrap: true,
       );
     }
-    print("length is NOT 0 (good news)");
 
     return ListView.builder(
       //key: Key(this.name),
@@ -228,14 +225,6 @@ class Workout
         return exercisesAndSupersetsListViewCardsAndHeaders[index];
       }
     );
-
-    /*
-    return ListView(
-      key: Key(this.name),
-      children: exercisesAndSupersetsListViewCardsAndHeaders,
-      shrinkWrap: true,
-    );
-     */
   }
 
   Map<String, String> getAsJson()
@@ -370,38 +359,39 @@ class Workout
     }
   }
 
-  void updateOnTapFunc(Function(BuildContext, dynamic) onTap)
+  void updateOnTapFunc(BuildContext context)
   {
     for (Object exerciseOrSuperset in exercisesAndSupersets)
     {
       if (exerciseOrSuperset is Superset)
       {
         // Update superset's onTap
-        _updateOnTapFunc(exerciseOrSuperset, onTap);
+        _updateOnTapFunc(exerciseOrSuperset, context);
 
         // Update each superset exercise's onTap
         for (Exercise exercise in exerciseOrSuperset.exercises)
         {
-          _updateOnTapFunc(exercise, onTap);
+          _updateOnTapFunc(exercise, context);
         }
       }
 
       // Update exercise's onTap
       else if (exerciseOrSuperset is Exercise)
       {
-        _updateOnTapFunc(exerciseOrSuperset, onTap);
+        _updateOnTapFunc(exerciseOrSuperset, context);
       }
     }
   }
 
   void _updateOnTapFunc(Object exerciseOrSuperset,
-                        Function(BuildContext, dynamic) onTap)
+                        BuildContext context)
   {
     if (exerciseOrSuperset is Exercise)
     {
       ExerciseListViewCard exerciseListViewCard =
           exerciseOrSuperset.exerciseListViewCard;
-      exerciseListViewCard.onTap = onTap;
+      exerciseListViewCard.onTap = (BuildContext c, data) =>
+          exerciseOrSuperset.onTapDefault(context, exerciseOrSuperset);
     }
 
     else if (exerciseOrSuperset is Superset)
