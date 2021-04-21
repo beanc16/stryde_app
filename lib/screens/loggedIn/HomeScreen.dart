@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget
   {
     StrydeUserStorage.userExperience = new UserExperience(
       this._userInfo["id"], this._userInfo["username"],
-      this._userInfo["password"], this._userInfo["goal"],
+      this._userInfo["password"], this._userInfo["goal"] ?? "",
       this._userInfo["experienceName"]
     );
 

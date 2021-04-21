@@ -56,7 +56,7 @@ class UserProfileScreen extends StatelessWidget
         errorMsg: "Goal Failed to Save",
       ),
       "validationErrorMsg": StrydeErrorToggleableWidget(
-        errorMsg: "Must change goal before saving",
+        errorMsg: "Must enter goal before saving",
       ),
       "inputTooShortError": StrydeErrorToggleableWidget(
         errorMsg: "Goal is too short",

@@ -4,7 +4,7 @@ class UserExperience
   final String username;
   final String password;
   String goal;
-  final String experienceName;
+  final String? experienceName;
 
   UserExperience(this.id, this.username, this.password, this.goal,
                  this.experienceName);
