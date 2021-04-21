@@ -203,8 +203,8 @@ class ListViewCardState extends State<ListViewCard>
   {
     double defaultMargin = 4;
     double leftMargin = defaultMargin;
-    Padding reorderIcon;
-    Padding deleteIcon;
+    Widget reorderIcon;
+    Widget deleteIcon;
 
     if (widget.shouldLeftIndent)
     {
@@ -226,7 +226,7 @@ class ListViewCardState extends State<ListViewCard>
     }
     else
     {
-      reorderIcon = _getNoReorderIcon();
+      reorderIcon = _getEditIcon(context);
       deleteIcon = _getNoDeleteIcon();
     }
 

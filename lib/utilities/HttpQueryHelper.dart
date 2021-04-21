@@ -8,7 +8,7 @@ import "package:universal_io/io.dart" show Platform;
 
 class HttpQueryHelper
 {
-	static String? url = "";
+  static String? url = "";
   static String query = "";
   static Map<String, String>? env;
 
@@ -17,20 +17,25 @@ class HttpQueryHelper
   static Future<void> get(String route,
 													{Function()? onBeforeQuery,
 													 Function(dynamic)? onSuccess,
-													 Function(dynamic)? onFailure,}) async
+													 Function(dynamic)? onFailure,
+													 bool useHttps = true}) async
 	{
 		try
 		{
 			await _tryInitializeUrls();
 
-			Uri httpUri = Uri.http(url!, route);
+			Uri uri = Uri.http(url!, route);
+			if (useHttps)
+			{
+				uri = Uri.https(url!, route);
+			}
 
 			if (onBeforeQuery != null)
 			{
 				onBeforeQuery();
 			}
 
-			http.get(httpUri)
+			http.get(uri)
 				.then((http.Response response)
 				{
 					if (onSuccess != null)
@@ -60,27 +65,25 @@ class HttpQueryHelper
 													 {Function()? onBeforeQuery,
 														Function(dynamic)? onSuccess,
 														Function(dynamic)? onFailure,
-													  bool shouldEncodeBody = false})
+													  bool useHttps = true})
   async
 	{
     try
 		{
 			await _tryInitializeUrls();
 
-			Uri httpUri = Uri.http(url!, route);
+			Uri uri = Uri.http(url!, route);
+			if (useHttps)
+			{
+				uri = Uri.https(url!, route);
+			}
 
 			if (onBeforeQuery != null)
 			{
 				onBeforeQuery();
 			}
 
-			// Encode the body if the json data has data other than strings
-			if (shouldEncodeBody)
-			{
-				body = jsonEncode(body);
-			}
-
-			http.post(httpUri, body: body)
+			http.post(uri, body: body)
 				.then((http.Response response)
 				{
 					if (onSuccess != null)
