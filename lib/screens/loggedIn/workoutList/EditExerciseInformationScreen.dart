@@ -4,6 +4,7 @@ import 'package:Stryde/components/strydeHelpers/widgets/buttons/EditExerciseInfo
 import 'package:Stryde/components/strydeHelpers/widgets/tags/StrydeMultiTagDisplay.dart';
 import 'package:Stryde/components/willPopScope/WillPopScopeSaveDontSave.dart';
 import 'package:Stryde/models/ExerciseInformation.dart';
+import 'package:Stryde/screens/ComingSoonWidget.dart';
 import 'package:Stryde/utilities/NavigateTo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -214,83 +215,88 @@ class EditExerciseInformationScreen extends StatelessWidget
     return Scaffold(
       appBar: StrydeAppBar(titleStr: "Edit Exercise", context: context),
       key: _tableKey,
-      body: WillPopScopeSaveDontSave(
-        buttonTextColor: StrydeColors.lightBlue,
-        onSave: (BuildContext context) => _onBackButtonPressed(context),
-        showPopupMenuIf: _showPopupMenuIf,
+      body: Stack(
+        children: [
+          WillPopScopeSaveDontSave(
+            buttonTextColor: StrydeColors.lightBlue,
+            onSave: (BuildContext context) => _onBackButtonPressed(context),
+            showPopupMenuIf: _showPopupMenuIf,
 
-        child: Padding(
-          padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextHeader1(
-                  displayText: _exercise.name,
-                  color: StrydeColors.darkGray,
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: TextInputElement.textArea(
-                    placeholderText: "Enter description",
-                    maxInputLength: 2000,
-                    initialText: _exercise.description ?? "",
-                    maxLines: 4,
-                  )
-                ),
-
-                EditExerciseInformationButtonRow(
-                  addNewRow: _addNewRow,
-                  deleteLastRow: _deleteLastRow,
-                  getEditedRows: _getEditedRows,
-                  tableController: _controller,
-                  exercise: _exercise,
-                ),
-
-                Expanded(
-                  child: EditableTable(
-                    controller: _controller,
-                    columns: _getInitialTableColumns(),
-                    rows: _getInitialTableRows(),
-
-                    stripeColor1: (StrydeColors.lightGrayMat[100])!,
-                    stripeColor2: (StrydeColors.darkGrayMat[200])!,
-                    columnRatio: 0.175,
-
-                    onAddRow: _onAddRow,
-                    onEditingComplete: _onEditingComplete,
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: StrydeMultiTagDisplay(
-                      displayText: _getMuscleGroupTagText(),
-                      canDeleteTags: false,
+            child: Padding(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+              child: Container(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextHeader1(
+                      displayText: _exercise.name,
+                      color: StrydeColors.darkGray,
                     ),
-                  ),
-                ),
 
-                Padding(
-                  padding: EdgeInsets.only(bottom: 15),
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: StrydeMultiTagDisplay(
-                      displayText: _getExerciseTypeTagText(),
-                      canDeleteTags: false,
+                    Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: TextInputElement.textArea(
+                        placeholderText: "Enter description",
+                        maxInputLength: 2000,
+                        initialText: _exercise.description ?? "",
+                        maxLines: 4,
+                      )
                     ),
-                  ),
+
+                    EditExerciseInformationButtonRow(
+                      addNewRow: _addNewRow,
+                      deleteLastRow: _deleteLastRow,
+                      getEditedRows: _getEditedRows,
+                      tableController: _controller,
+                      exercise: _exercise,
+                    ),
+
+                    Expanded(
+                      child: EditableTable(
+                        controller: _controller,
+                        columns: _getInitialTableColumns(),
+                        rows: _getInitialTableRows(),
+
+                        stripeColor1: (StrydeColors.lightGrayMat[100])!,
+                        stripeColor2: (StrydeColors.darkGrayMat[200])!,
+                        columnRatio: 0.175,
+
+                        onAddRow: _onAddRow,
+                        onEditingComplete: _onEditingComplete,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: StrydeMultiTagDisplay(
+                          displayText: _getMuscleGroupTagText(),
+                          canDeleteTags: false,
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 15),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        child: StrydeMultiTagDisplay(
+                          displayText: _getExerciseTypeTagText(),
+                          canDeleteTags: false,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )
-        )
-      )
+              )
+            )
+          ),
+          ComingSoonWidget(),
+        ],
+      ),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import "package:http/http.dart" as http;
-import "package:flutter_dotenv/flutter_dotenv.dart" as DotEnv;
+//import "package:flutter_dotenv/flutter_dotenv.dart" as DotEnv;
 
 // Same as: "dart:io" show Platform; But, works in web browsers too
 import "package:universal_io/io.dart" show Platform;
@@ -10,7 +10,7 @@ class HttpQueryHelper
 {
   static String? url = "";
   static String query = "";
-  static Map<String, String>? env;
+  //static Map<String, String>? env;
 
 
 
@@ -113,6 +113,8 @@ class HttpQueryHelper
   
   static Future _tryInitializeUrls() async
 	{
+		url = "stryde.app:8000";
+		/*
 		// Don't run the rest of the function if everything is initialized
 		if (_envIsInitialized() && _urlIsInitialized())
 		{
@@ -120,8 +122,8 @@ class HttpQueryHelper
 		}
 
 		// Load .env variables
-		await DotEnv.load(mergeWith: Platform.environment);
-		env = DotEnv.env;
+		//await DotEnv.load(mergeWith: Platform.environment);
+		//env = DotEnv.env;
 
 		// Log warnings if environment variables aren't set up
 		bool canSet = true;
@@ -150,6 +152,7 @@ class HttpQueryHelper
 		{
 			url = null;
 		}
+		 */
 	}
 
 
@@ -159,8 +162,10 @@ class HttpQueryHelper
 		return (url != null || url?.length != 0);
 	}
 
+	/*
 	static bool _envIsInitialized()
 	{
 		return (env != null);
 	}
+	*/
 }

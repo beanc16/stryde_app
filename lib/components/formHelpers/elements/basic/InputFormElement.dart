@@ -297,9 +297,7 @@ class _InputFormElementState extends State<InputFormElement>
     {
       return BoxDecoration(
         border: Border.all(
-          //color: (StrydeColors.darkRedErrorMat[600])!,
           color: borderColor,
-          //width: 1.25,
           width: borderWidth,
         ),
         borderRadius: BorderRadius.all(Radius.circular(5)),
