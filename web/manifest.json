@@ -1,11 +1,11 @@
 {
-    "name": "workout_buddy_web",
-    "short_name": "workout_buddy_web",
+    "name": "Stryde",
+    "short_name": "Stryde",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "A website & app that enables users to create custom workouts.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
