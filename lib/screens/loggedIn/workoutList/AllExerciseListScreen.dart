@@ -187,8 +187,8 @@ class AllExerciseListState extends State<AllExerciseListScreen>
               Expanded(
                 child: StrydeExerciseSearchableListView(
                   listTileDisplayText: _listTileDisplayText,
-                  onTapListTile: (BuildContext context, int index) =>
-                                  _onTapExerciseListTile(context, index),
+                  onTapListTile: (BuildContext context, int index, String displayText) =>
+                                  _onTapExerciseListTile(context, index, displayText),
                 ),
               ),
               Container(
@@ -225,15 +225,19 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
 
 
-  void _onTapExerciseListTile(BuildContext context, int index)
+  void _onTapExerciseListTile(BuildContext context, int index, String displayText)
   {
-    Exercise exercise = _exercises[index].duplicate();
+    // Select exercise
+    //Exercise exercise = _exercises[index].duplicate();
+    Exercise exercise = _exercises.singleWhere((ex) => ex.name == displayText);
     exercise.setActionAsInsert();
     _selectedExercises.add(exercise);
 
+    // Add tag
+    //String displayStr = _listTileDisplayText.singleWhere((str) => str == displayText);
     setState(()
     {
-      _selectExercisesTagDisplay.addTag(_listTileDisplayText[index]);
+      _selectExercisesTagDisplay.addTag(displayText);
     });
   }
 

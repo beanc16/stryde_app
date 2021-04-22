@@ -7,7 +7,7 @@ class StrydeExerciseSearchableListView extends SearchableListView
 {
   StrydeExerciseSearchableListView({
     required List<String> listTileDisplayText,
-    required Function(BuildContext, int) onTapListTile
+    required Function(BuildContext, int, String) onTapListTile
   }) :
       super(
         // Text
@@ -23,8 +23,8 @@ class StrydeExerciseSearchableListView extends SearchableListView
 
         // Miscellaneous
         spaceBetweenTiles: 15,
-        onTapListTile: (BuildContext context, int index) =>
-          onTapListTile(context, index),
+        onTapListTile: (BuildContext context, int index, String displayText) =>
+          onTapListTile(context, index, displayText),
         onTapColor: StrydeColors.lightBlue,
       );
 }

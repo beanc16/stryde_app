@@ -194,8 +194,8 @@ class AllSupersetListScreenState extends State<AllSupersetListScreen>
               Expanded(
                 child: StrydeExerciseSearchableListView(
                   listTileDisplayText: _listTileDisplayText,
-                  onTapListTile: (BuildContext context, int index) =>
-                                  _onTapSupersetListTile(context, index),
+                  onTapListTile: (BuildContext context, int index, String displayText) =>
+                                  _onTapSupersetListTile(context, index, displayText),
                 ),
               ),
               Container(
@@ -232,13 +232,15 @@ class AllSupersetListScreenState extends State<AllSupersetListScreen>
 
 
 
-  void _onTapSupersetListTile(BuildContext context, int index)
+  void _onTapSupersetListTile(BuildContext context, int index, String displayText)
   {
-    _selectedSupersets.add(_supersets[index]);
+    Superset superset = _supersets.singleWhere((s) => s.name == displayText);
+    _selectedSupersets.add(superset);
 
+    //String displayStr = _listTileDisplayText.singleWhere((str) => str == displayText);
     setState(()
     {
-      _selectSupersetsTagDisplay.addTag(_listTileDisplayText[index]);
+      _selectSupersetsTagDisplay.addTag(displayText);
     });
   }
 

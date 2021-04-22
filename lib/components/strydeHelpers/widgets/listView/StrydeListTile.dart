@@ -10,7 +10,7 @@ class StrydeListTile extends SearchableListTile
     required String displayText,
     double textSize = 20,
     Color? textColor,
-    Function(BuildContext, int)? onTapListTile,
+    Function(BuildContext, int, String)? onTapListTile,
     Color onTapColor = Colors.lightBlue,
     required int index,
     double borderWidth = 0,

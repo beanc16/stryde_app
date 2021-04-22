@@ -10,7 +10,7 @@ class SearchableListView extends StatefulWidget
   late final String _searchBarPlaceholderText;
   late final double _textSize;
   late Color? _textColor;
-  late Function(BuildContext, int)? _onTapListTile;
+  late Function(BuildContext, int, String)? _onTapListTile;
   late final Color _onTapColor;
   late final double _borderWidth;
   late final Color _borderColor;
@@ -21,7 +21,7 @@ class SearchableListView extends StatefulWidget
     String searchBarPlaceholderText = "Search Here...",
     double textSize = 20,
     Color? textColor,
-    Function(BuildContext, int)? onTapListTile,
+    Function(BuildContext, int, String)? onTapListTile,
     Color onTapColor = Colors.lightBlue,
     double borderWidth = 0,
     Color borderColor = Colors.black,
@@ -41,12 +41,12 @@ class SearchableListView extends StatefulWidget
 
     if (onTapListTile == null)
     {
-      this._onTapListTile = (context, index) =>
-          _defaultOnTapListView(context, index);
+      this._onTapListTile = (context, index, displayStr) =>
+          _defaultOnTapListView(context, index, displayStr);
     }
   }
 
-  void _defaultOnTapListView(context, index)
+  void _defaultOnTapListView(context, index, displayStr)
   {
   }
 
@@ -78,7 +78,7 @@ class SearchableListViewState extends State<SearchableListView>
   late int _prevSearchLength;
   double _textSize;
   Color? _textColor;
-  Function(BuildContext, int)? _onTapListTile;
+  Function(BuildContext, int, String)? _onTapListTile;
   Color _onTapColor;
   double _borderWidth;
   Color _borderColor;

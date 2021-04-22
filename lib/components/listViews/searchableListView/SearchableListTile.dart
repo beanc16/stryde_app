@@ -9,7 +9,7 @@ class SearchableListTile extends StatelessWidget
   final Color? _textColor;
 
   // Tap functionality
-  void Function(BuildContext, int)? _onTapListTile;
+  void Function(BuildContext, int, String)? _onTapListTile;
   final Color _onTapColor;
   int _index;
 
@@ -28,7 +28,7 @@ class SearchableListTile extends StatelessWidget
   Widget build(BuildContext context)
   {
     return InkWell(
-      onTap: () => _onTapListTile!(context, _index),
+      onTap: () => _onTapListTile!(context, _index, _displayText),
       splashColor: _onTapColor,
 
       child: Container(

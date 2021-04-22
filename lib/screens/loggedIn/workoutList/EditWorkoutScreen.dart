@@ -145,10 +145,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
         // Deleted widget
         else if (widget is EmptyWidgetWithData)
         {
-          // TODO: Delete this
-          print("empty's data.widget.information: " +
-                    widget.data.information.toString());
-
           models.add(widget.data);
         }
       }

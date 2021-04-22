@@ -302,7 +302,7 @@ class ListViewCardState extends State<ListViewCard>
       padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
       child: Icon(
         Icons.reorder,
-        color: Colors.grey,
+        color: StrydeColors.lightGray,
         size: 24.0,
       ),
     );

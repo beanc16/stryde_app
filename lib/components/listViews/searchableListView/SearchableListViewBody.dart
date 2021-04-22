@@ -7,7 +7,7 @@ class SearchableListViewBody extends StatefulWidget
   List<String> _listTileDisplayText = [];
   final double _textSize;
   final Color? _textColor;
-  Function(BuildContext, int)? _onTapListTile;
+  Function(BuildContext, int, String)? _onTapListTile;
   final Color _onTapColor;
   final double _borderWidth;
   final Color _borderColor;
@@ -55,7 +55,7 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
   List<String> _listTileDisplayText;
   double _textSize;
   Color? _textColor;
-  Function(BuildContext, int)? _onTapListTile;
+  Function(BuildContext, int, String)? _onTapListTile;
   Color _onTapColor;
   double _borderWidth;
   Color _borderColor;

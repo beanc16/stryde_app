@@ -124,7 +124,6 @@ class WorkoutListState extends State<UserWorkoutListScreen> with
         itemCount: _workouts.length,
         itemBuilder: (BuildContext context, int index)
         {
-          // TODO: Have some kind of converter for nonEmpty workouts
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(
