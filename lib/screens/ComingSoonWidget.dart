@@ -15,7 +15,7 @@ class ComingSoonWidget extends StatelessWidget
         textAlign: TextAlign.center,
         style: TextStyle(
           color: Colors.white,
-          fontSize: 48,
+          fontSize: 36,
         ),
       ),
     );
