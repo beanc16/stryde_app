@@ -242,6 +242,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     return Row(
       children: [
         Expanded(
+          flex: 1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -253,6 +254,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
           )
         ),
         Expanded(
+          flex: 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
