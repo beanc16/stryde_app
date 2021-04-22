@@ -39,7 +39,7 @@ class CreditsAcknowledgementsScreen extends StatelessWidget
   Widget build(BuildContext context)
   {
   	return Scaffold(
-			appBar: StrydeAppBar(titleStr: "Credits", context: context),
+			appBar: StrydeAppBar(titleStr: "Credits"),
 			body: Container(
 				child: Column(
 					mainAxisAlignment: MainAxisAlignment.center,

@@ -267,16 +267,13 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
                       flex: 2,
                       child: StrydeButton(
                         displayText: "Add",
-                        textSize: 14,
+                        textSize: 13,
                         onTap: () => _onTapAddButton(),
                       ),
                     ),
-                    Flexible(
-                      flex: 1,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 15,
-                        ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 15,
                       ),
                     ),
                     Flexible(
@@ -299,7 +296,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     if (workout.hasNoExercisesOrSupersets())
     {
       return StrydeButton(
-        displayText: "Edit", textSize: 14, onTap: null
+        displayText: "Edit", textSize: 13, onTap: null
       );
     }
 
@@ -308,7 +305,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     {
       return StrydeButton(
         displayText: "Edit",
-        textSize: 14,
+        textSize: 13,
         onTap: () => _onTapEditButton(context)
       );
     }
@@ -513,7 +510,7 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       showPopupMenuIf: () => (_isInputValid() && _hasChanged),
       preventBackIf: () => _tryThrowExceptions(),
       child: Scaffold(
-        appBar: StrydeAppBar(titleStr: _getAppBarTitle(), context: context),
+        appBar: StrydeAppBar(titleStr: _getAppBarTitle()),
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(left: 15, right: 15),

@@ -34,7 +34,7 @@ class AllExerciseAndSupersetListScreen extends StatelessWidget
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: StrydeAppBar(titleStr: "Select Exercise / Superset", context: context),
+      appBar: StrydeAppBar(titleStr: "Select Exercise / Superset"),
       //body: StrydeExerciseAndSupersetTabMenu(screens: _screens),
       body: Column(
         children: [

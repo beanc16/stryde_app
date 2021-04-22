@@ -129,10 +129,7 @@ class MultiPageScrollingWidgetState extends State
                                 _onPageChanged);
 
     return Scaffold(
-      appBar: StrydeAppBar(
-        titleStr: "Stryde",
-        context: (_showLogoutButton ? context : null),
-      ),
+      appBar: StrydeAppBar(titleStr: "Stryde"),
       body: Container(
         margin: EdgeInsets.all(_marginAroundScreens),
         child: pageView,

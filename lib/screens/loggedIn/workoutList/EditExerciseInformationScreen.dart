@@ -213,7 +213,7 @@ class EditExerciseInformationScreen extends StatelessWidget
 	 */
 
     return Scaffold(
-      appBar: StrydeAppBar(titleStr: "Edit Exercise", context: context),
+      appBar: StrydeAppBar(titleStr: "Edit Exercise"),
       key: _tableKey,
       body: Stack(
         children: [
@@ -269,7 +269,7 @@ class EditExerciseInformationScreen extends StatelessWidget
                     ),
 
                     Padding(
-                      padding: EdgeInsets.only(top: 5),
+                      padding: EdgeInsets.only(bottom: 5),
                       child: Container(
                         alignment: Alignment.centerLeft,
                         child: StrydeMultiTagDisplay(
