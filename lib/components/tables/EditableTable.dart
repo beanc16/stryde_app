@@ -243,7 +243,7 @@ class EditableTableState extends State<EditableTable>
       // Callbacks
       onRowSaved: _onRowSaved,
       onSubmitted: _onSubmitted,
-      onChanged: _onChanged,
+      //onChanged: _onChanged,
 
       // TODO: Make save icon for each row actually be a delete icon
 

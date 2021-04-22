@@ -6,21 +6,21 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/beanc16/stryde_app">
+  <a href="https://stryde.app">
     <img src="assets/images/stryde_app_icon.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Stryde</h3>
 
   <p align="center">
-    A website <!--and mobile app -->that allows users to create custom workout routines from scratch.
+    A website and mobile app that allows users to create custom workout routines from scratch.
     <br />
     <br />
-    <a href="https://stride.app">View Website</a>
+    <a href="https://stryde.app">View Website</a>
     <!--·
-    <a href="https://stride.app">Download for iOS</a>
+    <a href="https://stryde.app">Download for iOS</a>
     ·
-    <a href="https://stride.app">Download for Android</a>-->
+    <a href="https://stryde.app">Download for Android</a>-->
     ·
     <a href="https://github.com/beanc16/stryde_app/issues">Report Bug</a>
     ·
@@ -47,7 +47,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <!--<li><a href="#usage">Usage</a></li>-->
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
@@ -63,9 +63,11 @@ A website and mobile app that allows users to create custom workout routines fro
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]][website-url]
+[![Stryde Screenshot][product-screenshot-1]][website-url]
 
-I had been doing weight training using a home gym for over a year and had yet to find a website or app that met all of my needs for tracking my workouts and progress. Most of the websites and apps I’d used had minor bugs, only allowed people to do pre-made workouts, or locked important features like progress graphs behind pay walls. 
+[![Stryde Screenshot][product-screenshot-2]][website-url]
+
+Before making Stryde, I had been doing weight training using a home gym for over a year and had yet to find a website or app that met all of my needs for tracking my workouts and progress. Most of the websites and apps I’d used had minor bugs, only allowed people to do pre-made workouts, or locked important features like progress graphs behind pay walls. 
 
 I want to help myself and others create their own workout routines with technology in a user-friendly way that provides helpful statistics to track workout progress over time for free. My goal was for anyone to be able to pick up the website or app and intuitively understand how it works without reading a lengthy tutorial. This enables users to immediately jump into creating their own workouts without any kind of restrictions. 
 
@@ -91,11 +93,13 @@ Button for Android Download-->
 
 
 <!-- USAGE EXAMPLES -->
+<!--
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
+-->
 
 
 
@@ -105,6 +109,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 Chris Bean - [@Shocking_Shots](https://twitter.com/Shocking_Shots) - Bean.Christopher@outlook.com
 
 Client-Side Code: [https://github.com/beanc16/stryde_app](https://github.com/beanc16/stryde_app)
+
 Server-Side Code: [https://github.com/beanc16/workout_buddy](https://github.com/beanc16/workout_buddy)
 
 
@@ -114,8 +119,12 @@ Server-Side Code: [https://github.com/beanc16/workout_buddy](https://github.com/
 
 <!-- Add plugins and dependencies here -->
 * [Img Shields](https://shields.io)
-* []()
-* []()
+* [Http](https://pub.dev/packages/http)
+* [Flutter_SVG](https://pub.dev/packages/flutter_svg)
+* [Universal_IO](https://pub.dev/packages/universal_io)
+* [Multi_Select_Flutter](https://pub.dev/packages/multi_select_flutter)
+* [SyncFusion_Flutter_Calendar](https://pub.dev/packages/syncfusion_flutter_calendar)
+* [Editable](https://pub.dev/packages/editable)
 
 
 
@@ -133,6 +142,8 @@ Server-Side Code: [https://github.com/beanc16/workout_buddy](https://github.com/
 [issues-url]: https://github.com/beanc16/repo/issues
 [license-shield]: https://img.shields.io/github/license/beanc16/repo.svg?style=for-the-badge
 [license-url]: https://github.com/beanc16/repo/blob/master/LICENSE.txt
+[product-screenshot-1]: assets/images/screenshots/CreateViewWorkoutScreen.png
+[product-screenshot-2]: assets/images/screenshots/AddExerciseScreen.png
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/bean-christopher
 [twitter-shield-old]: https://img.shields.io/twitter/url?color=grey&style=for-the-badge&url=https%3A%2F%2Ftwitter.com%2Fstryde_app&logo=linkedin&colorB=555
