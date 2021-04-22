@@ -110,7 +110,7 @@ Chris Bean - [@Shocking_Shots](https://twitter.com/Shocking_Shots) - Bean.Christ
 
 Client-Side Code: [https://github.com/beanc16/stryde_app](https://github.com/beanc16/stryde_app)
 
-Server-Side Code: [https://github.com/beanc16/workout_buddy](https://github.com/beanc16/workout_buddy)
+Server-Side Code: [https://github.com/beanc16/workout_buddy](https://github.com/beanc16/stryde_server)
 
 
 
