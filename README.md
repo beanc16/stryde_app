@@ -143,5 +143,5 @@ Server-Side Code: [https://github.com/beanc16/workout_buddy](https://github.com/
 [linkedin-url]: https://www.linkedin.com/in/bean-christopher
 [twitter-shield-old]: https://img.shields.io/twitter/url?color=grey&style=for-the-badge&url=https%3A%2F%2Ftwitter.com%2Fstryde_app&logo=linkedin&colorB=555
 [twitter-shield]: https://img.shields.io/badge/-Twitter-black.svg?style=for-the-badge&logo=twitter&logoColor=white&colorB=555
-[twitter-url]: https://twitter.com/stryde_app
+[twitter-url]: https://twitter.com/stryde_fitness
 [website-url]: https://stryde.app
