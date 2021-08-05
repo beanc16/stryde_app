@@ -1,9 +1,7 @@
-import 'package:universal_io/io.dart';
+//import 'package:universal_io/io.dart';
 //import 'package:url_launcher/url_launcher.dart';
 
-
-class UrlService
-{
+class UrlService {
   /*
   static void openUrl(String url)
   {

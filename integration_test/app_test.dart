@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-//import 'file:///C:/Users/cbean/Documents/Homework/MSJ/20-21%20(Fall)/Senior%20Research/Bean%20Senior%20Project%20-%20App/workout_buddy/lib/screens/loggedOut/main.dart' as app;
-import 'file:///C:/Users/cbean/Documents/Homework/MSJ/20-21 (Fall)/Senior Research/Bean Senior Project - App/workout_buddy_web/lib/screens/loggedOut/main.dart' as app;
-void main() => run(_testMain);
+import '../lib/main.dart' as app;
+
+//void main() => run(_testMain);
 
 void _testMain() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
