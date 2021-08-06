@@ -128,7 +128,7 @@ class SearchableListViewBodyState extends State<SearchableListViewBody>
                 style: TextStyle(
                   color: _textColor,
                   fontSize: _textSize,
-                  ),
+                ),
               )
             ),
           );

@@ -10,4 +10,13 @@ class TrieNode
     this.isEndOfWord = false;
     this.data = data;
   }
+
+
+
+  @override
+  String toString()
+  {
+    return "TrieNode: {isEndOfWord: ${this.isEndOfWord}, " +
+                      "children.keys:${this.children.keys.toList()}}";
+  }
 }

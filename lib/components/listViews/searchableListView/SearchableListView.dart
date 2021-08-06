@@ -1,3 +1,4 @@
+import 'package:Stryde/data_structures/trie/Trie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'SearchBar.dart';
@@ -72,6 +73,7 @@ class SearchableListView extends StatefulWidget
 class SearchableListViewState extends State<SearchableListView>
 {
   // TODO: Implement search functionality with a Trie instead of a list
+  late Trie _trie;
   List<String> _listTileDisplayText = [];
   List<String> _listTileAllText = [];
   String _searchBarPlaceholderText;
@@ -97,6 +99,10 @@ class SearchableListViewState extends State<SearchableListView>
                           this._spaceBetweenTiles,
                           this._noResultsStr)
   {
+    this._trie = Trie(
+      words: this._listTileAllText.toList(),
+      onlyAllowLowercase: false,
+    );
     this._listTileDisplayText = this._listTileAllText.toList();
     this._prevSearchLength = 0;
 
@@ -123,7 +129,8 @@ class SearchableListViewState extends State<SearchableListView>
       final List<String> tempFilteredText = _getTempSearchResults(searchedText);
 
       _listTileDisplayText.clear();
-      _listTileDisplayText = tempFilteredText.toList();
+      //_listTileDisplayText = tempFilteredText.toList();
+      _listTileDisplayText = tempFilteredText;
     }
 
     _searchableListViewBody.updateListTileDisplayText(_listTileDisplayText);
@@ -131,9 +138,10 @@ class SearchableListViewState extends State<SearchableListView>
 
   List<String> _getTempSearchResults(String searchedText)
   {
-    List<String> tempFilteredText = [];
+    List<String> tempFilteredText = _trie.toListStartsWith(searchedText, keepCaseSensitivity: false);
 
     // Search text is shorter than the previous search
+    /*
     if (_newSearchIsShorterThanPrevSearch(searchedText))
     {
       // Search all possible results since the new results could
@@ -166,6 +174,7 @@ class SearchableListViewState extends State<SearchableListView>
     }
 
     _prevSearchLength = searchedText.length;
+    */
     return tempFilteredText;
   }
 

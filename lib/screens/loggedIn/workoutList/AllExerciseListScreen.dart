@@ -97,9 +97,6 @@ class AllExerciseListState extends State<AllExerciseListScreen>
 
   void _onGetExercisesSuccess(Map<String, dynamic> workoutsJson)
   {
-    print("");
-    print(workoutsJson["_results"].toString());
-    print("");
     // Convert exercises to model
     _convertExerciseResults(workoutsJson["_results"]);
 
@@ -121,8 +118,6 @@ class AllExerciseListState extends State<AllExerciseListScreen>
     // Show error message
     _loadingErrorMsg.hideLoadingIcon();
     _loadingErrorMsg.showChild();
-
-    print("_onGetExercisesFail:\n" + results.toString());
   }
 
   void _convertExerciseResults(List<dynamic> exerciseList)

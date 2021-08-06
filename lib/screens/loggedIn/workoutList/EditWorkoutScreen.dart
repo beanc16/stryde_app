@@ -438,9 +438,6 @@ class EditWorkoutState extends State<EditWorkoutScreen>
     Workout newWorkout = getListViewAsWorkout();
     newWorkout.isReorderable = false;
 
-    // TODO: Delete this
-    print("newWorkout json: " + newWorkout.getAsJson().toString());
-
     // Send the selected exercises back to the previous screen
     NavigateTo.previousScreenWithData(context, newWorkout);
 

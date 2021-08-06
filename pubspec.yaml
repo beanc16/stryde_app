@@ -32,6 +32,7 @@ dependencies:
   editable: ^2.0.0              # For editable spreadsheet-like tables
   #get_it: ^1.0.3+2              # For easy static singletons
   #url_launcher: ^5.0.3          # For launching URLs in-app
+  validators: ^3.0.0            # For searching with Trie
 
 
   # The following adds the Cupertino Icons font to your application.

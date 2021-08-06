@@ -1,4 +1,5 @@
 import 'package:Stryde/data_structures/trie/TrieNode.dart';
+import 'package:validators/validators.dart';
 
 class Trie
 {
@@ -11,7 +12,7 @@ class Trie
   */
   Trie({
     List<String> words = const [],
-    bool onlyAllowLowercase = false,
+    bool onlyAllowLowercase = true,
   })
   {
     this.root = TrieNode();
@@ -33,7 +34,7 @@ class Trie
   */
   Trie.withData({
     Map<String, dynamic> words = const {},
-    bool onlyAllowLowercase = false,
+    bool onlyAllowLowercase = true,
   })
   {
     this.root = TrieNode();
@@ -82,6 +83,11 @@ class Trie
       }
     }
 
+    if (curNode.children[curLetter] == null)
+    {
+      curNode.children[curLetter] = new TrieNode();
+    }
+
     // Mark last node as a leaf with data
     curNode.isEndOfWord = true;
     curNode.data = data;
@@ -90,6 +96,11 @@ class Trie
   // Time Complexity: O(2*l) where l is the length of str
   void remove(String str)
   {
+    if (this.onlyAllowLowercase)
+    {
+      str = str.toLowerCase();
+    }
+    
     String curLetter = "";
     TrieNode curNode = this.root;
     Map<String, TrieNode> nodesToRemove = {};
@@ -182,10 +193,83 @@ class Trie
                               and e is the number of edges
     Returns all words as a list
   */
-  List<String> toList()
+  List<String> toList({bool keepCaseSensitivity = true})
   {
-    List<String> output = _depthFirstSearch(this.root, "", {}, []);
+    List<String> output = _depthFirstSearch(this.root, "", {}, [], 
+                                            keepCaseSensitivity);
     return output;
+  }
+
+  /*
+    Time Complexity: O(l+v+e) where l is the length of prefix,
+                                    v is the number of vertices/nodes,
+                                and e is the number of edges
+    Returns all words that start with prefix as a list
+  */
+  List<String> toListStartsWith(String prefix, {bool keepCaseSensitivity = true})
+  {
+    if (this.onlyAllowLowercase)
+    {
+      prefix = prefix.toLowerCase();
+    }
+    
+    //TrieNode? node = _getNode(prefix, keepCaseSensitivity: keepCaseSensitivity);
+    String curLetter = "";
+    String prefixCorrectCase = "";
+    TrieNode? curNode = this.root;
+    for (int i = 0; i < prefix.length; i++)
+    {
+      curLetter = prefix[i];
+
+      // There are currently no children with that letter
+      if (curNode?.children[curLetter] == null)
+      {
+        // Letters can be uppercase, but can be searched by lowercase
+        if (!this.onlyAllowLowercase && !keepCaseSensitivity)
+        {
+          if (isUppercase(curLetter))
+          {
+            curLetter = curLetter.toLowerCase();
+          }
+          else if (isLowercase(curLetter))
+          {
+            curLetter = curLetter.toUpperCase();
+          }
+
+          if (curNode?.children[curLetter] == null)
+          {
+            curNode = null;
+            break;
+          }
+        }
+
+        // Letters are lowercase or 
+        // can be uppercase and can only be searched by uppercase
+        else if (this.onlyAllowLowercase || 
+                (!this.onlyAllowLowercase && keepCaseSensitivity))
+        {
+            curNode = null;
+          break;
+        }
+      }
+
+      // Go to the child for the current letter
+      TrieNode? nextNode = curNode?.children[curLetter];
+      if (nextNode != null)
+      {
+        prefixCorrectCase += curLetter;
+        curNode = nextNode;
+      }
+    }
+    
+    if (curNode != null)
+    {
+      List<String> output = _depthFirstSearch(curNode, prefixCorrectCase, {}, [], 
+                                              keepCaseSensitivity);
+      return output;
+    }
+    
+    return [];
   }
 
   /*
@@ -194,31 +278,54 @@ class Trie
   */
   List<String> _depthFirstSearch(TrieNode curNode, String curStr, 
                                  Map<String, bool> visited, 
-                                 List<String> output)
+                                 List<String> output, 
+                                 bool keepCaseSensitivity)
   {
     // Set up helper variables
+    String originalCurLetter;
     Map<String, TrieNode> children = curNode.children;
     visited[curStr] = true;
 
     // Iterate over each letter
     for (String curLetter in children.keys)
     {
+      originalCurLetter = "" + curLetter;
+
       // Node has not been visited yet
-      if (visited[curStr + curLetter] != null && 
+      if (visited[curStr + curLetter] == null || 
           visited[curStr + curLetter] != true)
       {
         TrieNode? newNode = children[curLetter];
+
+        // Letters can be uppercase and but searched by lowercase
+        if (newNode == null && !this.onlyAllowLowercase && 
+            !keepCaseSensitivity)
+        {
+          // Set newNode to be the same as previously, but swap cases
+          if (isUppercase(curLetter))
+          {
+            curLetter = curLetter.toLowerCase();
+          }
+          else if (isLowercase(curLetter))
+          {
+            curLetter = curLetter.toUpperCase();
+          }
+
+          newNode = children[curLetter];
+        }
+
         if (newNode != null)
         {
           // Add word to output
           if (newNode.isEndOfWord)
           {
-            output.add(curStr + curLetter);
+            output.add(curStr + originalCurLetter);
           }
 
           // Loop over children
           output = _depthFirstSearch(newNode, curStr + curLetter, 
-                                     visited, output);
+                                     visited, output, 
+                                     keepCaseSensitivity);
         }
       }
     }
@@ -229,8 +336,13 @@ class Trie
 
 
   // Time Complexity: O(l) where l is the length of str
-  TrieNode? _getNode(String str)
+  TrieNode? _getNode(String str, {bool keepCaseSensitivity = true})
   {
+    if (this.onlyAllowLowercase)
+    {
+      str = str.toLowerCase();
+    }
+    
     String curLetter;
     TrieNode curNode = this.root;
 
@@ -242,7 +354,31 @@ class Trie
       // There are currently no children with that letter
       if (curNode.children[curLetter] == null)
       {
-        return null;
+        // Letters can be uppercase, but can be searched by lowercase
+        if (!this.onlyAllowLowercase && !keepCaseSensitivity)
+        {
+          if (isUppercase(curLetter))
+          {
+            curLetter = curLetter.toLowerCase();
+          }
+          else if (isLowercase(curLetter))
+          {
+            curLetter = curLetter.toUpperCase();
+          }
+
+          if (curNode.children[curLetter] == null)
+          {
+            return null;
+          }
+        }
+
+        // Letters are lowercase or 
+        // can be uppercase and can only be searched by uppercase
+        else if (this.onlyAllowLowercase || 
+                (!this.onlyAllowLowercase && keepCaseSensitivity))
+        {
+          return null;
+        }
       }
 
       // Go to the child for the current letter
@@ -254,5 +390,11 @@ class Trie
     }
 
     return curNode;
+  }
+
+  @override
+  String toString()
+  {
+    return "Trie: " + this.toList().toString();
   }
 }

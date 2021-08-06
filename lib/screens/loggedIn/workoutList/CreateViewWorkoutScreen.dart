@@ -398,15 +398,11 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
     }
     route += "/workout";
 
-    print("postData: " + postData.toString());
-
     HttpQueryHelper.post(
       route,
       postData,
       onSuccess: (jsonResult)
       {
-        print("jsonResult: " + jsonResult.toString());
-
         // Updated existing workout
         if (!_isNewWorkout)
         {
@@ -434,7 +430,6 @@ class CreateViewWorkoutState extends State<CreateViewWorkoutScreen>
       },
       onFailure: (response)
       {
-        print("Fail: " + response.toString());
         // Remove saving popup and show error message
         NavigateTo.previousScreen(context);
         _showQueryErrorMessage();
